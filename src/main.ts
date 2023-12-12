@@ -1,5 +1,9 @@
 import { createApp } from 'vue';
 import App from './App.vue';
-import 'remixicon/fonts/remixicon.css';
+import { loadPlugins } from '@/plugins';
 
-createApp(App).mount('#app');
+const app = createApp(App);
+// 加载插件
+loadPlugins(app);
+
+app.mount('#app');
