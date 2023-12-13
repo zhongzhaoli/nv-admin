@@ -1,0 +1,23 @@
+// Navbar小功能按键
+.navbarFunItem {
+  @extend .flex-center;
+  width: var(--navbar-function-size);
+  height: var(--navbar-function-size);
+  cursor: pointer;
+  transition: background-color 0.3s;
+  border-radius: 5px;
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.06);
+  }
+  & > i[class^='ri-'] {
+    font-size: 18px;
+    color: var(--navbar-function-icon-color);
+  }
+}
+
+// flex全居中
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

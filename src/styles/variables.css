@@ -1,0 +1,29 @@
+:root {
+  /* Body的最小宽度 */
+  --body-min-width: 900px;
+
+  /* Layout的背景颜色 */
+  --layout-background-color: #f6f8f9;
+
+  /* Sidebar的宽度 */
+  --sidebar-width: 230px;
+  /* Sidebar的背景颜色 */
+  --sidebar-background-color: #fff;
+
+  /* Navbar的高度 */
+  --navbar-height: 60px;
+  /* Navbar的内边距 */
+  --navbar-padding: 0 5px;
+  /* Navbar的背景颜色 */
+  --navbar-background-color: #fff;
+  /* Navbar中小功能按键的大小 */
+  --navbar-function-size: 50px;
+  /* Navbar中小功能按键图标颜色 */
+  --navbar-function-icon-color: rgba(0, 0, 0, 0.65);
+
+  /* AppMain的外边距 */
+  --appMain-outside-padding: 20px;
+
+  /* 通用边框颜色 */
+  --normal-border-color: rgba(5, 5, 5, 0.06);
+}

@@ -3,11 +3,11 @@
     <div class="opacityBox" />
     <div class="loginBox">
       <div class="bgBox">
-        <img src="/src/assets/login_bg.png" alt="" />
+        <img src="@/assets/login_bg.png" alt="" />
       </div>
       <div class="rightBox">
         <div class="logo">
-          <img src="/src/assets/logo.png" alt="" />
+          <img src="@/assets/logo.png" alt="" />
         </div>
         <div class="formBox">
           <a-form>
