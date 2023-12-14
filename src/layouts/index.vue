@@ -1,8 +1,6 @@
 <template>
   <div class="container">
-    <div class="sidebar">
-      <Sidebar />
-    </div>
+    <Sidebar class="sidebar" />
     <div class="right">
       <div class="navbar">
         <Navbar />
@@ -27,7 +25,7 @@ import AppMain from './components/AppMain/index.vue';
     width: var(--sidebar-width);
   }
   & > .right {
-    width: calc(100% - var(--sidebar-width));
+    flex: 1;
     & > .navbar {
       width: 100%;
       height: var(--navbar-height);

@@ -1,8 +1,6 @@
 <template>
-  <div class="sidebarContainer">
-    <div class="logoBox">
-      <img src="@/assets/logo.png" alt="" />
-    </div>
+  <div class="sidebarContainer" :class="{ hideSidebar: isCollapse }">
+    <Logo :collapse="isCollapse" />
     <div class="menuBox">
       <a-menu
         v-model:openKeys="openKeys"
@@ -10,17 +8,36 @@
         style="width: 100%"
         mode="inline"
         :items="items"
+        :inline-collapsed="isCollapse"
         @click="handleClick"
       />
     </div>
   </div>
 </template>
 <script setup lang="ts">
-import { h, reactive, ref, VueElement } from 'vue';
+import Logo from './components/logo/index.vue';
+import { h, reactive, ref, VueElement, computed, watch } from 'vue';
 import type { ItemType } from 'ant-design-vue';
+import { useAppStore } from '@/store/modules/app';
 
+const openKeys = ref<string[]>([]);
 const selectedKeys = ref<string[]>(['1']);
-const openKeys = ref<string[]>(['sub1']);
+const appStore = useAppStore();
+
+const isCollapse = computed(() => !appStore.sidebarOpened);
+watch(
+  () => isCollapse.value,
+  (val) => {
+    if (val) {
+      openKeys.value = [];
+    } else {
+      openKeys.value = ['sub1'];
+    }
+  },
+  {
+    immediate: true
+  }
+);
 
 const handleClick = () => {};
 
@@ -72,8 +89,6 @@ const items: ItemType[] = reactive([
     ])
   ]),
 
-  { type: 'divider' },
-
   getItem(
     'Navigation Three',
     'sub4',
@@ -84,34 +99,17 @@ const items: ItemType[] = reactive([
       getItem('Option 11', '11'),
       getItem('Option 12', '12'))
     ]
-  ),
-
-  getItem(
-    'Group',
-    'grp',
-    null,
-    [getItem('Option 13', '13'), getItem('Option 14', '14')],
-    'group'
   )
 ]);
 </script>
 <style lang="scss" scoped>
 .sidebarContainer {
-  width: 100%;
   border-right: 1px solid var(--normal-border-color);
   background-color: var(--sidebar-background-color);
   box-sizing: border-box;
-  & > .logoBox {
-    width: 100%;
-    height: var(--navbar-height);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    // border-bottom: 1px solid var(--normal-border-color);
-    & > img {
-      width: calc(100% - 80px);
-      vertical-align: bottom;
-    }
+  transition-duration: 0.3s;
+  &.hideSidebar {
+    width: var(--sidebar-closed-width) !important;
   }
   & > .menuBox {
     height: calc(100vh - var(--navbar-height));

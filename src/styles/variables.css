@@ -7,8 +7,13 @@
 
   /* Sidebar的宽度 */
   --sidebar-width: 230px;
+  /* Sidebar收缩后的宽度 */
+  --sidebar-closed-width: 60px;
   /* Sidebar的背景颜色 */
   --sidebar-background-color: #fff;
+
+  /* Logo的高度 */
+  --logo-height: 60px;
 
   /* Navbar的高度 */
   --navbar-height: 60px;

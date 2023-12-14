@@ -1,0 +1,9 @@
+// layout-logo-fade
+.layout-logo-fade-enter-active,
+.layout-logo-fade-leave-active {
+  transition: opacity 1.5s;
+}
+.layout-logo-fade-enter-from,
+.layout-logo-fade-leave-to {
+  opacity: 0;
+}
