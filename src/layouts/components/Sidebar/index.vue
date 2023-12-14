@@ -7,24 +7,57 @@
         v-model:selectedKeys="selectedKeys"
         style="width: 100%"
         mode="inline"
-        :items="items"
         :inline-collapsed="isCollapse"
         @click="handleClick"
-      />
+      >
+        <SidebarItem
+          v-for="child in sideBarRoutes"
+          :item="child"
+          :isTop="true"
+          :key="child.path"
+        />
+      </a-menu>
     </div>
   </div>
 </template>
 <script setup lang="ts">
 import Logo from './components/logo/index.vue';
-import { h, reactive, ref, VueElement, computed, watch } from 'vue';
-import type { ItemType } from 'ant-design-vue';
+import SidebarItem from './SidebarItem.vue';
+import { ref, computed, watch } from 'vue';
 import { useAppStore } from '@/store/modules/app';
+import { useRouterStore } from '@/store/modules/router';
+import { staticRoutes } from '@/router';
+import { RouteRecordRaw, useRouter } from 'vue-router';
+import { removeHiddenMenus, onlyChildRoutes } from '@/utils/route';
 
 const openKeys = ref<string[]>([]);
 const selectedKeys = ref<string[]>(['1']);
-const appStore = useAppStore();
+const sideBarRoutes = ref<RouteRecordRaw[]>([]);
 
+const appStore = useAppStore();
+const routerStore = useRouterStore();
+const router = useRouter();
+
+// 是否折叠Sidebar
 const isCollapse = computed(() => !appStore.sidebarOpened);
+// 动态路由数据
+const asyncRoutes = computed(() => routerStore.asyncRoutes);
+
+if (asyncRoutes.value && asyncRoutes.value.length > 0) {
+  // 静动态路由合并
+  let routes: RouteRecordRaw[] = [...staticRoutes, ...asyncRoutes.value];
+  // 删除hidden为true的路由
+  routes = removeHiddenMenus(routes);
+  // 处理children只有一个的跟路由 仅留下子路由
+  routes = onlyChildRoutes(routes);
+  sideBarRoutes.value = routes;
+  console.log(routes);
+}
+
+const handleClick = (v: { key: string }) => {
+  router.push(v.key);
+};
+
 watch(
   () => isCollapse.value,
   (val) => {
@@ -38,69 +71,6 @@ watch(
     immediate: true
   }
 );
-
-const handleClick = () => {};
-
-function getItem(
-  label: VueElement | string,
-  key: string,
-  icon?: any,
-  children?: ItemType[],
-  type?: 'group'
-): ItemType {
-  return {
-    key,
-    icon,
-    children,
-    label,
-    type
-  } as ItemType;
-}
-
-const items: ItemType[] = reactive([
-  getItem(
-    'Navigation One',
-    'sub1',
-    () => h('i', { class: 'ri-dashboard-line' }),
-    [
-      getItem(
-        'Item 1',
-        'g1',
-        null,
-        [getItem('Option 1', '1'), getItem('Option 2', '2')],
-        'group'
-      ),
-      getItem(
-        'Item 2',
-        'g2',
-        null,
-        [getItem('Option 3', '3'), getItem('Option 4', '4')],
-        'group'
-      )
-    ]
-  ),
-
-  getItem('Navigation Two', 'sub2', () => h('i', { class: 'ri-user-line' }), [
-    getItem('Option 5', '5'),
-    getItem('Option 6', '6'),
-    getItem('Submenu', 'sub3', null, [
-      getItem('Option 7', '7'),
-      getItem('Option 8', '8')
-    ])
-  ]),
-
-  getItem(
-    'Navigation Three',
-    'sub4',
-    () => h('i', { class: 'ri-shield-user-line' }),
-    [
-      (getItem('Option 9', '9'),
-      getItem('Option 10', '10'),
-      getItem('Option 11', '11'),
-      getItem('Option 12', '12'))
-    ]
-  )
-]);
 </script>
 <style lang="scss" scoped>
 .sidebarContainer {

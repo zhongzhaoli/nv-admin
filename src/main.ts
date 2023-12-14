@@ -3,6 +3,7 @@ import App from './App.vue';
 import { loadPlugins } from '@/plugins';
 import store from '@/store';
 import router from '@/router';
+import '@/router/permission';
 
 import 'remixicon/fonts/remixicon.css';
 import 'ant-design-vue/dist/reset.css';

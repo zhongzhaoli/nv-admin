@@ -6,22 +6,94 @@ import Layout from '@/layouts/index.vue';
 export const staticRoutes: RouteRecordRaw[] = [
   {
     path: '/login',
-    name: 'login',
+    name: 'Login',
     component: () => import('@/views/login/index.vue'),
-    meta: {}
+    meta: {
+      hidden: true
+    }
   },
   {
     path: '/',
-    name: 'home',
+    name: 'Root',
     component: Layout,
-    redirect: '/dashboard',
-    meta: {},
+    redirect: '/workbenches',
     children: [
       {
-        path: '/dashboard',
-        name: 'dashboard',
+        path: 'workbenches',
+        name: 'Workbenches',
+        component: () => import('@/views/workbenches/index.vue'),
+        meta: {
+          title: '工作台',
+          icon: 'ri-home-5-line'
+        }
+      }
+    ]
+  }
+];
+
+// 动态路由 - 假装是后端返回的
+export const asyncRoutes: RouteRecordRaw[] = [
+  {
+    path: '/dashboard',
+    name: 'Dashboard',
+    redirect: '/dashboard/index',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        name: 'index',
         component: () => import('@/views/dashboard/index.vue'),
-        meta: {}
+        meta: {
+          title: '数据看板',
+          icon: 'ri-dashboard-line'
+        }
+      }
+    ]
+  },
+  {
+    path: '/system',
+    name: 'System',
+    component: Layout,
+    meta: {
+      title: '系统管理',
+      icon: 'ri-list-settings-line'
+    },
+    children: [
+      {
+        path: 'user',
+        name: 'User',
+        component: () => import('@/views/system/user/index.vue'),
+        meta: {
+          title: '用户管理',
+          icon: 'ri-user-line'
+        }
+      },
+      {
+        path: 'role',
+        name: 'Role',
+        component: () => import('@/views/system/role/index.vue'),
+        meta: {
+          title: '角色管理',
+          icon: 'ri-admin-line'
+        }
+      },
+      {
+        path: 'menu',
+        name: 'Menu',
+        component: () => import('@/views/system/menu/index.vue'),
+        meta: {
+          title: '菜单管理',
+          icon: 'ri-node-tree'
+        }
+      },
+      {
+        path: 'monitor',
+        name: 'Monitor',
+        component: () => import('@/views/system/monitor/index.vue'),
+        meta: {
+          title: '系统监控',
+          icon: 'ri-computer-line'
+        }
       }
     ]
   }
@@ -29,7 +101,7 @@ export const staticRoutes: RouteRecordRaw[] = [
 
 const router = createRouter({
   history,
-  routes: [...staticRoutes]
+  routes: staticRoutes
 });
 
 export default router;
