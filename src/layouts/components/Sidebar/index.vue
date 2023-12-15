@@ -11,7 +11,7 @@
         @click="handleClick"
       >
         <SidebarItem
-          v-for="child in sideBarRoutes"
+          v-for="child in handledRoutes"
           :item="child"
           :isTop="true"
           :key="child.path"
@@ -26,13 +26,10 @@ import SidebarItem from './SidebarItem.vue';
 import { ref, computed, watch } from 'vue';
 import { useAppStore } from '@/store/modules/app';
 import { useRouterStore } from '@/store/modules/router';
-import { staticRoutes } from '@/router';
-import { RouteRecordRaw, useRouter } from 'vue-router';
-import { removeHiddenMenus, onlyChildRoutes } from '@/utils/route';
+import { useRouter } from 'vue-router';
 
 const openKeys = ref<string[]>([]);
 const selectedKeys = ref<string[]>(['1']);
-const sideBarRoutes = ref<RouteRecordRaw[]>([]);
 
 const appStore = useAppStore();
 const routerStore = useRouterStore();
@@ -40,19 +37,8 @@ const router = useRouter();
 
 // 是否折叠Sidebar
 const isCollapse = computed(() => !appStore.sidebarOpened);
-// 动态路由数据
-const asyncRoutes = computed(() => routerStore.asyncRoutes);
-
-if (asyncRoutes.value && asyncRoutes.value.length > 0) {
-  // 静动态路由合并
-  let routes: RouteRecordRaw[] = [...staticRoutes, ...asyncRoutes.value];
-  // 删除hidden为true的路由
-  routes = removeHiddenMenus(routes);
-  // 处理children只有一个的跟路由 仅留下子路由
-  routes = onlyChildRoutes(routes);
-  sideBarRoutes.value = routes;
-  console.log(routes);
-}
+// 处理后的路由数据
+const handledRoutes = computed(() => routerStore.handledRoutes);
 
 const handleClick = (v: { key: string }) => {
   router.push(v.key);

@@ -15,43 +15,28 @@ export const addRoutes = (routes: RouteRecordRaw[]) => {
   });
 };
 
-// 删除需要隐藏的菜单
-export const removeHiddenMenus = (
+// 处理侧边栏展示路由数据
+export const handleRoutes = (
   routes: RouteRecordRaw[],
   basePath = ''
 ): RouteRecordRaw[] => {
   const res: RouteRecordRaw[] = [];
   routes.forEach((route: RouteRecordRaw) => {
-    const tmp = {
-      ...route,
-      path: resolve(basePath, route.path)
-    };
-    // 需要隐藏的菜单，不显示
-    if (tmp.meta && tmp.meta.hidden) return;
-    // 递归处理子菜单
-    if (tmp.children && tmp.children.length) {
-      tmp.children = removeHiddenMenus(tmp.children, tmp.path);
-    }
-    res.push(tmp);
-  });
-  return res;
-};
-
-// 处理children只有一个的跟路由 仅留下子路由
-export const onlyChildRoutes = (routes: RouteRecordRaw[]): RouteRecordRaw[] => {
-  const res: RouteRecordRaw[] = [];
-  routes.forEach((route: RouteRecordRaw) => {
+    const newPath = resolve(basePath, route.path);
     // 处理alwaysShow
-    if (route.meta && route.meta.alwaysShow) return res.push({ ...route });
-    // 递归处理子菜单
+    if (route.meta && route.meta.alwaysShow)
+      return res.push({ ...route, path: newPath });
+    // 需要隐藏的菜单，不显示
+    if (route.meta && route.meta.hidden) return;
+    // 只有一个children 只展示children
     if (route.children && route.children.length === 1) {
       // 只取第一个子路由
-      const childRoute = onlyChildRoutes(route.children)[0];
+      const childRoute = handleRoutes(route.children, newPath)[0];
       res.push(childRoute);
     } else {
-      const tmp = { ...route };
+      const tmp = { ...route, path: newPath };
       if (tmp.children) {
-        tmp.children = onlyChildRoutes(tmp.children);
+        tmp.children = handleRoutes(tmp.children, newPath);
       }
       res.push(tmp);
     }
