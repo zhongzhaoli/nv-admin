@@ -19,7 +19,6 @@ const getBreadcrumb = () => {
   breadcrumbs.value = route.matched.filter(
     (item) => item.meta && item.meta.title
   );
-  console.log(breadcrumbs.value);
 };
 
 addRouteListener(() => {

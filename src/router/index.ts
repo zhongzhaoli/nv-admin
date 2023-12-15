@@ -96,35 +96,6 @@ export const asyncRoutes: RouteRecordRaw[] = [
         }
       }
     ]
-  },
-  {
-    path: '/manyMenu',
-    name: 'ManyMenu',
-    component: Layout,
-    meta: {
-      title: '多级路由'
-    },
-    children: [
-      {
-        path: 'menu1',
-        name: 'Menu1',
-        component: () => import('@/views/system/menu/index.vue'),
-        children: [
-          {
-            path: 'menu1-1',
-            name: 'Menu1-1',
-            component: () => import('@/views/system/menu/index.vue'),
-            meta: {
-              title: '菜单1-1'
-            }
-          }
-        ],
-        meta: {
-          title: '菜单1',
-          alwaysShow: true
-        }
-      }
-    ]
   }
 ];
 

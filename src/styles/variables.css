@@ -8,27 +8,36 @@
   /* Sidebar的宽度 */
   --sidebar-width: 230px;
   /* Sidebar收缩后的宽度 */
-  --sidebar-closed-width: 60px;
+  --sidebar-closed-width: 55px;
   /* Sidebar的背景颜色 */
   --sidebar-background-color: #fff;
 
   /* Logo的高度 */
-  --logo-height: 60px;
+  --logo-height: 55px;
 
   /* Navbar的高度 */
-  --navbar-height: 60px;
+  --navbar-height: 55px;
   /* Navbar的内边距 */
   --navbar-padding: 0 5px;
   /* Navbar的背景颜色 */
   --navbar-background-color: #fff;
   /* Navbar中小功能按键的大小 */
-  --navbar-function-size: 50px;
+  --navbar-function-size: 45px;
   /* Navbar中小功能按键图标颜色 */
   --navbar-function-icon-color: rgba(0, 0, 0, 0.65);
+
+  /* TagsView的高度 */
+  --tagsView-height: 40px;
+  /* TagsView的激活背景颜色 */
+  --tagsView-active-background-color: #e6f4ff;
+  /* TagsView的激活文字颜色 */
+  --tagsView-active-text-color: #1677ff;
 
   /* AppMain的外边距 */
   --appMain-outside-padding: 20px;
 
   /* 通用边框颜色 */
   --normal-border-color: rgba(5, 5, 5, 0.06);
+  /* 通用文字颜色 - 黑 */
+  --normal-text-color-black: rgba(0, 0, 0, 0.88);
 }

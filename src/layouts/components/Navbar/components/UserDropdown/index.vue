@@ -1,7 +1,7 @@
 <template>
   <a-dropdown trigger="hover">
     <div class="navbarFunItem">
-      <a-avatar :size="30" src="/src/assets/logo_small.png" />
+      <a-avatar :size="26" src="/src/assets/logo_small.png" />
     </div>
     <template #overlay>
       <a-menu>

@@ -1,9 +1,12 @@
 <template>
-  <div class="container">
+  <div class="layoutContainer">
     <Sidebar class="sidebar" />
     <div class="right">
       <div class="navbar">
         <Navbar />
+      </div>
+      <div class="tagsView">
+        <TagsView />
       </div>
       <div class="appMain">
         <AppMain />
@@ -15,14 +18,16 @@
 import Sidebar from './components/Sidebar/index.vue';
 import Navbar from './components/Navbar/index.vue';
 import AppMain from './components/AppMain/index.vue';
+import TagsView from './components/TagsView/index.vue';
 </script>
 <style lang="scss" scoped>
-.container {
+.layoutContainer {
   display: flex;
   height: 100vh;
   background-color: var(--layout-background-color);
   & > .sidebar {
     width: var(--sidebar-width);
+    z-index: 1;
   }
   & > .right {
     flex: 1;
@@ -30,9 +35,14 @@ import AppMain from './components/AppMain/index.vue';
       width: 100%;
       height: var(--navbar-height);
     }
+    & > .tagsView {
+      width: 100%;
+      height: var(--tagsView-height);
+      box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.08);
+    }
     & > .appMain {
       width: 100%;
-      height: calc(100vh - var(--navbar-height));
+      height: calc(100vh - var(--navbar-height) - var(--tagsView-height));
       padding: var(--appMain-outside-padding);
       overflow: auto;
     }
