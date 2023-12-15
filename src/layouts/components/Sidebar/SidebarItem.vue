@@ -1,5 +1,5 @@
 <template>
-  <a-sub-menu v-if="item.children && item.children.length">
+  <a-sub-menu v-if="item.children && item.children.length" :key="item.path">
     <template #icon>
       <i :class="item?.meta?.icon || ''" />
     </template>

@@ -23,40 +23,31 @@
 <script setup lang="ts">
 import Logo from './components/logo/index.vue';
 import SidebarItem from './SidebarItem.vue';
-import { ref, computed, watch } from 'vue';
+import { ref, computed } from 'vue';
 import { useAppStore } from '@/store/modules/app';
 import { useRouterStore } from '@/store/modules/router';
-import { useRouter } from 'vue-router';
-
-const openKeys = ref<string[]>([]);
-const selectedKeys = ref<string[]>(['1']);
+import { useRouter, useRoute } from 'vue-router';
 
 const appStore = useAppStore();
 const routerStore = useRouterStore();
 const router = useRouter();
+const route = useRoute();
+
+const routeMatched = computed(() => {
+  return route.matched.map((v) => v.path);
+});
 
 // 是否折叠Sidebar
 const isCollapse = computed(() => !appStore.sidebarOpened);
 // 处理后的路由数据
 const handledRoutes = computed(() => routerStore.handledRoutes);
 
+const selectedKeys = ref(routeMatched);
+const openKeys = computed(() => (isCollapse.value ? [] : routeMatched.value));
+
 const handleClick = (v: { key: string }) => {
   router.push(v.key);
 };
-
-watch(
-  () => isCollapse.value,
-  (val) => {
-    if (val) {
-      openKeys.value = [];
-    } else {
-      openKeys.value = ['sub1'];
-    }
-  },
-  {
-    immediate: true
-  }
-);
 </script>
 <style lang="scss" scoped>
 .sidebarContainer {

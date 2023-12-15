@@ -2,6 +2,7 @@ import { addRoutes, isLoginWhiteList } from '@/utils/route';
 import router from './index';
 import { useUserStore } from '@/store/modules/user';
 import { useRouterStore } from '@/store/modules/router';
+import { routeChange } from '@/hooks/useRouteListener';
 
 router.beforeEach(async (to, from, next) => {
   const routerStore = useRouterStore();
@@ -37,4 +38,9 @@ router.beforeEach(async (to, from, next) => {
     addRoutes(asyncRoutes);
     return next(to.path);
   }
+});
+
+router.afterEach((to) => {
+  // 发布者 发送路由变化信息
+  routeChange(to);
 });
