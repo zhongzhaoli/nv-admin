@@ -1,7 +1,6 @@
 <template>
   <div>
     Menu
-    <customCom />
     <a-input type="text" />
   </div>
 </template>

@@ -23,33 +23,37 @@
 <script setup lang="ts">
 import Logo from './components/logo/index.vue';
 import SidebarItem from './SidebarItem.vue';
-import { computed } from 'vue';
+import { computed, ref, onMounted } from 'vue';
 import { useAppStore } from '@/store/modules/app';
 import { useRouterStore } from '@/store/modules/router';
-import { useRouter, useRoute } from 'vue-router';
+import { useRouter } from 'vue-router';
+import { useRouteListener } from '@/hooks/useRouteListener';
 
 const appStore = useAppStore();
 const routerStore = useRouterStore();
 const router = useRouter();
-const route = useRoute();
+const { addRouteListener } = useRouteListener();
 
-const selectedKeys = computed(() => {
-  const { matched } = route;
-  return matched.map((v) => v.path);
-});
-const openKeys = computed(() => {
-  const { matched } = route;
-  return isCollapse.value ? [] : matched.map((v) => v.path);
-});
+const selectedKeys = ref<string[]>([]);
+const openKeys = ref<string[]>([]);
 
 // 是否折叠Sidebar
 const isCollapse = computed(() => !appStore.sidebarOpened);
 // 处理后的路由数据
 const handledRoutes = computed(() => routerStore.handledRoutes);
 
+// 点击页面跳转
 const handleClick = (v: { key: string }) => {
   router.push(v.key);
 };
+
+onMounted(() => {
+  addRouteListener((route) => {
+    const pathStringArr = route.matched.map((v) => v.path);
+    selectedKeys.value = pathStringArr;
+    openKeys.value = isCollapse.value ? [] : pathStringArr;
+  }, true);
+});
 </script>
 <style lang="scss" scoped>
 .sidebarContainer {
