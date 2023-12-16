@@ -33,18 +33,19 @@ const routerStore = useRouterStore();
 const router = useRouter();
 const route = useRoute();
 
-// 页面刷新时，根据当前路由设置选中的菜单项
-const routeMatched = computed(() => {
-  return route.matched.map((v) => v.path);
+const selectedKeys = computed(() => {
+  const { matched } = route;
+  return matched.map((v) => v.path);
+});
+const openKeys = computed(() => {
+  const { matched } = route;
+  return isCollapse.value ? [] : matched.map((v) => v.path);
 });
 
 // 是否折叠Sidebar
 const isCollapse = computed(() => !appStore.sidebarOpened);
 // 处理后的路由数据
 const handledRoutes = computed(() => routerStore.handledRoutes);
-
-const selectedKeys = ref<string[]>(routeMatched.value);
-const openKeys = ref<string[]>(isCollapse.value ? [] : routeMatched.value);
 
 const handleClick = (v: { key: string }) => {
   router.push(v.key);
