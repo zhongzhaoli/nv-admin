@@ -24,7 +24,8 @@ export const staticRoutes: RouteRecordRaw[] = [
         component: () => import('@/views/workbenches/index.vue'),
         meta: {
           title: '工作台',
-          icon: 'ri-home-5-line'
+          icon: 'ri-home-5-line',
+          affix: true
         }
       }
     ]
@@ -61,7 +62,7 @@ export const asyncRoutes: RouteRecordRaw[] = [
     children: [
       {
         path: 'user',
-        name: 'User',
+        name: 'SystemUser',
         component: () => import('@/views/system/user/index.vue'),
         meta: {
           title: '用户管理',
@@ -70,7 +71,7 @@ export const asyncRoutes: RouteRecordRaw[] = [
       },
       {
         path: 'role',
-        name: 'Role',
+        name: 'SystemRole',
         component: () => import('@/views/system/role/index.vue'),
         meta: {
           title: '角色管理',
@@ -79,16 +80,17 @@ export const asyncRoutes: RouteRecordRaw[] = [
       },
       {
         path: 'menu',
-        name: 'Menu',
+        name: 'SystemMenu',
         component: () => import('@/views/system/menu/index.vue'),
         meta: {
           title: '菜单管理',
-          icon: 'ri-node-tree'
+          icon: 'ri-node-tree',
+          keepAlive: true
         }
       },
       {
         path: 'monitor',
-        name: 'Monitor',
+        name: 'SystemMonitor',
         component: () => import('@/views/system/monitor/index.vue'),
         meta: {
           title: '系统监控',

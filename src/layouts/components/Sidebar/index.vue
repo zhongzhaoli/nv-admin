@@ -23,7 +23,7 @@
 <script setup lang="ts">
 import Logo from './components/logo/index.vue';
 import SidebarItem from './SidebarItem.vue';
-import { ref, computed } from 'vue';
+import { computed } from 'vue';
 import { useAppStore } from '@/store/modules/app';
 import { useRouterStore } from '@/store/modules/router';
 import { useRouter, useRoute } from 'vue-router';

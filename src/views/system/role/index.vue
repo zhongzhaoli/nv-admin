@@ -1,5 +1,12 @@
 <template>
-  <div>Role</div>
+  <div>
+    Role
+    <a-input />
+  </div>
 </template>
-<script setup lang="ts"></script>
+<script setup lang="ts">
+defineOptions({
+  name: 'SystemRole'
+});
+</script>
 <style scoped></style>
