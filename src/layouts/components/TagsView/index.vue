@@ -196,7 +196,7 @@ onMounted(() => {
       padding: 0 14px;
       font-size: 13px;
       cursor: pointer;
-      color: var(--normal-text-color-black);
+      color: var(--el-text-color-regular);
       margin: 0 3px;
       height: 100%;
       transition: all 0.3s;

@@ -13,6 +13,8 @@
   --sidebar-background-color: #fff;
   /* Sidebar MenuItem的高度 */
   --sidebar-menu-item-height: 45px;
+  /* Sidebar Item之间的外边距 */
+  --sidebar-margin: 4px;
 
   /* Logo的高度 */
   --logo-height: 55px;

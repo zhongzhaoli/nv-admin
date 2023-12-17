@@ -1,13 +1,16 @@
 // 自定义的 Element Plus 样式
 
-// 色彩
 :root {
+  // 色彩
   --el-color-primary: #1677ff;
   --el-color-primary-light-3: #2e96ff;
   --el-color-primary-light-5: #53a9ff;
   --el-color-primary-light-7: #7dbcff;
   --el-color-primary-light-8: #a4d2ff;
   --el-color-primary-light-9: #e6f4ff;
+
+  // Menu icon宽度
+  --el-menu-icon-width: 22px;
 }
 
 // 菜单
@@ -22,9 +25,29 @@
     content: '';
   }
   border-right: none;
+  &.el-menu--collapse {
+    $collapse-padding-left: calc(
+      (
+          var(--sidebar-closed-width) - var(--el-menu-icon-width) - var(
+              --sidebar-margin
+            ) * 2
+        ) / 2
+    );
+    & > .el-menu-item {
+      padding-left: $collapse-padding-left;
+    }
+    & > .el-sub-menu {
+      & > .el-sub-menu__title {
+        padding-left: $collapse-padding-left;
+      }
+    }
+  }
   & > .el-menu-item {
-    margin-inline: 4px;
-    margin-block: 4px;
+    .el-icon {
+      font-size: 16px;
+    }
+    margin-inline: var(--sidebar-margin);
+    margin-block: var(--sidebar-margin);
     height: var(--sidebar-menu-item-height);
     border-radius: 5px;
     &.is-active {
@@ -35,6 +58,9 @@
     }
   }
   & > .el-sub-menu {
+    .el-icon {
+      font-size: 16px;
+    }
     & > .el-sub-menu__title {
       margin-inline: 4px;
       margin-block: 4px;
