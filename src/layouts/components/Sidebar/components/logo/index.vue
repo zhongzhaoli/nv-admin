@@ -1,5 +1,10 @@
 <template>
-  <a-flex :class="{ collapse, logoBox: true }" align="center" justify="center">
+  <div
+    class="flex-center"
+    :class="{ collapse, logoBox: true }"
+    align="center"
+    justify="center"
+  >
     <transition name="layout-logo-fade">
       <router-link to="/" v-if="collapse">
         <img class="smallLogo" :src="smallLogo" />
@@ -8,7 +13,7 @@
         <img class="logo" :src="logo" />
       </router-link>
     </transition>
-  </a-flex>
+  </div>
 </template>
 <script setup lang="ts">
 import logo from '@/assets/logo.png';

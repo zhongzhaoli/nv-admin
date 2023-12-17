@@ -10,22 +10,24 @@
           <img src="@/assets/logo.png" alt="" />
         </div>
         <div class="formBox">
-          <a-form>
-            <a-form-item>
-              <a-input placeholder="请输入用户名" />
-            </a-form-item>
-            <a-form-item>
-              <a-input-password placeholder="请输入密码" />
+          <el-form>
+            <el-form-item>
+              <el-input placeholder="请输入用户名" />
+            </el-form-item>
+            <el-form-item>
+              <el-input type="password" placeholder="请输入密码" />
               <div class="checkBox">
-                <a-checkbox>
+                <el-checkbox>
                   <span class="remember">记住密码</span>
-                </a-checkbox>
+                </el-checkbox>
               </div>
-            </a-form-item>
-            <a-form-item>
-              <a-button type="primary" block> 登录 </a-button>
-            </a-form-item>
-          </a-form>
+            </el-form-item>
+            <el-form-item>
+              <el-button class="w-100" type="primary" auto-insert-space>
+                登录
+              </el-button>
+            </el-form-item>
+          </el-form>
         </div>
         <div class="copyright">
           Copyright © 2022-2023 Luosen tech All Right Reserved.
@@ -91,11 +93,15 @@
       & > .formBox {
         margin-top: 40px;
         width: 250px;
+        & .w-100 {
+          width: 100%;
+        }
         & .checkBox {
           margin-top: 10px;
           & .remember {
             color: #626262;
             font-size: 12px;
+            line-height: 14px;
           }
         }
       }

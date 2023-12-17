@@ -6,7 +6,7 @@ import router from '@/router';
 import '@/router/permission';
 
 import 'remixicon/fonts/remixicon.css';
-import 'ant-design-vue/dist/reset.css';
+import 'element-plus/dist/index.css';
 import '@/styles/index.scss';
 
 const app = createApp(App);

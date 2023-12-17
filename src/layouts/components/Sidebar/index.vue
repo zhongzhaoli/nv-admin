@@ -1,14 +1,15 @@
 <template>
   <div class="sidebarContainer" :class="{ hideSidebar: isCollapse }">
     <Logo :collapse="isCollapse" />
-    <div class="menuBox">
-      <a-menu
-        v-model:openKeys="openKeys"
-        v-model:selectedKeys="selectedKeys"
+    <el-scrollbar wrap-class="scrollbar-wrapper">
+      <el-menu
         style="width: 100%"
-        mode="inline"
-        :inline-collapsed="isCollapse"
-        @click="handleClick"
+        :default-active="defaultActive"
+        mode="vertical"
+        :unique-opened="true"
+        :collapse-transition="false"
+        :collapse="isCollapse"
+        router
       >
         <SidebarItem
           v-for="child in handledRoutes"
@@ -16,44 +17,31 @@
           :isTop="true"
           :key="child.path"
         />
-      </a-menu>
-    </div>
+      </el-menu>
+    </el-scrollbar>
   </div>
 </template>
 <script setup lang="ts">
 import Logo from './components/logo/index.vue';
 import SidebarItem from './SidebarItem.vue';
-import { computed, ref, onMounted } from 'vue';
+import { computed } from 'vue';
 import { useAppStore } from '@/store/modules/app';
 import { useRouterStore } from '@/store/modules/router';
-import { useRouter } from 'vue-router';
-import { useRouteListener } from '@/hooks/useRouteListener';
+import { useRoute } from 'vue-router';
 
 const appStore = useAppStore();
 const routerStore = useRouterStore();
-const router = useRouter();
-const { addRouteListener } = useRouteListener();
+const route = useRoute();
 
-const selectedKeys = ref<string[]>([]);
-const openKeys = ref<string[]>([]);
+// 默认选中的菜单
+const defaultActive = computed(() => {
+  return route.path;
+});
 
 // 是否折叠Sidebar
 const isCollapse = computed(() => !appStore.sidebarOpened);
 // 处理后的路由数据
 const handledRoutes = computed(() => routerStore.handledRoutes);
-
-// 点击页面跳转
-const handleClick = (v: { key: string }) => {
-  router.push(v.key);
-};
-
-onMounted(() => {
-  addRouteListener((route) => {
-    const pathStringArr = route.matched.map((v) => v.path);
-    selectedKeys.value = pathStringArr;
-    openKeys.value = isCollapse.value ? [] : pathStringArr;
-  }, true);
-});
 </script>
 <style lang="scss" scoped>
 .sidebarContainer {
@@ -64,9 +52,16 @@ onMounted(() => {
   &.hideSidebar {
     width: var(--sidebar-closed-width) !important;
   }
-  & > .menuBox {
-    height: calc(100vh - var(--navbar-height));
-    overflow: auto;
+}
+
+.el-scrollbar {
+  height: calc(100vh - var(--logo-height));
+  :deep(.scrollbar-wrapper) {
+    // 限制水平宽度
+    overflow-x: hidden !important;
+    .el-scrollbar__view {
+      height: 100%;
+    }
   }
 }
 </style>

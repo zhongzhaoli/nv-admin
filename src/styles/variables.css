@@ -11,6 +11,8 @@
   --sidebar-closed-width: 55px;
   /* Sidebar的背景颜色 */
   --sidebar-background-color: #fff;
+  /* Sidebar MenuItem的高度 */
+  --sidebar-menu-item-height: 45px;
 
   /* Logo的高度 */
   --logo-height: 55px;
@@ -29,9 +31,9 @@
   /* TagsView的高度 */
   --tagsView-height: 40px;
   /* TagsView的激活背景颜色 */
-  --tagsView-active-background-color: #e6f4ff;
+  --tagsView-active-background-color: var(--el-color-primary-light-9);
   /* TagsView的激活文字颜色 */
-  --tagsView-active-text-color: #1677ff;
+  --tagsView-active-text-color: var(--el-color-primary);
 
   /* AppMain的外边距 */
   --appMain-outside-padding: 20px;

@@ -126,7 +126,7 @@ onMounted(() => {
     }
     & > .tag {
       text-decoration: none;
-      padding: 0 16px;
+      padding: 0 14px;
       font-size: 13px;
       cursor: pointer;
       color: var(--normal-text-color-black);
@@ -136,7 +136,7 @@ onMounted(() => {
       border-radius: 2px;
       & > span {
         transition: transform 0.3s;
-        transform: translateX(8px);
+        transform: translateX(9px);
       }
       &.affix {
         & > span {
@@ -156,8 +156,8 @@ onMounted(() => {
         overflow: hidden;
         border-radius: 50%;
         transition: all 0.3s;
-        transform: translateX(8px);
-        margin-left: 4px;
+        transform: translateX(9px);
+        margin-left: 6px;
         opacity: 0;
         &:hover {
           color: #999;

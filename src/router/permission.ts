@@ -19,9 +19,9 @@ router.beforeEach(async (to, from, next) => {
     return;
   }
   // 如果用户已经登录了，准备进入login界面，则跳转到首页
-  if (to.path === '/login') {
-    return next({ path: '/' });
-  }
+  // if (to.path === '/login') {
+  // return next({ path: '/' });
+  // }
 
   if (userStore.userInfo) {
     return next();
@@ -33,7 +33,6 @@ router.beforeEach(async (to, from, next) => {
       phone: '12345678901',
       avatar: 'https://avatars.githubusercontent.com/u/38655719?v=4'
     });
-    console.log(111);
     // 模拟异步获取路由信息
     const asyncRoutes = await routerStore.getRoutes();
     addRoutes(asyncRoutes);

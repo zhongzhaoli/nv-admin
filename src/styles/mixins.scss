@@ -13,6 +13,9 @@
     font-size: 18px;
     color: var(--navbar-function-icon-color);
   }
+  &:focus-visible {
+    outline: none;
+  }
 }
 
 // flex全居中

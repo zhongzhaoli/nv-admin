@@ -1,6 +1,6 @@
 import { type App } from 'vue';
-import { loadAntDesign } from './ant-design';
+import { loadElementPlus } from './element-plus';
 
 export function loadPlugins(app: App) {
-  loadAntDesign(app);
+  loadElementPlus(app);
 }

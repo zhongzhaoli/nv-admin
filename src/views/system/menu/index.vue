@@ -1,8 +1,5 @@
 <template>
-  <div>
-    Menu
-    <a-input type="text" />
-  </div>
+  <div>Menu</div>
 </template>
 <script setup lang="ts">
 defineOptions({

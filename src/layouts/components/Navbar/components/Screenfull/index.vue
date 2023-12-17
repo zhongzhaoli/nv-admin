@@ -1,11 +1,10 @@
 <template>
-  <a-tooltip>
-    <template #title>{{ isFullscreen ? '退出全屏' : '全屏展示' }}</template>
+  <el-tooltip :content="isFullscreen ? '退出全屏' : '全屏展示'">
     <div class="navbarFunItem" @click="toggleScreenFull">
       <i v-if="!isFullscreen" class="ri-fullscreen-line" />
       <i v-else class="ri-fullscreen-exit-line" />
     </div>
-  </a-tooltip>
+  </el-tooltip>
 </template>
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue';

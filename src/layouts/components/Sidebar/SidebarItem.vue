@@ -1,10 +1,8 @@
 <template>
   <template v-if="item.children && item.children.length">
-    <a-sub-menu :key="item.path">
-      <template #icon>
-        <i :class="item?.meta?.icon || ''" />
-      </template>
+    <el-sub-menu :index="item.path" teleported>
       <template #title>
+        <i class="re-icon" :class="item?.meta?.icon || ''" />
         <span>{{ item?.meta?.title || '' }}</span>
       </template>
       <SidebarItem
@@ -13,15 +11,13 @@
         :isTop="false"
         :key="child.path"
       />
-    </a-sub-menu>
+    </el-sub-menu>
   </template>
   <template v-else>
-    <a-menu-item :key="item.path">
-      <template #icon v-if="isTop">
-        <i :class="item?.meta?.icon || ''" />
-      </template>
+    <el-menu-item :index="item.path">
+      <i class="re-icon" v-if="isTop" :class="item?.meta?.icon || ''" />
       <span>{{ item?.meta?.title || '' }}</span>
-    </a-menu-item>
+    </el-menu-item>
   </template>
 </template>
 <script setup lang="ts">
@@ -34,4 +30,8 @@ interface Props {
 
 defineProps<Props>();
 </script>
-<style scoped></style>
+<style lang="scss" scoped>
+.re-icon {
+  margin-right: 12px;
+}
+</style>

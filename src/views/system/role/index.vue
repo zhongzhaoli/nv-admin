@@ -1,8 +1,5 @@
 <template>
-  <div>
-    Role
-    <a-input />
-  </div>
+  <div>Role</div>
 </template>
 <script setup lang="ts">
 defineOptions({

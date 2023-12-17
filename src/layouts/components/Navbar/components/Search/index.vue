@@ -1,10 +1,9 @@
 <template>
-  <a-tooltip>
-    <template #title>路由搜索</template>
+  <el-tooltip content="路由搜索">
     <div class="navbarFunItem">
       <i class="ri-menu-search-line" />
     </div>
-  </a-tooltip>
+  </el-tooltip>
 </template>
 <script setup lang="ts"></script>
 <style lang="scss" scoped></style>

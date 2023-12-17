@@ -1,10 +1,10 @@
 <template>
-  <a-breadcrumb>
-    <a-breadcrumb-item v-for="(item, index) in breadcrumbs" :key="item.path">
+  <el-breadcrumb>
+    <el-breadcrumb-item v-for="(item, index) in breadcrumbs" :key="item.path">
       <span v-if="index === breadcrumbs.length - 1">{{ item.meta.title }}</span>
       <router-link v-else :to="item.path">{{ item.meta.title }}</router-link>
-    </a-breadcrumb-item>
-  </a-breadcrumb>
+    </el-breadcrumb-item>
+  </el-breadcrumb>
 </template>
 <script setup lang="ts">
 import { useRouteListener } from '@/hooks/useRouteListener';

@@ -1,8 +1,5 @@
 <template>
-  <div class="container">
-    workbenches
-    <a-input type="text" />
-  </div>
+  <div class="container">workbenches</div>
 </template>
 <script setup lang="ts">
 defineOptions({

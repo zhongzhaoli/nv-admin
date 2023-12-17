@@ -1,19 +1,19 @@
 <template>
-  <a-flex class="navbarContainer" justify="space-between">
-    <a-flex class="leftBox" align="center">
+  <div class="navbarContainer">
+    <div class="leftBox">
       <Hamburger />
       <div class="breadcrumb">
         <Breadcrumb />
       </div>
-    </a-flex>
-    <a-flex class="rightBox" align="center" justify="flex-end">
+    </div>
+    <div class="rightBox">
       <Search />
       <Language />
       <Screenfull />
       <Notification />
       <UserDropdown />
-    </a-flex>
-  </a-flex>
+    </div>
+  </div>
 </template>
 <script setup lang="ts">
 import Hamburger from './components/Hamburger/index.vue';
@@ -30,10 +30,19 @@ import Search from './components/Search/index.vue';
   background-color: var(--navbar-background-color);
   padding: var(--navbar-padding);
   box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   & > .leftBox {
+    display: flex;
+    align-items: center;
     & > .breadcrumb {
       margin-left: 10px;
     }
+  }
+  & > .rightBox {
+    display: flex;
+    align-items: center;
   }
 }
 </style>

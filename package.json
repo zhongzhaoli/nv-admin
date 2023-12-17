@@ -10,7 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "ant-design-vue": "^4.0.7",
+    "element-plus": "^2.4.4",
     "mitt": "^3.0.1",
     "path-browserify": "^1.0.1",
     "pinia": "^2.1.7",
