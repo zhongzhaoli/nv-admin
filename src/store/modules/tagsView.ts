@@ -40,12 +40,45 @@ export const useTagsViewStore = defineStore('tagsView', () => {
     if (index !== -1) cachedViews.value.splice(index, 1);
   };
 
+  // 删除操作 - 全部
+  const delAllVisitedView = () => {
+    // 保留固定的 tags
+    visitedViews.value = visitedViews.value.filter((tag) => tag.meta?.affix);
+  };
+  const delAllCachedView = () => {
+    cachedViews.value = [];
+  };
+
+  // 删除操作 - 其他
+  const delOthersVisitedView = (view: TagView) => {
+    visitedViews.value = visitedViews.value.filter(
+      (tag) => tag.meta?.affix || tag.path === view.path
+    );
+  };
+  const delOthersCachedView = (view: TagView) => {
+    if (typeof view.name !== 'string') return;
+    const index = cachedViews.value.indexOf(view.name);
+    if (index !== -1) {
+      // 有缓存当前view的话，删除其他缓存
+      cachedViews.value = cachedViews.value.filter(
+        (name) => name === view.name
+      );
+    } else {
+      // 如果没有缓存当前view的话，直接删除全部缓存
+      delAllCachedView();
+    }
+  };
+
   return {
     cachedViews,
     visitedViews,
     addCachedView,
     addVisitedViews,
     delVisitedView,
-    delCachedView
+    delCachedView,
+    delAllVisitedView,
+    delAllCachedView,
+    delOthersVisitedView,
+    delOthersCachedView
   };
 });

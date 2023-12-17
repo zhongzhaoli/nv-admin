@@ -8,7 +8,7 @@
 </template>
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue';
-import { message } from 'ant-design-vue';
+import { ElMessage } from 'element-plus';
 import screenfull from 'screenfull';
 const isFullscreen = ref<boolean>(false);
 
@@ -20,7 +20,7 @@ const toggleScreenFull = () => {
   if (screenfull.isEnabled) {
     screenfull.toggle();
   } else {
-    message.error('您的浏览器不支持全屏');
+    ElMessage.error('您的浏览器不支持全屏');
   }
 };
 onMounted(() => {
