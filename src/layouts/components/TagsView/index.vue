@@ -239,25 +239,27 @@ onMounted(() => {
       }
     }
   }
-  & > .contextmenu {
+}
+.contextmenu {
+  margin: 0;
+  background: var(--el-bg-color-overlay);
+  border: 1px solid var(--el-border-color-light);
+  z-index: 3000;
+  position: absolute;
+  list-style-type: none;
+  padding: 5px 0;
+  border-radius: 4px;
+  color: #333;
+  box-shadow: var(--el-box-shadow-light);
+  li {
     margin: 0;
-    background-color: #fff;
-    z-index: 3000;
-    position: absolute;
-    list-style-type: none;
-    padding: 5px 0;
-    border-radius: 4px;
-    font-size: 12px;
-    font-weight: 400;
-    color: #333;
-    box-shadow: 2px 2px 3px 0 #00000030;
-    li {
-      margin: 0;
-      padding: 7px 16px;
-      cursor: pointer;
-      &:hover {
-        background-color: #eee;
-      }
+    padding: 7px 16px;
+    cursor: pointer;
+    font-size: var(--el-font-size-small);
+    color: var(--el-text-color-regular);
+    &:hover {
+      background-color: var(--el-color-primary-light-9);
+      color: var(--el-color-primary);
     }
   }
 }
