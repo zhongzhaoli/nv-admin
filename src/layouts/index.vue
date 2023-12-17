@@ -30,7 +30,7 @@ import TagsView from './components/TagsView/index.vue';
     z-index: 1;
   }
   & > .right {
-    flex: 1;
+    width: calc(100% - var(--sidebar-width));
     & > .navbar {
       width: 100%;
       height: var(--navbar-height);

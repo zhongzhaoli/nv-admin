@@ -98,6 +98,102 @@ export const asyncRoutes: RouteRecordRaw[] = [
         }
       }
     ]
+  },
+  {
+    path: '/system2',
+    name: 'System2',
+    component: Layout,
+    meta: {
+      title: '系统管理2',
+      icon: 'ri-list-settings-line'
+    },
+    children: [
+      {
+        path: 'user',
+        name: 'SystemUser2',
+        component: () => import('@/views/system/user/index.vue'),
+        meta: {
+          title: '用户管理2',
+          icon: 'ri-user-line'
+        }
+      },
+      {
+        path: 'role',
+        name: 'SystemRole2',
+        component: () => import('@/views/system/role/index.vue'),
+        meta: {
+          title: '角色管理2',
+          icon: 'ri-admin-line'
+        }
+      },
+      {
+        path: 'menu',
+        name: 'SystemMenu2',
+        component: () => import('@/views/system/menu/index.vue'),
+        meta: {
+          title: '菜单管理2',
+          icon: 'ri-node-tree',
+          keepAlive: true
+        }
+      },
+      {
+        path: 'monitor',
+        name: 'SystemMonitor2',
+        component: () => import('@/views/system/monitor/index.vue'),
+        meta: {
+          title: '系统监控2',
+          icon: 'ri-computer-line'
+        }
+      }
+    ]
+  },
+  {
+    path: '/system3',
+    name: 'System3',
+    component: Layout,
+    meta: {
+      title: '系统管理3',
+      icon: 'ri-list-settings-line'
+    },
+    children: [
+      {
+        path: 'user',
+        name: 'SystemUser3',
+        component: () => import('@/views/system/user/index.vue'),
+        meta: {
+          title: '用户管理3',
+          icon: 'ri-user-line'
+        }
+      },
+      {
+        path: 'role',
+        name: 'SystemRole3',
+        component: () => import('@/views/system/role/index.vue'),
+        meta: {
+          title: '角色管理3',
+          icon: 'ri-admin-line'
+        }
+      },
+      {
+        path: 'menu',
+        name: 'SystemMenu3',
+        component: () => import('@/views/system/menu/index.vue'),
+        meta: {
+          title: '菜单管理3',
+          icon: 'ri-node-tree',
+          keepAlive: true
+        }
+      },
+      {
+        path: 'monitor',
+        name: 'SystemMonitor3',
+        component: () => import('@/views/system/monitor/index.vue'),
+        meta: {
+          title: '系统监控3',
+          icon: 'ri-computer-line'
+        }
+      }
+    ]
   }
 ];
 

@@ -1,8 +1,9 @@
 <template>
   <div class="tagsViewContainer">
-    <div class="listBox">
+    <ScrollPane :tagRefs="tagRefs">
       <router-link
         class="tag flex-center"
+        ref="tagRefs"
         v-for="item in tagsViewStore.visitedViews"
         :class="{ active: isActive(item), affix: isAffix(item) }"
         :key="item.path"
@@ -18,17 +19,20 @@
           <i class="ri-close-line" />
         </div>
       </router-link>
-    </div>
-    <ul
-      v-show="visible"
-      class="contextmenu"
-      :style="{ left: menuPosition.left + 'px', top: menuPosition.top + 'px' }"
-    >
-      <li v-if="!isAffix(selectedTag)" @click="closeTag(selectedTag)">关闭</li>
-      <li @click="closeOthersTags">关闭其它</li>
-      <li @click="closeAllTags">关闭所有</li>
-    </ul>
+    </ScrollPane>
   </div>
+  <ul
+    v-show="visible"
+    class="contextmenu"
+    :style="{
+      left: menuPosition.left + 'px',
+      top: menuPosition.top + 'px'
+    }"
+  >
+    <li v-if="!isAffix(selectedTag)" @click="closeTag(selectedTag)">关闭</li>
+    <li @click="closeOthersTags">关闭其它</li>
+    <li @click="closeAllTags">关闭所有</li>
+  </ul>
 </template>
 <script setup lang="ts">
 import { useTagsViewStore, type TagView } from '@/store/modules/tagsView';
@@ -39,13 +43,18 @@ import {
   RouteLocationNormalizedLoaded,
   RouteRecordRaw
 } from 'vue-router';
+import ScrollPane from './components/ScrollPane/index.vue';
 import { useRouterStore } from '@/store/modules/router';
 import { onMounted, ref, getCurrentInstance, watch } from 'vue';
+import { RouterLink } from 'vue-router';
 const tagsViewStore = useTagsViewStore();
 const { addRouteListener } = useRouteListener();
 const route = useRoute();
 const router = useRouter();
 const routerStore = useRouterStore();
+
+// TagRef的集合
+const tagRefs = ref<InstanceType<typeof RouterLink>[]>([]);
 
 // 固定在TagsView上的菜单集合
 let affixTags: TagView[] = [];
@@ -183,52 +192,50 @@ onMounted(() => {
   width: 100%;
   background-color: #fff;
   height: 100%;
-  padding: 6px;
-  & > .listBox {
-    display: flex;
-    height: 100%;
-    align-items: center;
-    & > .tag:first-child {
-      margin-left: 0;
+  overflow: hidden;
+  & .tag:first-child {
+    margin-left: 0;
+  }
+  & .tag {
+    text-decoration: none;
+    padding: 0 14px;
+    font-size: 13px;
+    cursor: pointer;
+    color: var(--el-text-color-regular);
+    height: calc(var(--tagsView-height) - 12px);
+    transition: all 0.3s;
+    border-radius: 4px;
+    margin: 6px 0 0 6px;
+    &:last-child {
+      margin-right: 6px;
     }
-    & > .tag {
-      text-decoration: none;
-      padding: 0 14px;
-      font-size: 13px;
-      cursor: pointer;
-      color: var(--el-text-color-regular);
-      margin: 0 3px;
-      height: 100%;
-      transition: all 0.3s;
-      border-radius: 2px;
+    & > span {
+      transition: transform 0.3s;
+      transform: translateX(9px);
+    }
+    &.affix {
       & > span {
-        transition: transform 0.3s;
-        transform: translateX(9px);
+        transform: translateX(0px);
       }
-      &.affix {
-        & > span {
-          transform: translateX(0px);
-        }
-      }
-      &.active {
-        @extend .activeTag;
-      }
+    }
+    &.active {
+      @extend .activeTag;
+    }
+    &:hover {
+      @extend .activeTag;
+    }
+    & > div.close {
+      text-align: center;
+      color: #c0c4cc;
+      width: 12px;
+      overflow: hidden;
+      border-radius: 50%;
+      transition: all 0.3s;
+      transform: translateX(9px);
+      margin-left: 6px;
+      opacity: 0;
       &:hover {
-        @extend .activeTag;
-      }
-      & > div.close {
-        text-align: center;
-        color: #c0c4cc;
-        width: 12px;
-        overflow: hidden;
-        border-radius: 50%;
-        transition: all 0.3s;
-        transform: translateX(9px);
-        margin-left: 6px;
-        opacity: 0;
-        &:hover {
-          color: #999;
-        }
+        color: #999;
       }
     }
   }
