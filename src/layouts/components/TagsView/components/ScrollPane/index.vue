@@ -153,7 +153,7 @@ addRouteListener(() => {
   height: 100%;
 }
 :deep(.el-scrollbar__bar.is-horizontal) {
-  height: 4px;
+  height: 0px;
 }
 .scrollView {
   height: 100%;
