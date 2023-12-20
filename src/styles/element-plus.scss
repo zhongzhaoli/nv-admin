@@ -91,3 +91,8 @@
 .el-button {
   font-weight: 400;
 }
+
+// sidebar缩小后，popup弹窗
+.el-menu--popup {
+  padding: 0px;
+}
