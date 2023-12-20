@@ -1,5 +1,5 @@
 <template>
-  <div class="tagsViewContainer">
+  <div class="tagsViewContainer" ref="tagsViewRef">
     <ScrollPane :tagRefs="tagRefs">
       <router-link
         class="tag flex-center"
@@ -21,18 +21,21 @@
       </router-link>
     </ScrollPane>
   </div>
-  <ul
-    v-show="visible"
-    class="contextmenu"
-    :style="{
-      left: menuPosition.left + 'px',
-      top: menuPosition.top + 'px'
-    }"
-  >
-    <li v-if="!isAffix(selectedTag)" @click="closeTag(selectedTag)">关闭</li>
-    <li @click="closeOthersTags">关闭其它</li>
-    <li @click="closeAllTags">关闭所有</li>
-  </ul>
+  <Teleport to="body">
+    <ul
+      v-show="visible"
+      class="contextmenu"
+      ref="contextmenu"
+      :style="{
+        left: menuPosition.left + 'px',
+        top: menuPosition.top + 'px'
+      }"
+    >
+      <li v-if="!isAffix(selectedTag)" @click="closeTag(selectedTag)">关闭</li>
+      <li @click="closeOthersTags">关闭其它</li>
+      <li @click="closeAllTags">关闭所有</li>
+    </ul>
+  </Teleport>
 </template>
 <script setup lang="ts">
 import { useTagsViewStore, type TagView } from '@/store/modules/tagsView';
@@ -45,13 +48,16 @@ import {
 } from 'vue-router';
 import ScrollPane from './components/ScrollPane/index.vue';
 import { useRouterStore } from '@/store/modules/router';
-import { onMounted, ref, getCurrentInstance, watch } from 'vue';
+import { onMounted, ref } from 'vue';
+import { onClickOutside } from '@vueuse/core';
 import { RouterLink } from 'vue-router';
 const tagsViewStore = useTagsViewStore();
 const { addRouteListener } = useRouteListener();
 const route = useRoute();
 const router = useRouter();
 const routerStore = useRouterStore();
+const contextmenu = ref<HTMLElement>();
+const tagsViewRef = ref<HTMLElement>();
 
 // TagRef的集合
 const tagRefs = ref<InstanceType<typeof RouterLink>[]>([]);
@@ -60,7 +66,6 @@ const tagRefs = ref<InstanceType<typeof RouterLink>[]>([]);
 let affixTags: TagView[] = [];
 
 // 右键菜单一些参数
-const instance = getCurrentInstance();
 const menuPosition = ref<{ left: number; top: number }>({
   left: 0,
   top: 0
@@ -70,13 +75,20 @@ const selectedTag = ref<TagView>({});
 
 // 打开右键菜单
 const openMenu = (tag: TagView, e: MouseEvent) => {
-  // 当前组件宽度
-  const offsetWidth = instance!.proxy!.$el.offsetWidth;
-  // 面板距离鼠标指针的距离
-  const left15 = e.clientX + 15;
-  // 超过最边界，就显示在最边界
-  menuPosition.value.left = left15 > offsetWidth ? offsetWidth : left15;
-  menuPosition.value.top = e.clientY;
+  // 偏移量
+  const offset = 15;
+  // 右键面板的宽度
+  const menuWidth = 100;
+  // 鼠标点击位置X
+  const mouseX = e.clientX;
+  // 鼠标点击位置Y
+  const mouseY = e.clientY;
+  // body Width
+  const bodyWidth = document.body.clientWidth;
+  // 可以点击最大的X值
+  const maxLeft = bodyWidth - menuWidth + offset;
+  menuPosition.value.left = mouseX > maxLeft ? maxLeft : mouseX + offset;
+  menuPosition.value.top = mouseY;
   // 显示面板
   visible.value = true;
   // 更新当前正在右键操作的标签页
@@ -88,6 +100,10 @@ const closeMenu = () => {
   visible.value = false;
 };
 
+onClickOutside(contextmenu, () => {
+  closeMenu();
+});
+
 // 关闭其他Tags
 const closeOthersTags = () => {
   tagsViewStore.delOthersVisitedView(selectedTag.value);
@@ -96,22 +112,18 @@ const closeOthersTags = () => {
   const selectedPath = selectedTag.value.path;
   if (selectedPath !== route.path && selectedPath !== undefined)
     router.push(selectedPath);
+  closeMenu();
 };
 
 // 关闭所有Tags
 const closeAllTags = () => {
   tagsViewStore.delAllVisitedView();
   tagsViewStore.delAllCachedView();
+  closeMenu();
   // 如果当前在固定的tag上，那就不会跳转到最后一个页面，否则就跳转
   if (affixTags.some((tag) => tag.path === route.path)) return;
   toLastView(tagsViewStore.visitedViews);
 };
-
-watch(visible, (value) => {
-  value
-    ? document.body.addEventListener('click', closeMenu)
-    : document.body.removeEventListener('click', closeMenu);
-});
 
 // 路由有变化，添加tag在tagsView上
 const addTags = (route: RouteLocationNormalizedLoaded) => {
@@ -133,6 +145,7 @@ const isAffix = (view: TagView) => {
 const closeTag = (view: TagView) => {
   tagsViewStore.delVisitedView(view);
   tagsViewStore.delCachedView(view);
+  closeMenu();
   isActive(view) && toLastView(tagsViewStore.visitedViews);
 };
 
