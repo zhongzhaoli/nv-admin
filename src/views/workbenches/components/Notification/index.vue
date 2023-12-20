@@ -18,7 +18,7 @@
   </Card>
 </template>
 <script setup lang="ts">
-import Card from '../Card/index.vue';
+import Card from '@/components/Card/index.vue';
 import Item, { type Notice } from './item.vue';
 const activities: Notice[] = [
   {

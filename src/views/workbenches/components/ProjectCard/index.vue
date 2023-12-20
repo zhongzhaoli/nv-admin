@@ -11,7 +11,7 @@
   </Card>
 </template>
 <script setup lang="ts">
-import Card from '../Card/index.vue';
+import Card from '@/components/Card/index.vue';
 import ProjectItem, { type ProjectItemProps } from './item.vue';
 
 const listData: ProjectItemProps[] = [

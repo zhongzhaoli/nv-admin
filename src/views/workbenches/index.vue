@@ -46,7 +46,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import Card from './components/Card/index.vue';
+import Card from '@/components/Card/index.vue';
 import ProjectCard from './components/ProjectCard/index.vue';
 import Notification from './components/Notification/index.vue';
 import TodoList from './components/TodoList/index.vue';

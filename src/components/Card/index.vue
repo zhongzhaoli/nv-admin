@@ -1,5 +1,5 @@
 <template>
-  <div class="cardComponent">
+  <div class="cardComponent" :class="{ small: size === 'small' }">
     <div class="headerBox" v-if="title || $slots.action">
       <div class="title">{{ title || '' }}</div>
       <slot name="action" />
@@ -15,6 +15,7 @@
 <script setup lang="ts">
 interface CardProps {
   title?: string;
+  size?: 'small' | 'default';
 }
 
 defineProps<CardProps>();
@@ -27,6 +28,7 @@ $border-color: #f0f0f0;
   border-radius: 8px;
   border: 1px solid $border-color;
   overflow: hidden;
+
   & > .headerBox {
     display: flex;
     align-items: center;
@@ -45,6 +47,15 @@ $border-color: #f0f0f0;
   }
   & > .footer {
     border-top: 1px solid #f6f6f6;
+  }
+  &.small {
+    & > .headerBox {
+      min-height: 40px;
+      padding: 0 14px;
+      & > .title {
+        font-size: 14px;
+      }
+    }
   }
 }
 </style>

@@ -50,7 +50,7 @@
   </Card>
 </template>
 <script setup lang="ts">
-import Card from '../Card/index.vue';
+import Card from '@/components/Card/index.vue';
 
 const userList: Array<{ avatar: string }> = [
   {
