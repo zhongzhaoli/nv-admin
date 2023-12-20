@@ -1,6 +1,6 @@
 <template>
   <div class="cardComponent">
-    <div class="headerBox" v-if="$slots.action && title">
+    <div class="headerBox" v-if="title || $slots.action">
       <div class="title">{{ title || '' }}</div>
       <slot name="action" />
     </div>

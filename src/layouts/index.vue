@@ -1,7 +1,7 @@
 <template>
   <div class="layoutContainer">
     <Sidebar class="sidebar" />
-    <div class="right">
+    <div class="right" :class="{ opened: appStore.sidebarOpened }">
       <div class="navbar">
         <Navbar />
       </div>
@@ -19,6 +19,8 @@ import Sidebar from './components/Sidebar/index.vue';
 import Navbar from './components/Navbar/index.vue';
 import AppMain from './components/AppMain/index.vue';
 import TagsView from './components/TagsView/index.vue';
+import { useAppStore } from '@/store/modules/app';
+const appStore = useAppStore();
 </script>
 <style lang="scss" scoped>
 .layoutContainer {
@@ -30,7 +32,11 @@ import TagsView from './components/TagsView/index.vue';
     z-index: 10;
   }
   & > .right {
-    width: calc(100% - var(--sidebar-width));
+    transition: width var(--normal-transition-duration);
+    width: calc(100% - var(--sidebar-closed-width));
+    &.opened {
+      width: calc(100% - var(--sidebar-width));
+    }
     & > .navbar {
       width: 100%;
       height: var(--navbar-height);

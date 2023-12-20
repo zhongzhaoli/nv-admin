@@ -1,7 +1,7 @@
 <template>
   <Card title="待办事项">
     <template #action>
-      <el-button type="text">添加</el-button>
+      <el-button type="primary" link>查看全部</el-button>
     </template>
     <template #default>
       <div class="cardBody">

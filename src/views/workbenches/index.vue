@@ -13,15 +13,15 @@
       </div>
       <div class="countBox">
         <div class="item">
-          <div class="title">待办</div>
+          <div class="title">待办事项</div>
           <div class="num">10</div>
         </div>
         <div class="item">
-          <div class="title">通知</div>
+          <div class="title">最新通知</div>
           <div class="num">5</div>
         </div>
         <div class="item">
-          <div class="title">项目</div>
+          <div class="title">我的项目</div>
           <div class="num">7</div>
         </div>
       </div>
@@ -89,7 +89,7 @@ defineOptions({
         & > .title {
           font-size: 14px;
           color: #00000073;
-          letter-spacing: 2px;
+          letter-spacing: 1px;
         }
         & > .num {
           font-size: 20px;

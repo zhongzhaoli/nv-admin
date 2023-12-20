@@ -1,7 +1,7 @@
 <template>
   <Card title="部门信息">
     <template #action>
-      <el-button type="text">查看详细</el-button>
+      <el-button type="primary" link>查看详细</el-button>
     </template>
     <template #default>
       <div class="cardBody">
@@ -12,7 +12,7 @@
             src="/src/assets/departmentAvatar.png"
           />
           <div class="textBox">
-            <div class="title">开发组</div>
+            <div class="title">前端开发部</div>
             <div class="desc">我们的团队OUR TEAM.</div>
           </div>
         </div>
@@ -30,7 +30,7 @@
             </div>
           </div>
           <div class="text">
-            <el-button type="text">共 20 人</el-button>
+            <el-button type="primary" link>共 20 人</el-button>
           </div>
         </div>
       </div>

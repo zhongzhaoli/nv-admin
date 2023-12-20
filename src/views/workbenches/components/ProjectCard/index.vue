@@ -1,7 +1,7 @@
 <template>
   <Card title="项目">
     <template #action>
-      <el-button type="text">查看更多</el-button>
+      <el-button type="primary" link>查看更多</el-button>
     </template>
     <el-row>
       <el-col :span="8" v-for="(item, index) in listData" :key="index">

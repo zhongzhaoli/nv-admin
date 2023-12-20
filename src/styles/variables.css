@@ -46,4 +46,6 @@
   --normal-text-color-black: rgba(0, 0, 0, 0.88);
   /* 通用文字颜色 - 灰 */
   --normal-text-color-sliver: #424242;
+  /* 通用动画时间 */
+  --normal-transition-duration: 0.3s;
 }

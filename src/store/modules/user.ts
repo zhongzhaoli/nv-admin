@@ -4,9 +4,11 @@ import { defineStore } from 'pinia';
 
 interface UserInfo {
   username: string;
+  realname: string;
   email: string;
   phone: string;
   avatar: string;
+  department: string;
 }
 
 interface UserState {

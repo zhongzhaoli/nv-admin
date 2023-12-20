@@ -48,7 +48,7 @@ const handledRoutes = computed(() => routerStore.handledRoutes);
   border-right: 1px solid var(--normal-border-color);
   background-color: var(--sidebar-background-color);
   box-sizing: border-box;
-  transition-duration: 0.3s;
+  transition-duration: var(--normal-transition-duration);
   &.hideSidebar {
     width: var(--sidebar-closed-width) !important;
   }

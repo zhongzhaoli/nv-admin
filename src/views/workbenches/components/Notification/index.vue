@@ -1,7 +1,7 @@
 <template>
   <Card title="最新通知">
     <template #action>
-      <el-button type="text">查看更多</el-button>
+      <el-button type="primary" link>查看更多</el-button>
     </template>
     <template #default>
       <div class="cardBody">

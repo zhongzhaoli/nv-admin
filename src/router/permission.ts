@@ -30,8 +30,11 @@ router.beforeEach(async (to, from, next) => {
     await userStore.setUserInfo({
       username: 'admin',
       email: '123@qq.com',
-      phone: '12345678901',
-      avatar: 'https://avatars.githubusercontent.com/u/38655719?v=4'
+      phone: '13662648176',
+      realname: '钟兆立',
+      department: '前端开发部',
+      avatar:
+        'https://resource.lstaer.com/283df2f7-dc52-4a0a-8110-88cd38746dff?imageView2/1/w/100/h/100'
     });
     // 模拟异步获取路由信息
     const asyncRoutes = await routerStore.getRoutes();
