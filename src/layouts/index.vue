@@ -27,7 +27,7 @@ import TagsView from './components/TagsView/index.vue';
   background-color: var(--layout-background-color);
   & > .sidebar {
     width: var(--sidebar-width);
-    z-index: 1;
+    z-index: 10;
   }
   & > .right {
     width: calc(100% - var(--sidebar-width));
@@ -39,11 +39,12 @@ import TagsView from './components/TagsView/index.vue';
       width: 100%;
       height: var(--tagsView-height);
       box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.08);
+      position: relative;
+      z-index: 9;
     }
     & > .appMain {
       width: 100%;
       height: calc(100vh - var(--navbar-height) - var(--tagsView-height));
-      padding: var(--appMain-outside-padding);
       overflow: auto;
     }
   }

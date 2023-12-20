@@ -2,7 +2,9 @@
   <router-view>
     <template #default="{ Component, route }">
       <keep-alive :include="tagsViewStore.cachedViews">
-        <component :is="Component" :key="route.path" />
+        <el-scrollbar>
+          <component :is="Component" :key="route.path" />
+        </el-scrollbar>
       </keep-alive>
     </template>
   </router-view>

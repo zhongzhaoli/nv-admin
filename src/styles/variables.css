@@ -44,4 +44,6 @@
   --normal-border-color: rgba(5, 5, 5, 0.06);
   /* 通用文字颜色 - 黑 */
   --normal-text-color-black: rgba(0, 0, 0, 0.88);
+  /* 通用文字颜色 - 灰 */
+  --normal-text-color-sliver: #424242;
 }
