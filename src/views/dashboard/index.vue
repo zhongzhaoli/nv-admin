@@ -34,7 +34,6 @@
 </template>
 <script setup lang="ts">
 import Card from '@/components/Card/index.vue';
-import { useTransition, TransitionPresets } from '@vueuse/core';
 </script>
 <style lang="scss" scoped>
 .container {
