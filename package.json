@@ -12,6 +12,7 @@
   "dependencies": {
     "@types/lodash-es": "^4.17.12",
     "@vueuse/core": "^10.7.0",
+    "echarts": "^5.4.3",
     "element-plus": "^2.4.4",
     "lodash-es": "^4.17.21",
     "mitt": "^3.0.1",

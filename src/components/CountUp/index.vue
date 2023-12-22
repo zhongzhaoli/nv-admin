@@ -121,7 +121,6 @@ watch([() => props.startVal, () => props.endVal], () => {
 
 // 这是初始化的时候执行start
 onMounted(() => {
-  console.log(1);
   props.autoplay && start();
 });
 
