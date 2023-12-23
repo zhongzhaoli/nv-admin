@@ -1,27 +1,27 @@
 <template>
   <div class="container">
     <TopModule />
-    <el-row :gutter="20" class="mt-20">
-      <el-col :span="12">
+    <el-row :gutter="20">
+      <el-col :md="12" :sm="24" :xs="24">
         <OrderTrend />
       </el-col>
-      <el-col :span="12">
+      <el-col :md="12" :sm="24" :xs="24">
         <BalanceTrend />
       </el-col>
     </el-row>
-    <el-row :gutter="20" class="mt-20">
-      <el-col :span="12">
+    <el-row :gutter="20">
+      <el-col :md="12" :sm="24" :xs="24">
         <VisitCard />
       </el-col>
-      <el-col :span="12">
+      <el-col :md="12" :sm="24" :xs="24">
         <DealCard />
       </el-col>
     </el-row>
-    <el-row :gutter="20" class="mt-20">
-      <el-col :span="8">
+    <el-row :gutter="20">
+      <el-col :md="10" :sm="24" :xs="24">
         <ConversionCard />
       </el-col>
-      <el-col :span="16">
+      <el-col :md="14" :sm="24" :xs="24">
         <StoreVisitCard />
       </el-col>
     </el-row>
@@ -40,8 +40,8 @@ useWindowSizeFn(() => {});
 </script>
 <style lang="scss" scoped>
 .container {
-  padding: 20px;
-  & .mt-20 {
+  padding: 0 20px 20px 20px;
+  :deep(.el-col) {
     margin-top: 20px;
   }
 }

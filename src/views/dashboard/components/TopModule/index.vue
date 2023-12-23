@@ -1,7 +1,16 @@
 <template>
   <el-row :gutter="20">
-    <el-col :span="6" v-for="(item, index) in listData" :key="index">
+    <el-col
+      :xl="6"
+      :lg="6"
+      :md="12"
+      :sm="12"
+      :xs="12"
+      v-for="(item, index) in listData"
+      :key="index"
+    >
       <DataCard
+        class="dataCardComponent"
         :title="item.title"
         :actionTagText="item.actionTagText"
         :actionTagType="item.actionTagType"
