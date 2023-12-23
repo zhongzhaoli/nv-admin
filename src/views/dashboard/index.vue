@@ -35,8 +35,6 @@ import ConversionCard from './components/ConversionCard/index.vue';
 import VisitCard from './components/VisitCard/index.vue';
 import DealCard from './components/DealCard/index.vue';
 import StoreVisitCard from './components/StoreVisitCard/index.vue';
-import { useWindowSizeFn } from '@/hooks/useWindowSizeFn';
-useWindowSizeFn(() => {});
 </script>
 <style lang="scss" scoped>
 .container {
