@@ -16,6 +16,9 @@ const renderChart = () => {
     initOptions: {
       renderer: 'svg'
     },
+    tooltip: {
+      formatter: `{b}：{c}次`
+    },
     grid: {
       top: '5%',
       left: '3%',
