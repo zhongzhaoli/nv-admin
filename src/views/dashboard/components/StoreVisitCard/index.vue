@@ -5,13 +5,13 @@
 </template>
 <script setup lang="ts">
 import Card from '@/components/Card/index.vue';
-import * as echarts from 'echarts';
-import { ref, onMounted } from 'vue';
-import { EChartsOption, ECharts } from 'echarts';
+import { ref, onMounted, Ref } from 'vue';
+import { EChartsOption } from 'echarts';
+import { useEcharts } from '@/hooks/useEcharts';
 const target = ref<HTMLElement | null>(null);
-let myEchart: ECharts;
 
 const renderChart = () => {
+  const { setOptions } = useEcharts(target as Ref<HTMLElement>);
   const options: EChartsOption = {
     initOptions: {
       renderer: 'svg'
@@ -66,11 +66,10 @@ const renderChart = () => {
       }
     ]
   };
-  myEchart.setOption(options);
+  setOptions(options);
 };
 
 onMounted(() => {
-  myEchart = echarts.init(target.value as HTMLElement);
   renderChart();
 });
 </script>
