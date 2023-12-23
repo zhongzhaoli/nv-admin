@@ -17,7 +17,10 @@ const renderChart = () => {
       renderer: 'svg'
     },
     tooltip: {
-      trigger: 'axis'
+      trigger: 'item',
+      formatter: (params: any) => {
+        return `访问来源<br/>${params.marker}${params.name}: ${params.value} (${params.percent}%)`;
+      }
     },
     series: [
       {

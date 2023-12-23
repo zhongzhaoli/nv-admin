@@ -17,15 +17,16 @@ const renderChart = () => {
       orient: 'vertical',
       left: '0%'
     },
+    tooltip: {},
     radar: {
       // shape: 'circle',
       indicator: [
-        { name: '服饰', max: 30000 },
-        { name: '玩具', max: 30000 },
-        { name: '虚拟', max: 30000 },
-        { name: '3C', max: 30000 },
-        { name: '文具', max: 30000 },
-        { name: '机械', max: 30000 }
+        { name: '服饰', max: 3000 },
+        { name: '玩具', max: 3000 },
+        { name: '虚拟', max: 3000 },
+        { name: '3C', max: 3000 },
+        { name: '文具', max: 3000 },
+        { name: '机械', max: 3000 }
       ]
     },
     series: [
@@ -34,7 +35,7 @@ const renderChart = () => {
         type: 'radar',
         data: [
           {
-            value: [4200, 3000, 20000, 12000, 20000, 18000],
+            value: [420, 300, 2000, 1200, 2000, 1800],
             areaStyle: {
               color: '#bd51c0',
               opacity: 0.2
@@ -49,7 +50,7 @@ const renderChart = () => {
             name: '成交数'
           },
           {
-            value: [5000, 14000, 28000, 26000, 22000, 21000],
+            value: [500, 1400, 2800, 2600, 2200, 2100],
             name: '访问数',
             areaStyle: {
               color: '#fe5570',
