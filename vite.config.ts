@@ -1,6 +1,7 @@
 import { type UserConfigExport, type ConfigEnv, loadEnv } from 'vite';
 import { resolve } from 'path';
 import vue from '@vitejs/plugin-vue';
+import { viteMockServe } from 'vite-plugin-mock';
 
 export default (configEnv: ConfigEnv): UserConfigExport => {
   const viteEnv = loadEnv(configEnv.mode, process.cwd());
@@ -28,6 +29,12 @@ export default (configEnv: ConfigEnv): UserConfigExport => {
         clientFiles: ['./src/{views,components}/**/*.{vue,ts}']
       }
     },
-    plugins: [vue()]
+    plugins: [
+      vue(),
+      viteMockServe({
+        mockPath: './mock',
+        enable: true
+      })
+    ]
   };
 };

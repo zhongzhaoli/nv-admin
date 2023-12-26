@@ -16,5 +16,4 @@ loadPlugins(app);
 app.use(store);
 // Router
 app.use(router);
-
 app.mount('#app');
