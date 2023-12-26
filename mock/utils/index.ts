@@ -14,3 +14,10 @@ export const pathPrefix = (
   });
   return list;
 };
+
+// 判断登录
+export const isLogin = (headers) => {
+  if (!headers.authorization || headers.authorization === 'undefined')
+    return false;
+  return true;
+};

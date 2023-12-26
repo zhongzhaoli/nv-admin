@@ -1,6 +1,7 @@
 import { MockMethod } from 'vite-plugin-mock';
 import { UserToken } from './login';
 import { ResponseJson } from '../types';
+import { isLogin } from '../utils';
 
 interface UserInfo {
   username: string;
@@ -30,10 +31,9 @@ export default [
     url: '/user/userInfo',
     method: 'get',
     response: ({ headers }): ResponseJson<any> => {
-      if (!headers.authorization || headers.authorization === 'undefined') {
+      if (!isLogin(headers)) {
         return {
           code: 401,
-          data: {},
           msg: '用户未登录'
         };
       }
