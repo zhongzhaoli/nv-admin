@@ -1,7 +1,7 @@
 import { MockMethod } from 'vite-plugin-mock';
 import { ResponseJson } from '../types';
 
-enum UserToken {
+export enum UserToken {
   admin = 'admin-token'
 }
 

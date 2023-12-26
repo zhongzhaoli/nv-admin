@@ -12,6 +12,7 @@
   "dependencies": {
     "@types/lodash-es": "^4.17.12",
     "@vueuse/core": "^10.7.0",
+    "axios": "^1.6.2",
     "echarts": "^5.4.3",
     "element-plus": "^2.4.4",
     "lodash-es": "^4.17.21",
@@ -21,7 +22,6 @@
     "pinia-plugin-persistedstate": "^3.2.0",
     "remixicon": "^3.7.0",
     "screenfull": "^6.0.2",
-    "vite-plugin-mock": "2.9",
     "vue": "^3.3.11",
     "vue-router": "^4.2.5"
   },

@@ -12,10 +12,17 @@
         <div class="formBox">
           <el-form>
             <el-form-item>
-              <el-input placeholder="请输入用户名" />
+              <el-input
+                v-model="loginPayload.username"
+                placeholder="请输入用户名"
+              />
             </el-form-item>
             <el-form-item>
-              <el-input type="password" placeholder="请输入密码" />
+              <el-input
+                type="password"
+                v-model="loginPayload.password"
+                placeholder="请输入密码"
+              />
               <div class="checkBox">
                 <el-checkbox>
                   <span class="remember">记住密码</span>
@@ -23,7 +30,13 @@
               </div>
             </el-form-item>
             <el-form-item>
-              <el-button class="w-100" type="primary" auto-insert-space>
+              <el-button
+                class="w-100"
+                type="primary"
+                auto-insert-space
+                :loading="loading"
+                @click="loginHandle"
+              >
                 登录
               </el-button>
             </el-form-item>
@@ -36,7 +49,34 @@
     </div>
   </div>
 </template>
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { reactive, ref } from 'vue';
+import { useUserStore } from '@/store/modules/user';
+import { LoginDto } from '@/api/login';
+import { ElMessage } from 'element-plus';
+import { useRouter } from 'vue-router';
+const userStore = useUserStore();
+const router = useRouter();
+// 按钮loading
+const loading = ref<boolean>(false);
+// 登录信息载核
+const loginPayload = reactive<LoginDto>({
+  username: '',
+  password: ''
+});
+// 登录操作
+const loginHandle = async () => {
+  // TODO：做一些数据校验
+  loading.value = true;
+  try {
+    await userStore.login(loginPayload);
+    ElMessage.success('登录成功');
+    router.push('/');
+  } finally {
+    loading.value = false;
+  }
+};
+</script>
 <style lang="scss" scoped>
 .container {
   width: 100%;

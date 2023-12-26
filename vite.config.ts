@@ -32,8 +32,7 @@ export default (configEnv: ConfigEnv): UserConfigExport => {
     plugins: [
       vue(),
       viteMockServe({
-        mockPath: './mock',
-        enable: true
+        mockPath: './mock'
       })
     ]
   };
