@@ -11,9 +11,10 @@ const routes = [
     children: [
       {
         path: 'index',
-        name: 'index',
-        component: () => '@/views/dashboard/index.vue',
+        name: 'DashboardIndex',
+        component: 'dashboard/index.vue',
         meta: {
+          keepAlive: true,
           title: '数据看板',
           icon: 'ri-dashboard-line'
         }
@@ -32,7 +33,7 @@ const routes = [
       {
         path: 'user',
         name: 'SystemUser',
-        component: () => '@/views/system/user/index.vue',
+        component: 'system/user/index.vue',
         meta: {
           title: '用户管理',
           icon: 'ri-user-line'
@@ -41,7 +42,7 @@ const routes = [
       {
         path: 'role',
         name: 'SystemRole',
-        component: () => '@/views/system/role/index.vue',
+        component: 'system/role/index.vue',
         meta: {
           title: '角色管理',
           icon: 'ri-admin-line'
@@ -50,7 +51,7 @@ const routes = [
       {
         path: 'menu',
         name: 'SystemMenu',
-        component: () => '@/views/system/menu/index.vue',
+        component: 'system/menu/index.vue',
         meta: {
           title: '菜单管理',
           icon: 'ri-node-tree',
@@ -60,7 +61,7 @@ const routes = [
       {
         path: 'monitor',
         name: 'SystemMonitor',
-        component: () => '@/views/system/monitor/index.vue',
+        component: 'system/monitor/index.vue',
         meta: {
           title: '系统监控',
           icon: 'ri-computer-line'

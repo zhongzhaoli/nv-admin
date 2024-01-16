@@ -2,7 +2,9 @@ import { ref } from 'vue';
 import { defineStore } from 'pinia';
 import { RouteRecordRaw } from 'vue-router';
 import { asyncRoutes as aR, staticRoutes } from '@/router';
-import { handleRoutes } from '@/utils/route';
+import { getRoutes as getRoutesApi } from '@/api/routes';
+import { handleRoutes, routesComponentInstance } from '@/utils/route';
+import { ResponseJson } from '@/config/request';
 
 export const useRouterStore = defineStore('router', () => {
   // 动态获取的路由
@@ -15,11 +17,12 @@ export const useRouterStore = defineStore('router', () => {
   const handledRoutes = ref<RouteRecordRaw[]>([]);
 
   const getRoutes = async () => {
+    const data = (await getRoutesApi()) as ResponseJson<any>;
     // 模拟异步获取路由
-    asyncRoutes.value = aR;
+    asyncRoutes.value = routesComponentInstance(data.data);
     // 处理数据
     handledRoutes.value = handleRoutes([...staticRoutes, ...asyncRoutes.value]);
-    return aR;
+    return asyncRoutes.value;
   };
 
   return { asyncRoutes, getRoutes, handledRoutes };

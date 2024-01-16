@@ -10,7 +10,7 @@ export function useWindowSizeFn(
   fn: Function,
   options: UseWindowSizeOptions = {}
 ) {
-  const { wait = 150 } = options;
+  const { wait = 300 } = options;
   const windowSize = ref<{ width: number; height: number }>();
   const getWindowSize = () => {
     const { width, height } = useWindowSize();

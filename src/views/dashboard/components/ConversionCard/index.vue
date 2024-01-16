@@ -20,7 +20,7 @@ const renderChart = () => {
     },
     tooltip: {},
     radar: {
-      // shape: 'circle',
+      splitNumber: 6,
       indicator: [
         { name: '服饰', max: 3000 },
         { name: '玩具', max: 3000 },
