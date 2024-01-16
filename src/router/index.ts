@@ -30,6 +30,13 @@ export const staticRoutes: RouteRecordRaw[] = [
         }
       }
     ]
+  },
+  {
+    path: '/:pathMatch(.*)*',
+    component: () => import('@/views/errorPage/404.vue'),
+    meta: {
+      hidden: true
+    }
   }
 ];
 

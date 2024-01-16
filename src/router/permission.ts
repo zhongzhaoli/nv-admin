@@ -4,7 +4,7 @@ import { useUserStore } from '@/store/modules/user';
 import { useRouterStore } from '@/store/modules/router';
 import { routeChange } from '@/hooks/useRouteListener';
 
-router.beforeEach(async (to, from, next) => {
+router.beforeEach(async (to, _, next) => {
   const routerStore = useRouterStore();
   const userStore = useUserStore();
   // 如果用户没有登录
@@ -22,17 +22,17 @@ router.beforeEach(async (to, from, next) => {
   if (to.path === '/login') {
     return next({ path: '/' });
   }
-
   if (userStore.userInfo) {
-    return next();
+    next();
   } else {
     // 模拟异步获取用户信息
     await userStore.getUserInfo();
     // 模拟异步获取路由信息
     const asyncRoutes = await routerStore.getRoutes();
     addRoutes(asyncRoutes);
-    return next(to.path);
+    next({ ...to, replace: true });
   }
+  return;
 });
 
 router.afterEach((to) => {
