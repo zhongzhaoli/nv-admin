@@ -35,9 +35,11 @@
     <!-- Page -->
     <PageComponent
       v-if="page"
-      :total="page?.total"
-      :current-page="page?.currentPage"
+      :total="page.total"
+      :current-page="page.currentPage"
+      :page-size="page.pageSize"
       class="pageBox"
+      @current-change="handleCurrentChange"
     />
   </div>
 </template>
@@ -57,17 +59,22 @@ interface ComponentProps {
   page?: PageComponentProps;
 }
 defineProps<ComponentProps>();
+const emits = defineEmits(['currentChange', 'refresh', 'handleLeftClick']);
 
 // 刷新数据
 const refresh = (key: string) => {
-  console.log('refresh', key);
+  emits('refresh', key);
 };
 // Handle 左侧按钮点击事件
 const handleLeftButtonClick = (obj: {
   item: HandleLeftProps;
   index: number;
 }) => {
-  console.log('handleLeftClick', obj);
+  emits('handleLeftClick', obj);
+};
+// 分页页数变化
+const handleCurrentChange = (v: number) => {
+  emits('currentChange', v);
 };
 </script>
 <style lang="scss" scoped>

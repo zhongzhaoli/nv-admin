@@ -9,3 +9,16 @@ export interface ResponseJson<T = string> {
   msg: string;
   data?: T;
 }
+
+export interface ResponsePageJson<T = any> {
+  code: ResponseCode;
+  msg: string;
+  data: T;
+}
+
+export interface PageListJson<T> {
+  list: T[];
+  total: number;
+  page: number;
+  pageSize: number;
+}

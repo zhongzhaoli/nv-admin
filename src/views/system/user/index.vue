@@ -29,8 +29,11 @@
           data: tableData,
           extraColumns: tableExtraColumns
         }"
+        v-loading="loading"
         :handle="{ leftButtons: leftButtons }"
-        :page="{ total, currentPage }"
+        :page="{ total, currentPage, pageSize }"
+        @currentChange="pageChange"
+        @refresh="pageChange(PAGE)"
       >
         <template #table-avatar="{ row }">
           <el-avatar :src="row.avatar" :size="32" />
@@ -47,115 +50,44 @@
   </div>
 </template>
 <script setup lang="ts">
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import tableContainer from '@/components/TableContainer/index.vue';
-import {
-  TableColumnsProps,
-  HandleLeftProps,
-  TableExtraColumnsProps
-} from '@/components/TableContainer/types';
+import { PAGE_SIZE, PAGE } from '@/constants/data';
+import * as API_USERS from '@/api/users';
+import { tableColumns, tableExtraColumns, leftButtons } from './data';
 
-const tableColumns: TableColumnsProps[] = [
-  {
-    label: '头像',
-    prop: 'avatar',
-    width: '70',
-    slot: true,
-    align: 'center'
-  },
-  {
-    label: '用户名',
-    prop: 'username',
-    align: 'center',
-    width: '180',
-    showOverflowTooltip: true
-  },
-  {
-    prop: 'phone',
-    label: '手机号',
-    width: '180',
-    align: 'center'
-  },
-  {
-    label: '角色',
-    prop: 'role',
-    align: 'center',
-    showOverflowTooltip: true,
-    minWidth: '200'
-  },
-  {
-    label: '状态',
-    prop: 'status',
-    slot: true,
-    width: '120',
-    align: 'center'
-  },
-  {
-    prop: 'createTime',
-    label: '创建日期',
-    width: '180',
-    align: 'center'
-  },
-  {
-    prop: 'updateTime',
-    label: '更新日期',
-    width: '180',
-    align: 'center'
-  },
-  {
-    prop: 'action',
-    label: '操作',
-    width: '180',
-    slot: true,
-    fixed: 'right',
-    align: 'center'
+const currentPage = ref<number>(PAGE);
+const pageSize = ref<number>(PAGE_SIZE);
+const total = ref(0);
+const tableData = ref<any>([]);
+const loading = ref<boolean>(true);
+
+const getListFun = async () => {
+  loading.value = true;
+  try {
+    const { data } = await API_USERS.getUsersList({
+      page: currentPage.value,
+      pageSize: pageSize.value
+    });
+    currentPage.value = data.page;
+    tableData.value = data.list;
+    total.value = data.total;
+  } catch (err) {
+    console.error(err);
+  } finally {
+    loading.value = false;
   }
-];
-
-const tableExtraColumns: TableExtraColumnsProps = {
-  index: true
 };
 
-const leftButtons: HandleLeftProps[] = [
-  {
-    label: '新增',
-    type: 'primary',
-    click: () => {
-      console.log('新增');
-    }
-  },
-  {
-    label: '删除',
-    type: 'danger',
-    click: () => {
-      console.log('删除');
-    }
-  }
-];
+// 页数发生变化
+const pageChange = (v: number) => {
+  currentPage.value = v;
+  getListFun();
+};
 
-const currentPage = ref(1);
-const total = ref(100);
-const tableData = ref([
-  {
-    username: 'zhongzhaoli',
-    avatar: 'https://resource.lstaer.com/0543d7c3-9fda-49d4-ba46-1628f7ee0639',
-    phone: '13662648176',
-    status: true,
-    role: '管理员、技术开发、社区运营',
-    createTime: '2024-10-10 19:00:23',
-    updateTime: '2024-10-10 19:00:23'
-  },
-  {
-    username: 'Custer',
-    avatar:
-      'https://resource.lstaer.com/283df2f7-dc52-4a0a-8110-88cd38746dff?imageView2/1/w/100/h/100',
-    phone: '18665814282',
-    role: '管理员',
-    status: false,
-    createTime: '2024-10-10 19:00:23',
-    updateTime: '2024-10-10 19:00:23'
-  }
-]);
+onMounted(() => {
+  getListFun();
+});
 </script>
 <style lang="scss" scoped>
 .container {

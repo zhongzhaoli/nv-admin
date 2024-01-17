@@ -37,5 +37,6 @@ export interface HandleLeftProps {
 // Page
 export interface PageComponentProps {
   total: number;
+  pageSize: number;
   currentPage: number;
 }

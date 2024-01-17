@@ -17,3 +17,18 @@ export interface ResponseJson<T = string> {
   msg: string;
   data?: T;
 }
+
+// 返回分页信息格式
+export interface ResponsePageJson<T = any> {
+  code: ResponseCode;
+  msg: string;
+  data: PageListJson<T>;
+}
+
+// 分页数据格式
+export interface PageListJson<T> {
+  list: T[];
+  total: number;
+  page: number;
+  pageSize: number;
+}

@@ -2,8 +2,10 @@
   <div class="tableContainerPageComponent">
     <el-pagination
       v-model="page"
+      :page-size="pageSize"
       :total="total"
       layout="total, prev, pager, next"
+      @current-change="handleCurrentChange"
     />
   </div>
 </template>
@@ -11,9 +13,10 @@
 import { PageComponentProps } from '../types';
 import { ref, watch } from 'vue';
 
-const page = ref(1);
+const page = ref<number>(1);
 
 const props = defineProps<PageComponentProps>();
+const emits = defineEmits(['currentChange']);
 
 watch(
   () => props.currentPage,
@@ -24,6 +27,10 @@ watch(
     immediate: true
   }
 );
+
+const handleCurrentChange = (v: number) => {
+  emits('currentChange', v);
+};
 </script>
 <style lang="scss" scoped>
 .tableContainerPageComponent {
