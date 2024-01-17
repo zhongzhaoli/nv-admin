@@ -21,12 +21,10 @@ interface CardProps {
 defineProps<CardProps>();
 </script>
 <style lang="scss" scoped>
-$border-color: #f0f0f0;
-
 .cardComponent {
   background-color: #fff;
-  border-radius: 8px;
-  border: 1px solid $border-color;
+  border-radius: 5px;
+  border: 1px solid var(--normal-border-color);
   overflow: hidden;
 
   & > .headerBox {
@@ -35,7 +33,7 @@ $border-color: #f0f0f0;
     justify-content: space-between;
     min-height: 56px;
     padding: 0 24px;
-    border-bottom: 1px $border-color solid;
+    border-bottom: 1px solid var(--normal-border-color);
     & > .title {
       font-size: 16px;
       font-weight: bold;

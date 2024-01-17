@@ -37,9 +37,6 @@
   /* TagsView的激活文字颜色 */
   --tagsView-active-text-color: var(--el-color-primary);
 
-  /* AppMain的外边距 */
-  --appMain-outside-padding: 20px;
-
   /* 通用边框颜色 */
   --normal-border-color: rgba(5, 5, 5, 0.06);
   /* 通用文字颜色 - 黑 */
@@ -48,4 +45,6 @@
   --normal-text-color-sliver: #424242;
   /* 通用动画时间 */
   --normal-transition-duration: 0.3s;
+  /* 通用边距 */
+  --normal-padding: 16px;
 }

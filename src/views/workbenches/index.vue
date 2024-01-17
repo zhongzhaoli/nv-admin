@@ -27,19 +27,19 @@
       </div>
     </div>
     <div class="bodyContentBox">
-      <el-row :gutter="20">
+      <el-row :gutter="normalPadding">
         <el-col :span="16">
           <ProjectCard />
-          <Notification class="mt-20" />
+          <Notification class="mt-normal-padding" />
         </el-col>
         <el-col :span="8">
           <TodoList />
-          <Card class="mt-20">
+          <Card class="mt-normal-padding">
             <div class="imgCard">
               <img src="@/assets/workbenches.jpg" />
             </div>
           </Card>
-          <Department class="mt-20" />
+          <Department class="mt-normal-padding" />
         </el-col>
       </el-row>
     </div>
@@ -51,18 +51,26 @@ import ProjectCard from './components/ProjectCard/index.vue';
 import Notification from './components/Notification/index.vue';
 import TodoList from './components/TodoList/index.vue';
 import Department from './components/Department/index.vue';
+import { getCssVariableValue } from '@/utils/css';
+
+let normalPadding: string | number = getCssVariableValue('--normal-padding');
+normalPadding = parseFloat(normalPadding.replace('px', ''));
 defineOptions({
   name: 'Workbenches'
 });
 </script>
 <style lang="scss" scoped>
 .container {
+  padding: var(--normal-padding);
   & > .headerContentBox {
     background-color: #fff;
-    padding: 20px 30px;
+    padding: var(--normal-padding) 30px var(--normal-padding) 20px;
+    margin-bottom: var(--normal-padding);
     display: flex;
     justify-content: space-between;
     align-items: center;
+    border-radius: 5px;
+    border: 1px solid #f0f0f0;
     & > .userBox {
       display: flex;
       align-items: center;
@@ -100,9 +108,8 @@ defineOptions({
     }
   }
   & > .bodyContentBox {
-    padding: 20px;
-    & .mt-20 {
-      margin-top: 20px;
+    & .mt-normal-padding {
+      margin-top: var(--normal-padding);
     }
     & .imgCard {
       & > img {

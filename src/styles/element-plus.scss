@@ -96,3 +96,11 @@
 .el-menu--popup {
   padding: 0px;
 }
+
+// 表格
+.el-table th {
+  background-color: #f8f8f8 !important;
+  border-bottom: none !important;
+  height: 50px;
+  color: #6c6c6c;
+}

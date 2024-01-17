@@ -58,6 +58,7 @@ defineProps<DataCardProps>();
   }
   & > img {
     width: 50px;
+    height: 50px;
   }
 }
 .footerCard {

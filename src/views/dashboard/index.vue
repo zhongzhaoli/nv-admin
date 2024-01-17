@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <TopModule />
-    <el-row :gutter="20">
+    <el-row :gutter="normalPadding">
       <el-col :md="12" :sm="24" :xs="24">
         <OrderTrend />
       </el-col>
@@ -9,7 +9,7 @@
         <BalanceTrend />
       </el-col>
     </el-row>
-    <el-row :gutter="20">
+    <el-row :gutter="normalPadding">
       <el-col :md="12" :sm="24" :xs="24">
         <VisitCard />
       </el-col>
@@ -17,7 +17,7 @@
         <DealCard />
       </el-col>
     </el-row>
-    <el-row :gutter="20">
+    <el-row :gutter="normalPadding">
       <el-col :md="10" :sm="24" :xs="24">
         <ConversionCard />
       </el-col>
@@ -35,15 +35,18 @@ import ConversionCard from './components/ConversionCard/index.vue';
 import VisitCard from './components/VisitCard/index.vue';
 import DealCard from './components/DealCard/index.vue';
 import StoreVisitCard from './components/StoreVisitCard/index.vue';
+import { getCssVariableValue } from '@/utils/css';
 defineOptions({
   name: 'DashboardIndex'
 });
+let normalPadding: string | number = getCssVariableValue('--normal-padding');
+normalPadding = parseFloat(normalPadding.replace('px', ''));
 </script>
 <style lang="scss" scoped>
 .container {
-  padding: 0 20px 20px 20px;
+  padding: 0 var(--normal-padding) var(--normal-padding) var(--normal-padding);
   :deep(.el-col) {
-    margin-top: 20px;
+    margin-top: var(--normal-padding);
   }
 }
 </style>

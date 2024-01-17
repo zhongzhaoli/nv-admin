@@ -1,5 +1,5 @@
 <template>
-  <el-row :gutter="20">
+  <el-row :gutter="normalPadding">
     <el-col
       :xl="6"
       :lg="6"
@@ -29,6 +29,10 @@ import VisitSvg from '@/assets/svg/visit.svg';
 import UserSvg from '@/assets/svg/user.svg';
 import OrderSvg from '@/assets/svg/order.svg';
 import BalanceSvg from '@/assets/svg/balance.svg';
+import { getCssVariableValue } from '@/utils/css';
+
+let normalPadding: string | number = getCssVariableValue('--normal-padding');
+normalPadding = parseFloat(normalPadding.replace('px', ''));
 
 const listData: DataCardProps[] = [
   {
