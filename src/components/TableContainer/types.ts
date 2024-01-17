@@ -39,4 +39,5 @@ export interface PageComponentProps {
   total: number;
   pageSize: number;
   currentPage: number;
+  layout?: string;
 }

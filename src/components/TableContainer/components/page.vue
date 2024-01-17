@@ -4,19 +4,22 @@
       v-model="page"
       :page-size="pageSize"
       :total="total"
-      layout="total, prev, pager, next"
+      :page-sizes="PAGE_SIZES"
+      :layout="PAGINATION_LAYOUT"
       @current-change="handleCurrentChange"
+      @size-change="handlePageSizeChange"
     />
   </div>
 </template>
 <script setup lang="ts">
 import { PageComponentProps } from '../types';
+import { PAGE, PAGINATION_LAYOUT, PAGE_SIZES } from '@/constants/app';
 import { ref, watch } from 'vue';
 
-const page = ref<number>(1);
+const page = ref<number>(PAGE);
 
 const props = defineProps<PageComponentProps>();
-const emits = defineEmits(['currentChange']);
+const emits = defineEmits(['currentChange', 'pageSizeChange']);
 
 watch(
   () => props.currentPage,
@@ -30,6 +33,10 @@ watch(
 
 const handleCurrentChange = (v: number) => {
   emits('currentChange', v);
+};
+
+const handlePageSizeChange = (v: number) => {
+  emits('pageSizeChange', v);
 };
 </script>
 <style lang="scss" scoped>

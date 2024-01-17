@@ -1,6 +1,6 @@
 <template>
   <div class="tableContainerTableComponent">
-    <el-table :data="data || []" size="large">
+    <el-table :data="data || []" :size="tableSize">
       <el-table-column
         type="index"
         align="center"
@@ -45,7 +45,12 @@
   </div>
 </template>
 <script setup lang="ts">
+import { computed } from 'vue';
 import { TableComponentProps } from '../types';
+import { useAppStore } from '@/store/modules/app';
+const appStore = useAppStore();
+
+const tableSize = computed(() => appStore.tableSize);
 
 defineProps<TableComponentProps>();
 </script>

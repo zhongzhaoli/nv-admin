@@ -22,18 +22,17 @@
         </el-row>
       </el-form>
     </div>
-    <div class="tableBox">
+    <div class="tableBox" v-loading="loading">
       <tableContainer
         :table="{
           columns: tableColumns,
           data: tableData,
           extraColumns: tableExtraColumns
         }"
-        v-loading="loading"
         :handle="{ leftButtons: leftButtons }"
         :page="{ total, currentPage, pageSize }"
-        @currentChange="pageChange"
-        @refresh="pageChange(PAGE)"
+        @pageChange="pageChange"
+        @refresh="refresh"
       >
         <template #table-avatar="{ row }">
           <el-avatar :src="row.avatar" :size="32" />
@@ -52,9 +51,12 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
 import tableContainer from '@/components/TableContainer/index.vue';
-import { PAGE_SIZE, PAGE } from '@/constants/data';
+import { PAGE_SIZE, PAGE } from '@/constants/app';
 import * as API_USERS from '@/api/users';
 import { tableColumns, tableExtraColumns, leftButtons } from './data';
+defineOptions({
+  name: 'SystemUser'
+});
 
 const currentPage = ref<number>(PAGE);
 const pageSize = ref<number>(PAGE_SIZE);
@@ -79,9 +81,14 @@ const getListFun = async () => {
   }
 };
 
-// 页数发生变化
-const pageChange = (v: number) => {
-  currentPage.value = v;
+const pageChange = (v: { page: number; pageSize: number }) => {
+  currentPage.value = v.page;
+  pageSize.value = v.pageSize;
+  getListFun();
+};
+
+const refresh = () => {
+  currentPage.value = PAGE;
   getListFun();
 };
 

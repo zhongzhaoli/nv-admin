@@ -1,10 +1,11 @@
 import { defineStore } from 'pinia';
-import { SIDEBAR_OPENED } from '@/constants/app';
+import { ELEMENT_UI_SIZE, SIDEBAR_OPENED, TABLE_SIZE } from '@/constants/app';
 import { piniaPersistConfig } from '@/utils/persist';
 import { ref } from 'vue';
 
 interface AppState {
   sidebarOpened: boolean;
+  tableSize: ELEMENT_UI_SIZE;
 }
 
 type AppStateKey = Array<keyof AppState>;
@@ -19,12 +20,23 @@ export const useAppStore = defineStore(
       sidebarOpened.value = !sidebarOpened.value;
     };
 
+    // Table Size
+    const tableSize = ref<ELEMENT_UI_SIZE>(TABLE_SIZE);
+    const setTableSize = (size: ELEMENT_UI_SIZE) => {
+      tableSize.value = size;
+    };
+
     return {
       sidebarOpened,
+      tableSize,
+      setTableSize,
       toggleSidebarCollapsed
     };
   },
   {
-    persist: piniaPersistConfig<AppStateKey>('APP_STORE', ['sidebarOpened'])
+    persist: piniaPersistConfig<AppStateKey>('APP_STORE', [
+      'sidebarOpened',
+      'tableSize'
+    ])
   }
 );

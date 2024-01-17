@@ -98,9 +98,19 @@
 }
 
 // 表格
-.el-table th {
-  background-color: #f8f8f8 !important;
-  border-bottom: none !important;
-  height: 50px;
-  color: #6c6c6c;
+.el-table {
+  &.el-table--large th {
+    height: 46px;
+  }
+  &.el-table--default th {
+    height: 44px;
+  }
+  &.el-table--small th {
+    height: 38px;
+  }
+  th {
+    background-color: #f8f8f8 !important;
+    border-bottom: none !important;
+    color: #6c6c6c;
+  }
 }

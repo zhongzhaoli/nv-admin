@@ -36,7 +36,8 @@ const routes = [
         component: 'system/user/index.vue',
         meta: {
           title: '用户管理',
-          icon: 'ri-user-line'
+          icon: 'ri-user-line',
+          keepAlive: true
         }
       },
       {
