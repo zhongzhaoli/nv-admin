@@ -3,8 +3,10 @@
     <!-- Handle -->
     <HandleComponent
       :leftButtons="(handle && handle.leftButtons) || []"
+      :columns="newColumns"
       @refresh="refresh"
       @left-button-click="handleLeftButtonClick"
+      @columns-change="handleColumnsChange"
     >
       <template #left>
         <slot name="handleLeft" />
@@ -16,12 +18,12 @@
     <!-- Table -->
     <TableComponent
       class="tableBox"
-      :columns="table.columns"
+      :columns="newColumns"
       :data="table.data || []"
       :extra-columns="table.extraColumns || {}"
     >
       <template
-        v-for="item in table.columns"
+        v-for="item in newColumns"
         :key="item.prop"
         #[item.prop]="scope"
       >
@@ -45,7 +47,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import { reactive } from 'vue';
+import { reactive, ref } from 'vue';
 import HandleComponent from './components/handle.vue';
 import TableComponent from './components/table.vue';
 import PageComponent from './components/page.vue';
@@ -53,8 +55,10 @@ import {
   HandleComponentProps,
   HandleLeftProps,
   TableComponentProps,
-  PageComponentProps
+  PageComponentProps,
+  TableColumnsProps
 } from './types';
+import { mergeWith } from 'lodash-es';
 interface ComponentProps {
   table: TableComponentProps;
   handle?: HandleComponentProps;
@@ -94,6 +98,25 @@ const handleCurrentChange = (v: number) => {
 const handlePageSizeChange = (v: number) => {
   pageData.pageSize = v;
   emits('pageChange', pageData);
+};
+
+// 字段设置
+const newColumns = ref<TableColumnsProps[]>(
+  props.table.columns.map((item) => {
+    return { ...item, show: true };
+  })
+);
+const handleColumnsChange = (columns: TableColumnsProps[]) => {
+  const mergedArray = mergeWith(
+    newColumns.value,
+    columns,
+    (_objValue, srcValue, key) => {
+      if (key === 'show') {
+        return srcValue;
+      }
+    }
+  );
+  newColumns.value = mergedArray;
 };
 </script>
 <style lang="scss" scoped>

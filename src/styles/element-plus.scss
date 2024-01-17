@@ -114,3 +114,16 @@
     color: #6c6c6c;
   }
 }
+
+// 抽屉
+.el-drawer {
+  .el-drawer__header {
+    border-bottom: 1px #eaeaea solid;
+    padding: var(--el-drawer-padding-primary);
+    margin-bottom: 0;
+  }
+  .el-drawer__footer {
+    padding: var(--el-drawer-padding-primary);
+    border-top: 1px #eaeaea solid;
+  }
+}

@@ -53,7 +53,7 @@ import { onMounted, ref } from 'vue';
 import tableContainer from '@/components/TableContainer/index.vue';
 import { PAGE_SIZE, PAGE } from '@/constants/app';
 import * as API_USERS from '@/api/users';
-import { tableColumns, tableExtraColumns, leftButtons } from './data';
+import { tableColumns, tableExtraColumns, leftButtons } from './config';
 defineOptions({
   name: 'SystemUser'
 });

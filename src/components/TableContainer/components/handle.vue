@@ -34,24 +34,42 @@
           </template>
         </el-dropdown>
       </div>
-      <div>
-        <el-button circle>
+      <div v-if="columns && columns.length">
+        <el-button circle @click="columnSetting">
           <i class="ri-equalizer-line" />
         </el-button>
       </div>
       <slot name="right" />
     </div>
+    <Teleport to="body">
+      <el-drawer v-model="drawerOpen" title="字段设置">
+        <div v-for="item in newColumns" :key="item.prop">
+          <el-checkbox :label="item.prop" v-model="item.show">{{
+            item.label
+          }}</el-checkbox>
+        </div>
+        <template #footer>
+          <el-button type="primary" @click="saveColumns">保存</el-button>
+          <el-button @click="drawerOpen = false">取消</el-button>
+        </template>
+      </el-drawer>
+    </Teleport>
   </div>
 </template>
 <script setup lang="ts">
-import { computed } from 'vue';
-import { HandleLeftProps, HandleComponentProps } from '../types';
+import { computed, ref, watch } from 'vue';
+import {
+  HandleLeftProps,
+  HandleComponentProps,
+  TableColumnsProps
+} from '../types';
 import { ELEMENT_UI_SIZE, TABLE_SIZE_LIST } from '@/constants/app';
 import { useAppStore } from '@/store/modules/app';
+import { cloneDeep } from 'lodash-es';
 const appStore = useAppStore();
 
-defineProps<HandleComponentProps>();
-const emits = defineEmits(['leftButtonClick', 'refresh']);
+const props = defineProps<HandleComponentProps>();
+const emits = defineEmits(['leftButtonClick', 'refresh', 'columnsChange']);
 
 // 左边按钮点击
 const leftButtonClick = (item: HandleLeftProps, index: number) => {
@@ -65,8 +83,32 @@ const tableChangeSize = (key: ELEMENT_UI_SIZE) => {
   appStore.setTableSize(key);
 };
 
+// 刷新
 const refresh = () => {
   emits('refresh', 'handle');
+};
+
+// 字段筛选
+const drawerOpen = ref<boolean>(false);
+const columnSetting = () => {
+  drawerOpen.value = true;
+};
+const newColumns = ref<TableColumnsProps[]>([]);
+watch(
+  () => props.columns,
+  () => {
+    if (props.columns && props.columns.length) {
+      newColumns.value = cloneDeep(props.columns);
+    }
+  },
+  {
+    immediate: true,
+    deep: true
+  }
+);
+const saveColumns = () => {
+  emits('columnsChange', newColumns.value);
+  drawerOpen.value = false;
 };
 </script>
 <style lang="scss" scoped>

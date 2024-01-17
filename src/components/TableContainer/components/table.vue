@@ -16,30 +16,32 @@
         v-if="extraColumns && extraColumns.selection"
       />
       <template v-for="item in columns" :key="item.prop">
-        <el-table-column
-          :label="item.label"
-          :prop="item.prop"
-          :width="item.width"
-          :align="item.align"
-          :show-overflow-tooltip="item.showOverflowTooltip"
-          :min-width="item.minWidth"
-          :fixed="item.fixed"
-          v-if="item.slot"
-        >
-          <template v-slot="scope">
-            <slot :name="item.prop" :row="scope.row" :index="scope.$index" />
-          </template>
-        </el-table-column>
-        <el-table-column
-          :label="item.label"
-          :prop="item.prop"
-          :width="item.width"
-          :align="item.align"
-          :show-overflow-tooltip="item.showOverflowTooltip"
-          :min-width="item.minWidth"
-          :fixed="item.fixed"
-          v-else
-        />
+        <template v-if="item.show">
+          <el-table-column
+            :label="item.label"
+            :prop="item.prop"
+            :width="item.width"
+            :align="item.align"
+            :show-overflow-tooltip="item.showOverflowTooltip"
+            :min-width="item.minWidth"
+            :fixed="item.fixed"
+            v-if="item.slot"
+          >
+            <template v-slot="scope">
+              <slot :name="item.prop" :row="scope.row" :index="scope.$index" />
+            </template>
+          </el-table-column>
+          <el-table-column
+            :label="item.label"
+            :prop="item.prop"
+            :width="item.width"
+            :align="item.align"
+            :show-overflow-tooltip="item.showOverflowTooltip"
+            :min-width="item.minWidth"
+            :fixed="item.fixed"
+            v-else
+          />
+        </template>
       </template>
     </el-table>
   </div>

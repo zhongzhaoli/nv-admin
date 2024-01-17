@@ -13,6 +13,7 @@ export interface TableColumnsProps {
   fixed?: 'left' | 'right';
   minWidth?: string;
   slot?: boolean;
+  show?: boolean;
   renderHeader?: (h: any, params: any) => any;
   render?: (h: any, params: any) => any;
 }
@@ -26,6 +27,7 @@ export interface TableExtraColumnsProps {
 // Handle
 export interface HandleComponentProps {
   leftButtons?: HandleLeftProps[];
+  columns?: TableColumnsProps[];
 }
 export interface HandleLeftProps {
   label: string;
