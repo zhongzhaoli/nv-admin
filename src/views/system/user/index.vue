@@ -23,91 +23,124 @@
       </el-form>
     </div>
     <div class="tableBox">
-      <div class="handleBox">
-        <div class="leftBox">
-          <el-button type="primary">新增</el-button>
-          <el-button type="danger">删除</el-button>
-        </div>
-        <div class="rightBox">
-          <el-button circle>
-            <i class="ri-refresh-line" />
-          </el-button>
-        </div>
-      </div>
-      <el-table :data="tableData" size="large">
-        <el-table-column type="index" width="60" label="#" align="center" />
-        <el-table-column prop="avatar" label="头像" width="70" align="center">
-          <template #default="{ row }">
-            <div class="usernameBox">
-              <el-avatar :src="row.avatar" :size="32" circle />
-            </div>
-          </template>
-        </el-table-column>
-        <el-table-column
-          prop="username"
-          align="center"
-          width="180"
-          label="用户名"
-          show-overflow-tooltip
-        />
-        <el-table-column
-          prop="phone"
-          label="手机号"
-          width="180"
-          align="center"
-        />
-        <el-table-column
-          prop="role"
-          label="角色"
-          align="center"
-          show-overflow-tooltip
-          min-width="200"
-        />
-        <el-table-column prop="status" label="状态" width="120" align="center">
-          <el-switch />
-        </el-table-column>
-        <el-table-column
-          prop="createTime"
-          label="创建日期"
-          width="180"
-          align="center"
-        />
-        <el-table-column
-          prop="updateTime"
-          label="更新时间"
-          width="180"
-          align="center"
-        />
-        <el-table-column
-          prop="handle"
-          label="操作"
-          width="180"
-          fixed="right"
-          align="center"
-        >
-          <el-button type="text">编辑</el-button>
-          <el-button type="text">删除</el-button>
-        </el-table-column>
-      </el-table>
-      <div class="paginationBox">
-        <el-pagination
-          v-model="page"
-          :total="total"
-          layout="total, prev, pager, next"
-        />
-      </div>
+      <tableContainer
+        :table="{
+          columns: tableColumns,
+          data: tableData,
+          extraColumns: tableExtraColumns
+        }"
+        :handle="{ leftButtons: leftButtons }"
+        :page="{ total, currentPage }"
+      >
+        <template #table-avatar="{ row }">
+          <el-avatar :src="row.avatar" :size="32" />
+        </template>
+        <template #table-status="{ row }">
+          <el-switch v-model="row.status" />
+        </template>
+        <template #table-action>
+          <el-button type="primary" link>编辑</el-button>
+          <el-button type="primary" link>删除</el-button>
+        </template>
+      </tableContainer>
     </div>
   </div>
 </template>
 <script setup lang="ts">
 import { ref } from 'vue';
-const page = ref(1);
+import tableContainer from '@/components/TableContainer/index.vue';
+import {
+  TableColumnsProps,
+  HandleLeftProps,
+  TableExtraColumnsProps
+} from '@/components/TableContainer/types';
+
+const tableColumns: TableColumnsProps[] = [
+  {
+    label: '头像',
+    prop: 'avatar',
+    width: '70',
+    slot: true,
+    align: 'center'
+  },
+  {
+    label: '用户名',
+    prop: 'username',
+    align: 'center',
+    width: '180',
+    showOverflowTooltip: true
+  },
+  {
+    prop: 'phone',
+    label: '手机号',
+    width: '180',
+    align: 'center'
+  },
+  {
+    label: '角色',
+    prop: 'role',
+    align: 'center',
+    showOverflowTooltip: true,
+    minWidth: '200'
+  },
+  {
+    label: '状态',
+    prop: 'status',
+    slot: true,
+    width: '120',
+    align: 'center'
+  },
+  {
+    prop: 'createTime',
+    label: '创建日期',
+    width: '180',
+    align: 'center'
+  },
+  {
+    prop: 'updateTime',
+    label: '更新日期',
+    width: '180',
+    align: 'center'
+  },
+  {
+    prop: 'action',
+    label: '操作',
+    width: '180',
+    slot: true,
+    fixed: 'right',
+    align: 'center'
+  }
+];
+
+const tableExtraColumns: TableExtraColumnsProps = {
+  index: true
+};
+
+const leftButtons: HandleLeftProps[] = [
+  {
+    label: '新增',
+    type: 'primary',
+    click: () => {
+      console.log('新增');
+    }
+  },
+  {
+    label: '删除',
+    type: 'danger',
+    click: () => {
+      console.log('删除');
+    }
+  }
+];
+
+const currentPage = ref(1);
 const total = ref(100);
 const tableData = ref([
   {
     username: 'zhongzhaoli',
     avatar: 'https://resource.lstaer.com/0543d7c3-9fda-49d4-ba46-1628f7ee0639',
     phone: '13662648176',
+    status: true,
     role: '管理员、技术开发、社区运营',
     createTime: '2024-10-10 19:00:23',
     updateTime: '2024-10-10 19:00:23'
@@ -118,6 +151,7 @@ const tableData = ref([
       'https://resource.lstaer.com/283df2f7-dc52-4a0a-8110-88cd38746dff?imageView2/1/w/100/h/100',
     phone: '18665814282',
     role: '管理员',
+    status: false,
     createTime: '2024-10-10 19:00:23',
     updateTime: '2024-10-10 19:00:23'
   }
