@@ -5,6 +5,8 @@ import { ResponsePageJson } from '@/config/request';
 export interface UsersListParams {
   page: number;
   pageSize?: number;
+  username?: string;
+  status?: number;
 }
 
 export function getUsersList(

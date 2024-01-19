@@ -1,29 +1,12 @@
 <template>
   <div class="container">
-    <div class="searchBox">
-      <el-form label-position="left" label-width="70px">
-        <el-row :gutter="20">
-          <el-col :span="6">
-            <el-form-item label="用户名">
-              <el-input placeholder="请输入用户名" />
-            </el-form-item>
-          </el-col>
-          <el-col :span="6">
-            <el-form-item label="状态">
-              <el-input placeholder="请输入用户名" />
-            </el-form-item>
-          </el-col>
-          <el-col :span="6">
-            <el-form-item label-width="0">
-              <el-button type="primary">搜索</el-button>
-              <el-button>重置</el-button>
-            </el-form-item>
-          </el-col>
-        </el-row>
-      </el-form>
-    </div>
+    <FilterContainer
+      v-model="filterObject"
+      :columns="filterColumns"
+      :submit-fn="getListFun"
+    />
     <div class="tableBox" v-loading="loading">
-      <tableContainer
+      <TableContainer
         :table="{
           columns: tableColumns,
           data: tableData,
@@ -44,16 +27,22 @@
           <el-button type="primary" link>编辑</el-button>
           <el-button type="primary" link>删除</el-button>
         </template>
-      </tableContainer>
+      </TableContainer>
     </div>
   </div>
 </template>
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
-import tableContainer from '@/components/TableContainer/index.vue';
+import TableContainer from '@/components/TableContainer/index.vue';
+import FilterContainer from '@/components/FilterContainer/index.vue';
 import { PAGE_SIZE, PAGE } from '@/constants/app';
 import * as API_USERS from '@/api/users';
-import { tableColumns, tableExtraColumns, leftButtons } from './config';
+import {
+  tableColumns,
+  tableExtraColumns,
+  leftButtons,
+  filterColumns
+} from './config';
 defineOptions({
   name: 'SystemUser'
 });
@@ -63,13 +52,15 @@ const pageSize = ref<number>(PAGE_SIZE);
 const total = ref(0);
 const tableData = ref<any>([]);
 const loading = ref<boolean>(true);
+const filterObject = ref({});
 
 const getListFun = async () => {
   loading.value = true;
   try {
     const { data } = await API_USERS.getUsersList({
       page: currentPage.value,
-      pageSize: pageSize.value
+      pageSize: pageSize.value,
+      ...filterObject.value
     });
     currentPage.value = data.page;
     tableData.value = data.list;
