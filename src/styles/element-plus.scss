@@ -127,3 +127,29 @@
     border-top: 1px #eaeaea solid;
   }
 }
+
+// 弹窗
+.el-dialog {
+  position: relative;
+  background-color: #ffffff;
+  background-clip: padding-box;
+  border: 0;
+  border-radius: 5px;
+  box-shadow:
+    0 6px 16px 0 rgba(0, 0, 0, 0.08),
+    0 3px 6px -4px rgba(0, 0, 0, 0.12),
+    0 9px 28px 8px rgba(0, 0, 0, 0.05);
+  pointer-events: auto;
+  padding: 20px 24px;
+  .el-dialog__header {
+    padding-left: 0;
+    padding-top: 0;
+    padding-bottom: 24px;
+  }
+  .el-dialog__body {
+    padding: 0;
+  }
+  .el-dialog__footer {
+    padding: 24px 0 0 0;
+  }
+}

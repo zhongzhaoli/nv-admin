@@ -1,5 +1,5 @@
 import { MockMethod } from 'vite-plugin-mock';
-import { ResponseJson } from '../types';
+import { ResponseCode, ResponseJson } from '../types';
 import { isLogin } from '../utils';
 
 const routes = [
@@ -79,12 +79,12 @@ export default [
     response: ({ headers }): ResponseJson<any> => {
       if (!isLogin(headers)) {
         return {
-          code: 401,
+          code: ResponseCode.UNAUTHORIZED,
           msg: '用户未登录'
         };
       }
       return {
-        code: 0,
+        code: ResponseCode.SUCCESS,
         data: routes,
         msg: '获取成功'
       };

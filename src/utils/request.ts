@@ -56,8 +56,15 @@ function createService() {
   instance.interceptors.response.use(
     (response) => responseHandle(response),
     (error) => {
-      // TODO: 各种网络请求错误处理
-      console.log(error);
+      // 网络错误码
+      const status = error.response.status;
+      switch (status) {
+        case 404:
+          ElMessage.error('接口不存在');
+          break;
+        default:
+          console.log(error);
+      }
       return Promise.reject(error);
     }
   );

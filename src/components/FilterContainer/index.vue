@@ -21,7 +21,14 @@
                 v-else-if="item.type === 'select'"
                 :placeholder="item.placeholder || `请选择${item.label}`"
                 clearable
-              />
+              >
+                <el-option
+                  v-for="option in item.selectOptions"
+                  :key="option.value"
+                  :label="option.label"
+                  :value="option.value"
+                />
+              </el-select>
               <el-date-picker
                 v-model="formValue[item.prop]"
                 v-else-if="item.type === 'date'"
@@ -36,7 +43,7 @@
         <el-col :span="col || COL">
           <el-form-item label-width="0">
             <el-button type="primary" @click="submit">搜索</el-button>
-            <el-button>重置</el-button>
+            <el-button @click="reset">重置</el-button>
           </el-form-item>
         </el-col>
       </el-row>
@@ -67,7 +74,7 @@ interface ComponentProps {
   submitFn?: (filterObject: any) => any;
 }
 const props = defineProps<ComponentProps>();
-const emits = defineEmits(['submit', 'update:modelValue']);
+const emits = defineEmits(['submit', 'update:modelValue', 'reset']);
 
 // 搜索取值绑定
 const formValue = reactive<any>({});
@@ -103,6 +110,14 @@ const filterNull = (val: any) => {
 const submit = () => {
   props.submitFn && props.submitFn(filterNull(formValue));
   emits('submit', filterNull(formValue));
+};
+
+// 重置按钮点击
+const reset = () => {
+  props.columns.forEach((item) => {
+    formValue[item.prop] = undefined;
+  });
+  emits('reset');
 };
 </script>
 <style lang="scss" scoped>

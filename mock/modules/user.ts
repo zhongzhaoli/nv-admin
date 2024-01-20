@@ -1,6 +1,6 @@
 import { MockMethod } from 'vite-plugin-mock';
 import { UserToken } from './login';
-import { ResponseJson } from '../types';
+import { ResponseCode, ResponseJson } from '../types';
 import { isLogin } from '../utils';
 
 interface UserInfo {
@@ -33,7 +33,7 @@ export default [
     response: ({ headers }): ResponseJson<any> => {
       if (!isLogin(headers)) {
         return {
-          code: 401,
+          code: ResponseCode.UNAUTHORIZED,
           msg: '用户未登录'
         };
       }
@@ -41,13 +41,13 @@ export default [
       const user = userInfoArr.find((item) => item.token === token);
       if (!user) {
         return {
-          code: 401,
+          code: ResponseCode.UNAUTHORIZED,
           msg: '用户未找到'
         };
       }
       const data = user.userInfo;
       return {
-        code: 0,
+        code: ResponseCode.SUCCESS,
         data,
         msg: '获取成功'
       };

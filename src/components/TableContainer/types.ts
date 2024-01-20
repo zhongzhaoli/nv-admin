@@ -31,6 +31,7 @@ export interface HandleComponentProps {
 }
 export interface HandleLeftProps {
   label: string;
+  key: string;
   type?: string;
   reIcon?: string;
   click?: () => any;

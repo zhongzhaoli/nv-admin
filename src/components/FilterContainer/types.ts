@@ -5,5 +5,10 @@ export interface FilterColumnsProp {
   prop: string;
   type?: FormType;
   placeholder?: string;
-  selectOptions?: { label: string; value: string }[];
+  selectOptions?: FilterSelectOptionsProp[];
+}
+
+export interface FilterSelectOptionsProp {
+  label: string;
+  value: any;
 }

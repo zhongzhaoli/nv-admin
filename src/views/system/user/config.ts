@@ -3,7 +3,21 @@ import {
   HandleLeftProps,
   TableExtraColumnsProps
 } from '@/components/TableContainer/types';
-import { FilterColumnsProp } from '@/components/FilterContainer/types';
+import {
+  FilterColumnsProp,
+  FilterSelectOptionsProp
+} from '@/components/FilterContainer/types';
+
+export interface DataProp {
+  avatar: string;
+  createTime: string;
+  phone: string;
+  realName: string;
+  role: string;
+  status: 1 | 2;
+  updateTime: string;
+  username: string;
+}
 
 export const tableColumns: TableColumnsProps[] = [
   {
@@ -70,9 +84,18 @@ export const leftButtons: HandleLeftProps[] = [
   {
     label: '新增',
     type: 'primary',
-    click: () => {
-      console.log('新增');
-    }
+    key: 'create'
+  }
+];
+
+export const userStatus: FilterSelectOptionsProp[] = [
+  {
+    label: '启用',
+    value: 1
+  },
+  {
+    label: '禁用',
+    value: 0
   }
 ];
 
@@ -84,6 +107,7 @@ export const filterColumns: FilterColumnsProp[] = [
   {
     label: '状态',
     prop: 'status',
-    type: 'select'
+    type: 'select',
+    selectOptions: userStatus
   }
 ];

@@ -1,7 +1,7 @@
 export enum ResponseCode {
   SUCCESS = 0,
   ERROR = 1,
-  TIMEOUT = 401
+  UNAUTHORIZED = 401
 }
 
 export interface ResponseJson<T = string> {
