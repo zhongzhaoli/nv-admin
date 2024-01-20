@@ -9,6 +9,7 @@ import {
 } from '@/components/FilterContainer/types';
 
 export interface DataProp {
+  id: string;
   avatar: string;
   createTime: string;
   phone: string;

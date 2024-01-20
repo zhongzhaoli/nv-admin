@@ -33,7 +33,9 @@
             >编辑</el-button
           >
           <el-button type="primary" link>角色</el-button>
-          <el-button type="primary" link>删除</el-button>
+          <el-button type="primary" link @click="deleteUser(row)"
+            >删除</el-button
+          >
         </template>
       </TableContainer>
     </div>
@@ -51,6 +53,7 @@
         <el-form-item label="用户名：">
           <el-input
             v-model="editFormValue.username"
+            :disabled="dialogTitle === '编辑用户'"
             placeholder="请输入用户名"
           />
         </el-form-item>
@@ -85,6 +88,7 @@ import {
 } from './config';
 import { cloneDeep } from 'lodash-es';
 import { ElMessage } from 'element-plus';
+import { useMessageBox } from '@/hooks/useMessageBox';
 defineOptions({
   name: 'SystemUser'
 });
@@ -130,7 +134,7 @@ const refresh = () => {
 
 // 编辑框
 const editVisible = ref<boolean>(false);
-const dialogTitle = ref<string>('编辑用户');
+const dialogTitle = ref<string>('');
 const editFormValue = ref<any>({});
 const submitLoading = ref<boolean>(false);
 // 打开编辑框，设置标题
@@ -157,7 +161,10 @@ const editFun = async () => {
     if (editFormValue.value.id === undefined) {
       await API_USERS.createUsers(editFormValue.value);
     } else {
-      await API_USERS.updateUsers(editFormValue.value.id, editFormValue.value);
+      await API_USERS.updateUsers<DataProp>(
+        editFormValue.value.id,
+        editFormValue.value
+      );
     }
     editVisible.value = false;
     ElMessage.success('操作成功');
@@ -167,6 +174,19 @@ const editFun = async () => {
   } finally {
     submitLoading.value = false;
   }
+};
+
+// 删除用户
+const deleteUser = (row: DataProp) => {
+  useMessageBox('提示', '确定删除该用户吗？', async () => {
+    try {
+      await API_USERS.deleteUsers(row.id);
+      ElMessage.success('删除成功');
+      getListFun();
+    } catch (err) {
+      console.error(err);
+    }
+  });
 };
 
 getListFun();

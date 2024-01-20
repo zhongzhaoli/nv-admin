@@ -85,5 +85,23 @@ export default [
         msg: '操作成功'
       };
     }
+  },
+  {
+    url: '/users/:id',
+    method: 'delete',
+    timeout: 500,
+    response: ({ headers, query }): ResponseJson => {
+      if (!isLogin(headers)) {
+        return {
+          code: ResponseCode.UNAUTHORIZED,
+          msg: '用户未登录'
+        } as ResponsePageJson;
+      }
+      console.log(`users(ID:${query.id}): 删除`);
+      return {
+        code: ResponseCode.SUCCESS,
+        msg: '操作成功'
+      };
+    }
   }
 ] as MockMethod[];

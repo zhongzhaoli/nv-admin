@@ -44,3 +44,10 @@ export function updateUsers<T>(
     data
   });
 }
+
+export function deleteUsers(id: string): Promise<ResponseJson> {
+  return request({
+    url: `/users/${id}`,
+    method: 'delete'
+  });
+}
