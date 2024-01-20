@@ -146,6 +146,7 @@ const openDialog = (title: string) => {
 const handleLeftClick = (obj: { item: HandleLeftProps }) => {
   const { item } = obj;
   if (item.key === 'create') {
+    editFormValue.value = {};
     openDialog('创建用户');
   }
 };

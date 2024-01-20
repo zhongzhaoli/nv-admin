@@ -21,6 +21,7 @@
       :columns="newColumns"
       :data="table.data || []"
       :extra-columns="table.extraColumns || {}"
+      @selection-change="handleSelectionChange"
     >
       <template
         v-for="item in newColumns"
@@ -69,7 +70,8 @@ const emits = defineEmits([
   'currentChange',
   'refresh',
   'handleLeftClick',
-  'pageChange'
+  'pageChange',
+  'selectionChange'
 ]);
 
 // 刷新数据
@@ -117,6 +119,11 @@ const handleColumnsChange = (columns: TableColumnsProps[]) => {
     }
   );
   newColumns.value = mergedArray;
+};
+
+// 选择框
+const handleSelectionChange = (selection: any[]) => {
+  emits('selectionChange', selection);
 };
 </script>
 <style lang="scss" scoped>

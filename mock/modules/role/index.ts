@@ -5,7 +5,7 @@ import Mock from 'mockjs';
 
 export default [
   {
-    url: '/users',
+    url: '/role',
     method: 'get',
     timeout: 500,
     response: ({ query, headers }): ResponsePageJson => {
@@ -17,17 +17,14 @@ export default [
       }
       const pageSize = parseInt(query.pageSize) || 10;
       const page = parseInt(query.page) || 1;
-      const total = 34;
+      const total = 5;
       const list = Mock.mock({
         [`list|${pageSize}`]: [
           {
             id: '@id',
-            username: '@name',
-            avatar: '@image',
-            phone: /^1[34578]\d{9}$/,
+            name: '@name',
+            description: '@cword(5, 20)',
             status: '@pick([1, 2])',
-            role: '@cword(2, 5)',
-            realName: '@cword(2, 3)',
             createTime: '@datetime',
             updateTime: '@datetime'
           }
@@ -46,7 +43,7 @@ export default [
     }
   },
   {
-    url: '/users',
+    url: '/role',
     method: 'post',
     timeout: 500,
     response: ({ headers, body }): ResponseJson => {
@@ -56,7 +53,7 @@ export default [
           msg: '用户未登录'
         } as ResponsePageJson;
       }
-      console.log('users: 新增', body);
+      console.log('role: 新增', body);
       return {
         code: ResponseCode.SUCCESS,
         msg: '操作成功'
@@ -64,7 +61,7 @@ export default [
     }
   },
   {
-    url: '/users/:id',
+    url: '/role/:id',
     method: 'put',
     timeout: 500,
     response: ({ headers, body, query }): ResponseJson => {
@@ -77,9 +74,9 @@ export default [
       if (!query.id)
         return {
           code: ResponseCode.ERROR,
-          msg: '找不到此用户'
+          msg: '找不到此角色'
         };
-      console.log(`users(ID：${query.id}): 修改`, body);
+      console.log(`role(ID：${query.id}): 修改`, body);
       return {
         code: ResponseCode.SUCCESS,
         msg: '操作成功'
@@ -87,7 +84,7 @@ export default [
     }
   },
   {
-    url: '/users/:id',
+    url: '/role/:id',
     method: 'delete',
     timeout: 500,
     response: ({ headers, query }): ResponseJson => {
@@ -102,7 +99,7 @@ export default [
           code: ResponseCode.ERROR,
           msg: '找不到此角色'
         };
-      console.log(`users(ID:${query.id}): 删除`);
+      console.log(`role(ID:${query.id}): 删除`);
       return {
         code: ResponseCode.SUCCESS,
         msg: '操作成功'

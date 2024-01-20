@@ -7,6 +7,7 @@ import Login from './modules/login';
 import Routes from './modules/routes';
 import Users from './modules/users/index';
 import Common from './modules/common';
+import Role from './modules/role/index';
 // 统一前缀
 const prefix = '/mock/api';
 
@@ -15,7 +16,8 @@ const apis = pathPrefix(prefix, [
   ...Login,
   ...Routes,
   ...Users,
-  ...Common
+  ...Common,
+  ...Role
 ]) as MockMethod[];
 
 export default apis;

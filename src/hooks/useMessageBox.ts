@@ -18,5 +18,5 @@ export function useMessageBox(title: string, message: string, fn?: Function) {
         done();
       }
     }
-  });
+  }).catch(() => {});
 }

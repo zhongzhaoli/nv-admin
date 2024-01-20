@@ -1,6 +1,10 @@
 <template>
   <div class="tableContainerTableComponent">
-    <el-table :data="data || []" :size="tableSize">
+    <el-table
+      :data="data || []"
+      :size="tableSize"
+      @selection-change="handleSelectionChange"
+    >
       <el-table-column
         type="index"
         align="center"
@@ -55,5 +59,10 @@ const appStore = useAppStore();
 const tableSize = computed(() => appStore.tableSize);
 
 defineProps<TableComponentProps>();
+const emits = defineEmits(['selectionChange']);
+
+const handleSelectionChange = (selection: any[]) => {
+  emits('selectionChange', selection);
+};
 </script>
 <style lang="scss" scoped></style>
