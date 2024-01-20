@@ -9,34 +9,28 @@
       <el-row :gutter="gutter || GUTTER">
         <el-col :span="col || COL" v-for="item in columns" :key="item.prop">
           <el-form-item :label="item.label" :prop="item.prop">
-            <el-input
-              v-if="!item.type || item.type === 'input'"
-              v-model="formValue[item.prop]"
-              :placeholder="item.placeholder || `请输入${item.label}`"
-              clearable
-            />
-            <el-select
-              v-model="formValue[item.prop]"
-              v-else-if="item.type === 'select'"
-              :placeholder="item.placeholder || `请选择${item.label}`"
-              clearable
-            />
-            <el-date-picker
-              v-model="formValue[item.prop]"
-              v-else-if="item.type === 'date'"
-              :placeholder="item.placeholder || `请选择${item.label}`"
-              type="date"
-              value-format="yyyy-MM-dd"
-              clearable
-            />
-            <el-date-picker
-              v-model="formValue[item.prop]"
-              v-else-if="item.type === 'daterange'"
-              :placeholder="item.placeholder || `请选择${item.label}`"
-              type="daterange"
-              value-format="yyyy-MM-dd"
-              clearable
-            />
+            <slot :name="item.prop" v-bind="{ row: item, form: formValue }">
+              <el-input
+                v-if="!item.type || item.type === 'input'"
+                v-model="formValue[item.prop]"
+                :placeholder="item.placeholder || `请输入${item.label}`"
+                clearable
+              />
+              <el-select
+                v-model="formValue[item.prop]"
+                v-else-if="item.type === 'select'"
+                :placeholder="item.placeholder || `请选择${item.label}`"
+                clearable
+              />
+              <el-date-picker
+                v-model="formValue[item.prop]"
+                v-else-if="item.type === 'date'"
+                :placeholder="item.placeholder || `请选择${item.label}`"
+                type="date"
+                value-format="yyyy-MM-dd"
+                clearable
+              />
+            </slot>
           </el-form-item>
         </el-col>
         <el-col :span="col || COL">
