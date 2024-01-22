@@ -62,7 +62,7 @@ const pageSize = ref<number>(16);
 const total = ref<number>(iconList.value.length);
 
 interface ComponentProps {
-  modelValue: string;
+  modelValue: string | undefined;
 }
 
 const props = defineProps<ComponentProps>();
@@ -70,7 +70,7 @@ const emits = defineEmits(['update:modelValue']);
 watch(
   () => props.modelValue,
   () => {
-    formValue.value = props.modelValue;
+    formValue.value = props.modelValue || '';
   },
   { immediate: true }
 );
