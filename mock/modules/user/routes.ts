@@ -5,14 +5,13 @@ import { PREFIX } from '../../constant';
 
 const routes = [
   {
-    path: '/dashboard',
-    name: 'Dashboard',
-    redirect: '/dashboard/index',
+    path: '/',
+    name: 'Root',
     component: 'Layout',
     children: [
       {
-        path: 'index',
-        name: 'DashboardIndex',
+        path: 'dashboard',
+        name: 'dashboard',
         component: 'dashboard/index.vue',
         meta: {
           keepAlive: true,
@@ -67,7 +66,8 @@ const routes = [
         component: 'system/monitor/index.vue',
         meta: {
           title: '系统监控',
-          icon: 'ri-computer-line'
+          icon: 'ri-computer-line',
+          hidden: false
         }
       }
     ]

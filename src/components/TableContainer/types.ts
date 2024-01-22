@@ -2,6 +2,7 @@
 export interface TableComponentProps {
   columns: TableColumnsProps[];
   extraColumns?: TableExtraColumnsProps;
+  extraConfig?: TableExtraConfigProps;
   data?: any[];
 }
 export interface TableColumnsProps {
@@ -22,6 +23,13 @@ export interface TableExtraColumnsProps {
   selection?: boolean;
   indexLabel?: string;
   selectionLabel?: string;
+}
+export interface TableExtraConfigProps {
+  rowKey?: string;
+  treeProps?: { children: string; hasChildren: string };
+  expand?: boolean;
+  lazy?: boolean;
+  load?: (row: any, treeNode: unknown, resolve: (data: any[]) => void) => void;
 }
 
 // Handle

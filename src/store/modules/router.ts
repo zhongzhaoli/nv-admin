@@ -1,7 +1,7 @@
 import { ref } from 'vue';
 import { defineStore } from 'pinia';
 import { RouteRecordRaw } from 'vue-router';
-import { asyncRoutes as aR, staticRoutes } from '@/router';
+import { staticRoutes } from '@/router';
 import { getRoutes as getRoutesApi } from '@/api/routes';
 import { handleRoutes, routesComponentInstance } from '@/utils/route';
 import { ResponseJson } from '@/config/request';

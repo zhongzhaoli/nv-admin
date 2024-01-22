@@ -21,6 +21,7 @@
       :columns="newColumns"
       :data="table.data || []"
       :extra-columns="table.extraColumns || {}"
+      :extra-config="table.extraConfig || {}"
       @selection-change="handleSelectionChange"
     >
       <template

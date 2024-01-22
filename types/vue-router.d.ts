@@ -1,3 +1,4 @@
+import { ROUTE_TYPE } from '@/constants/route';
 import 'vue-router';
 
 declare module 'vue-router' {
@@ -17,5 +18,9 @@ declare module 'vue-router' {
     keepAlive?: boolean;
     /** 是否固定在TagsView */
     affix?: boolean;
+    /** 路由类型 */
+    type?: ROUTE_TYPE;
+    /** 排序 */
+    sort?: number;
   }
 }

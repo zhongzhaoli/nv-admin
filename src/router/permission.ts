@@ -1,5 +1,5 @@
-import { addRoutes, isLoginWhiteList } from '@/utils/route';
-import router from './index';
+import { addRoutes, isLoginWhiteList, mergeRoutes } from '@/utils/route';
+import router, { staticRoutes } from './index';
 import { useUserStore } from '@/store/modules/user';
 import { useRouterStore } from '@/store/modules/router';
 import { routeChange } from '@/hooks/useRouteListener';
@@ -29,7 +29,10 @@ router.beforeEach(async (to, _, next) => {
     await userStore.getUserInfo();
     // 模拟异步获取路由信息
     const asyncRoutes = await routerStore.getRoutes();
-    addRoutes(asyncRoutes);
+    // 合并静态，防止同样的path覆盖静态路由
+    const mergedRoutes = mergeRoutes(asyncRoutes, staticRoutes);
+    // 注册路由
+    addRoutes(mergedRoutes);
     next({ ...to, replace: true });
   }
   return;

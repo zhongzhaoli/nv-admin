@@ -49,6 +49,23 @@ const dynamicImport = (
   console.warn('找不到此组件');
 };
 
+// 合并相同path的children r1为主，r2合并入r1
+export const mergeRoutes = (r1: RouteRecordRaw[], r2: RouteRecordRaw[]) => {
+  r2.forEach((route2: RouteRecordRaw) => {
+    const route1 = r1.find((route) => route.path === route2.path);
+    if (route1) {
+      if (!route1.children) {
+        route1.children = [route2];
+      } else {
+        route1.children = [...(route2.children || []), ...route1.children];
+      }
+      // 默认跳转children的第一个路由
+      route1.redirect = route1.children[0].path;
+    }
+  });
+  return r1;
+};
+
 // 处理侧边栏展示路由数据
 export const handleRoutes = (
   routes: RouteRecordRaw[],

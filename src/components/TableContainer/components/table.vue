@@ -3,6 +3,8 @@
     <el-table
       :data="data || []"
       :size="tableSize"
+      :row-key="(extraConfig && extraConfig.rowKey) || ''"
+      :tree-props="(extraConfig && extraConfig.treeProps) || DEFAULT_TREEPROPS"
       @selection-change="handleSelectionChange"
     >
       <el-table-column
@@ -51,6 +53,7 @@
   </div>
 </template>
 <script setup lang="ts">
+const DEFAULT_TREEPROPS = { children: 'children', hasChildren: 'hasChildren' };
 import { computed } from 'vue';
 import { TableComponentProps } from '../types';
 import { useAppStore } from '@/store/modules/app';
