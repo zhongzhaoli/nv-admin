@@ -2,10 +2,11 @@ import { MockMethod } from 'vite-plugin-mock';
 import { ResponseCode, ResponseJson } from '../types';
 import { isLogin } from '../utils';
 import Mock from 'mockjs';
+import { PREFIX } from '../constant';
 
 export default [
   {
-    url: '/common/fileUpload',
+    url: `${PREFIX}/common/fileUpload`,
     method: 'post',
     timeout: 1000,
     response: ({ headers }): ResponseJson<any> => {

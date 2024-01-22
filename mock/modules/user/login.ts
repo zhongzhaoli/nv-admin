@@ -1,5 +1,6 @@
 import { MockMethod } from 'vite-plugin-mock';
-import { ResponseCode, ResponseJson } from '../types';
+import { ResponseCode, ResponseJson } from '../../types';
+import { PREFIX } from '../../constant';
 
 export enum UserToken {
   admin = 'admin-token'
@@ -7,7 +8,7 @@ export enum UserToken {
 
 export default [
   {
-    url: '/login',
+    url: `${PREFIX}/login`,
     method: 'post',
     timeout: 500,
     response: ({ body }): ResponseJson => {

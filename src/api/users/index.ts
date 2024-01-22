@@ -20,7 +20,7 @@ export function getUsersList(
   params: UsersListParams
 ): Promise<ResponsePageJson> {
   return request({
-    url: '/users',
+    url: '/system/users',
     method: 'get',
     params
   });
@@ -28,7 +28,7 @@ export function getUsersList(
 
 export function createUsers(data: UsersDto): Promise<ResponseJson> {
   return request({
-    url: '/users',
+    url: '/system/users',
     method: 'post',
     data
   });
@@ -39,7 +39,7 @@ export function updateUsers<T>(
   data: Partial<T>
 ): Promise<ResponseJson> {
   return request({
-    url: `/users/${id}`,
+    url: `/system/users/${id}`,
     method: 'put',
     data
   });
@@ -47,7 +47,7 @@ export function updateUsers<T>(
 
 export function deleteUsers(id: string): Promise<ResponseJson> {
   return request({
-    url: `/users/${id}`,
+    url: `/system/users/${id}`,
     method: 'delete'
   });
 }

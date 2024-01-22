@@ -2,10 +2,11 @@ import { MockMethod } from 'vite-plugin-mock';
 import { ResponseCode, ResponseJson, ResponsePageJson } from '../../types';
 import { isLogin } from '../../utils';
 import Mock from 'mockjs';
+import { PREFIX } from '../../constant';
 
 export default [
   {
-    url: '/users',
+    url: `${PREFIX}/system/users`,
     method: 'get',
     timeout: 500,
     response: ({ query, headers }): ResponsePageJson => {
@@ -46,7 +47,7 @@ export default [
     }
   },
   {
-    url: '/users',
+    url: `${PREFIX}/system/users`,
     method: 'post',
     timeout: 500,
     response: ({ headers, body }): ResponseJson => {
@@ -64,7 +65,7 @@ export default [
     }
   },
   {
-    url: '/users/:id',
+    url: `${PREFIX}/system/users/:id`,
     method: 'put',
     timeout: 500,
     response: ({ headers, body, query }): ResponseJson => {
@@ -87,7 +88,7 @@ export default [
     }
   },
   {
-    url: '/users/:id',
+    url: `${PREFIX}/system/users/:id`,
     method: 'delete',
     timeout: 500,
     response: ({ headers, query }): ResponseJson => {

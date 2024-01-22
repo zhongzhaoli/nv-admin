@@ -1,7 +1,8 @@
 import { MockMethod } from 'vite-plugin-mock';
 import { UserToken } from './login';
-import { ResponseCode, ResponseJson } from '../types';
-import { isLogin } from '../utils';
+import { ResponseCode, ResponseJson } from '../../types';
+import { isLogin } from '../../utils';
+import { PREFIX } from '../../constant';
 
 interface UserInfo {
   username: string;
@@ -28,7 +29,7 @@ const userInfoArr: Array<{ token: UserToken; userInfo: UserInfo }> = [
 
 export default [
   {
-    url: '/user/userInfo',
+    url: `${PREFIX}/userInfo`,
     method: 'get',
     response: ({ headers }): ResponseJson<any> => {
       if (!isLogin(headers)) {

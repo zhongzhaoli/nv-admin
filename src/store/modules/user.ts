@@ -1,8 +1,8 @@
 import { piniaPersistConfig } from '@/utils/persist';
 import { ref } from 'vue';
 import { defineStore } from 'pinia';
-import { LoginDto, login as loginApi } from '@/api/login';
-import { getUserInfo as getUserInfoApi } from '@/api/user';
+import { LoginDto, login as loginApi } from '@/api/user/login';
+import { getUserInfo as getUserInfoApi } from '@/api/user/user';
 import { ResponseJson } from '@/config/request';
 
 interface UserInfo {

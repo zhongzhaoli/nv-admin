@@ -1,6 +1,7 @@
 import { MockMethod } from 'vite-plugin-mock';
-import { ResponseCode, ResponseJson } from '../types';
-import { isLogin } from '../utils';
+import { ResponseCode, ResponseJson } from '../../types';
+import { isLogin } from '../../utils';
+import { PREFIX } from '../../constant';
 
 const routes = [
   {
@@ -46,7 +47,8 @@ const routes = [
         component: 'system/role/index.vue',
         meta: {
           title: '角色管理',
-          icon: 'ri-admin-line'
+          icon: 'ri-admin-line',
+          keepAlive: true
         }
       },
       {
@@ -74,7 +76,7 @@ const routes = [
 
 export default [
   {
-    url: '/routes',
+    url: `${PREFIX}/routes`,
     method: 'get',
     response: ({ headers }): ResponseJson<any> => {
       if (!isLogin(headers)) {

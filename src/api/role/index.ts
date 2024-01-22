@@ -16,7 +16,7 @@ export interface RoleListParams {
 
 export function getRoleList(params: RoleListParams): Promise<ResponsePageJson> {
   return request({
-    url: '/role',
+    url: '/system/role',
     method: 'get',
     params
   });
@@ -24,7 +24,7 @@ export function getRoleList(params: RoleListParams): Promise<ResponsePageJson> {
 
 export function createRole(data: RoleDto): Promise<ResponseJson> {
   return request({
-    url: '/role',
+    url: '/system/role',
     method: 'post',
     data
   });
@@ -35,7 +35,7 @@ export function updateRole<T>(
   data: Partial<T>
 ): Promise<ResponseJson> {
   return request({
-    url: `/role/${id}`,
+    url: `/system/role/${id}`,
     method: 'put',
     data
   });
@@ -43,7 +43,7 @@ export function updateRole<T>(
 
 export function deleteRole(id: string): Promise<ResponseJson> {
   return request({
-    url: `/role/${id}`,
+    url: `/system/role/${id}`,
     method: 'delete'
   });
 }
