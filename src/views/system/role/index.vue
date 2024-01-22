@@ -90,7 +90,7 @@ const currentPage = ref<number>(PAGE);
 const pageSize = ref<number>(PAGE_SIZE);
 const loading = ref<boolean>(false);
 const filterObject = ref<any>();
-// 获取用户列表
+// 获取角色列表
 const getListFun = async () => {
   loading.value = true;
   try {

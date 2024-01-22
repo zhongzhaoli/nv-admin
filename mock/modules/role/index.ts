@@ -93,7 +93,7 @@ export default [
         return {
           code: ResponseCode.UNAUTHORIZED,
           msg: '用户未登录'
-        } as ResponsePageJson;
+        };
       }
       if (!query.id)
         return {
