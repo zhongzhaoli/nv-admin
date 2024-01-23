@@ -4,7 +4,6 @@
       <el-col :span="12">
         <el-form-item label="上级菜单">
           <el-tree-select
-            ref="treeselect"
             style="width: 100%"
             v-model="formValue.pid"
             :data="menus"
@@ -113,7 +112,6 @@ interface ComponentProps {
 
 const props = defineProps<ComponentProps>();
 
-const treeselect = ref();
 const menuTypeList = ref<{ label: string; value: string }[]>([]);
 const formValue = ref<any>({});
 
