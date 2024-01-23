@@ -11,7 +11,7 @@ const routes = [
     children: [
       {
         path: 'dashboard',
-        name: 'dashboard',
+        name: 'Dashboard',
         component: 'dashboard/index.vue',
         meta: {
           keepAlive: true,
@@ -41,6 +41,16 @@ const routes = [
         }
       },
       {
+        path: 'department',
+        name: 'SystemDepartment',
+        component: 'system/department/index.vue',
+        meta: {
+          title: '部门管理',
+          icon: 'ri-computer-line',
+          keepAlive: true
+        }
+      },
+      {
         path: 'role',
         name: 'SystemRole',
         component: 'system/role/index.vue',
@@ -58,16 +68,6 @@ const routes = [
           title: '菜单管理',
           icon: 'ri-node-tree',
           keepAlive: true
-        }
-      },
-      {
-        path: 'monitor',
-        name: 'SystemMonitor',
-        component: 'system/monitor/index.vue',
-        meta: {
-          title: '系统监控',
-          icon: 'ri-computer-line',
-          hidden: false
         }
       }
     ]

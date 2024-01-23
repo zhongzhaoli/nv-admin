@@ -55,6 +55,22 @@ const menus = [
       {
         id: 4,
         pid: 2,
+        path: 'department',
+        name: 'SystemDepartment',
+        component: 'system/department/index.vue',
+        meta: {
+          title: '部门管理',
+          icon: 'ri-computer-line',
+          type: 'MENU',
+          sort: 4,
+          keepAlive: true,
+          hidden: false,
+          affix: false
+        }
+      },
+      {
+        id: 5,
+        pid: 2,
         path: 'role',
         name: 'SystemRole',
         component: 'system/role/index.vue',
@@ -69,7 +85,7 @@ const menus = [
         }
       },
       {
-        id: 5,
+        id: 6,
         pid: 2,
         path: 'menu',
         name: 'SystemMenu',
@@ -80,22 +96,6 @@ const menus = [
           keepAlive: true,
           type: 'MENU',
           sort: 3,
-          hidden: false,
-          affix: false
-        }
-      },
-      {
-        id: 6,
-        pid: 2,
-        path: 'monitor',
-        name: 'SystemMonitor',
-        component: 'system/monitor/index.vue',
-        meta: {
-          title: '系统监控',
-          icon: 'ri-computer-line',
-          type: 'MENU',
-          sort: 4,
-          keepAlive: true,
           hidden: false,
           affix: false
         }
