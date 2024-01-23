@@ -7,21 +7,26 @@
           src="https://resource.lstaer.com/283df2f7-dc52-4a0a-8110-88cd38746dff?imageView2/1/w/100/h/100"
         />
         <div class="greetBox">
-          <div class="title">晚上好 Custer，开始您一天的工作吧！</div>
+          <div class="title">
+            {{ $t(`msg.workbenches.hello.${greeting}.text1`) }}
+            {{ userStore.userInfo?.username || ''
+            }}{{ $t(`msg.workbenches.hello.${greeting}.text2`)
+            }}{{ $t(`msg.workbenches.hello.${greeting}.text3`) }}
+          </div>
           <div class="desc">今日晴，20℃ - 32℃！</div>
         </div>
       </div>
       <div class="countBox">
         <div class="item">
-          <div class="title">待办事项</div>
+          <div class="title">{{ $t('msg.workbenches.toDo.title') }}</div>
           <div class="num">10</div>
         </div>
         <div class="item">
-          <div class="title">最新通知</div>
+          <div class="title">{{ $t('msg.workbenches.latestNotice') }}</div>
           <div class="num">5</div>
         </div>
         <div class="item">
-          <div class="title">我的项目</div>
+          <div class="title">{{ $t('msg.workbenches.project') }}</div>
           <div class="num">7</div>
         </div>
       </div>
@@ -51,10 +56,25 @@ import ProjectCard from './components/ProjectCard/index.vue';
 import Notification from './components/Notification/index.vue';
 import TodoList from './components/TodoList/index.vue';
 import Department from './components/Department/index.vue';
+import { useUserStore } from '@/store/modules/user';
 import { getCssVariableValue } from '@/utils/css';
+import { ref } from 'vue';
+const userStore = useUserStore();
 
 let normalPadding: string | number = getCssVariableValue('--normal-padding');
 normalPadding = parseFloat(normalPadding.replace('px', ''));
+
+let greeting = ref<string>('');
+const currentHour = new Date().getHours();
+
+if (currentHour >= 6 && currentHour < 12) {
+  greeting.value = 'morning';
+} else if (currentHour >= 12 && currentHour < 19) {
+  greeting.value = 'afteroon';
+} else {
+  greeting.value = 'night';
+}
+
 defineOptions({
   name: 'Workbenches'
 });

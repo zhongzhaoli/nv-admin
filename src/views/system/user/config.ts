@@ -7,6 +7,8 @@ import {
   FilterColumnsProp,
   FilterSelectOptionsProp
 } from '@/components/FilterContainer/types';
+import { useI18n } from '@/hooks/useI18n';
+const { t } = useI18n();
 
 export interface DataProp {
   id: string;
@@ -83,7 +85,7 @@ export const tableExtraColumns: TableExtraColumnsProps = {
 
 export const leftButtons: HandleLeftProps[] = [
   {
-    label: '新增',
+    label: t('msg.create'),
     type: 'primary',
     key: 'create'
   }

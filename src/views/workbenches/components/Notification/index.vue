@@ -1,7 +1,9 @@
 <template>
-  <Card title="最新通知">
+  <Card :title="$t('msg.workbenches.latestNotice')">
     <template #action>
-      <el-button type="primary" link>查看更多</el-button>
+      <el-button type="primary" link>{{
+        $t('msg.workbenches.more')
+      }}</el-button>
     </template>
     <template #default>
       <div class="cardBody">

@@ -12,12 +12,14 @@
     </div>
     <div class="rightBox">
       <div>
-        <el-button circle @click="refresh()">
-          <i class="ri-refresh-line" />
-        </el-button>
+        <el-tooltip :content="$t('msg.tableContainer.refresh')">
+          <el-button circle @click="refresh()">
+            <i class="ri-refresh-line" />
+          </el-button>
+        </el-tooltip>
       </div>
       <div>
-        <el-dropdown trigger="click" @command="tableChangeSize">
+        <el-dropdown trigger="hover" @command="tableChangeSize">
           <el-button circle>
             <i class="ri-text-spacing" />
           </el-button>
@@ -35,9 +37,11 @@
         </el-dropdown>
       </div>
       <div v-if="columns && columns.length">
-        <el-button circle @click="columnSetting">
-          <i class="ri-equalizer-line" />
-        </el-button>
+        <el-tooltip :content="$t('msg.tableContainer.columnSetting')">
+          <el-button circle @click="columnSetting">
+            <i class="ri-equalizer-line" />
+          </el-button>
+        </el-tooltip>
       </div>
       <slot name="right" />
     </div>
@@ -63,10 +67,28 @@ import {
   HandleComponentProps,
   TableColumnsProps
 } from '../types';
-import { ELEMENT_UI_SIZE, TABLE_SIZE_LIST } from '@/constants/app';
+import { ELEMENT_UI_SIZE } from '@/constants/app';
 import { useAppStore } from '@/store/modules/app';
 import { cloneDeep } from 'lodash-es';
+import { useI18n } from '@/hooks/useI18n';
+const { t } = useI18n();
 const appStore = useAppStore();
+
+/** Table Size 列表 */
+const TABLE_SIZE_LIST: { key: ELEMENT_UI_SIZE; label: string }[] = [
+  {
+    key: 'small',
+    label: t('msg.elementUiSize.small')
+  },
+  {
+    key: 'default',
+    label: t('msg.elementUiSize.default')
+  },
+  {
+    key: 'large',
+    label: t('msg.elementUiSize.large')
+  }
+];
 
 const props = defineProps<HandleComponentProps>();
 const emits = defineEmits(['leftButtonClick', 'refresh', 'columnsChange']);

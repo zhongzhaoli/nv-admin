@@ -1,5 +1,11 @@
 <template>
-  <el-tooltip :content="isFullscreen ? '退出全屏' : '全屏展示'">
+  <el-tooltip
+    :content="
+      isFullscreen
+        ? $t('msg.navbar.screenfull.tooltip_close')
+        : $t('msg.navbar.screenfull.tooltip_open')
+    "
+  >
     <div class="navbarFunItem" @click="toggleScreenFull">
       <i v-if="!isFullscreen" class="ri-fullscreen-line" />
       <i v-else class="ri-fullscreen-exit-line" />

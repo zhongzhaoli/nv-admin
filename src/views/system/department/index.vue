@@ -13,7 +13,7 @@
           extraColumns: tableExtraColumns
         }"
         :handle="{
-          leftButtons
+          leftButtons: leftButtons
         }"
         :page="{ total, currentPage, pageSize }"
         @refresh="refresh"
@@ -31,13 +31,13 @@
           />
         </template>
         <template #table-action="{ row }">
-          <el-button type="primary" link @click="editDialogOpen(row)"
-            >编辑</el-button
-          >
-          <el-button type="primary" link>成员</el-button>
-          <el-button type="primary" link @click="deleteDept(row.id)"
-            >删除</el-button
-          >
+          <el-button type="primary" link @click="editDialogOpen(row)">{{
+            $t('msg.edit')
+          }}</el-button>
+          <el-button type="primary" link>{{ $t('msg.member') }}</el-button>
+          <el-button type="primary" link @click="deleteDept(row.id)">{{
+            $t('msg.delete')
+          }}</el-button>
         </template>
       </TableContainer>
     </div>
@@ -75,11 +75,11 @@ import ConfirmDialog from '@/components/ConfirmDialog/index.vue';
 import UploadAvatar from '@/components/UploadAvatar/index.vue';
 import * as API_DEPARTMENT from '@/api/department/index';
 import {
+  DataProp,
   filterColumns,
   tableColumns,
   tableExtraColumns,
-  leftButtons,
-  DataProp
+  leftButtons
 } from './config';
 import { PAGE, PAGE_SIZE } from '@/constants/app';
 import { HandleLeftProps } from '@/components/TableContainer/types';

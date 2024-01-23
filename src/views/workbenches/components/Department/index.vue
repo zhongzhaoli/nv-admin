@@ -1,8 +1,5 @@
 <template>
-  <Card title="部门信息">
-    <template #action>
-      <el-button type="primary" link>查看详细</el-button>
-    </template>
+  <Card :title="$t('msg.workbenches.department.title')">
     <template #default>
       <div class="cardBody">
         <div class="posterBox">
@@ -30,12 +27,15 @@
             </div>
           </div>
           <div class="text">
-            <el-button type="primary" link>共 20 人</el-button>
+            <el-button type="primary" link
+              >{{ $t('msg.workbenches.department.count1') }} 20
+              {{ $t('msg.workbenches.department.count2') }}</el-button
+            >
           </div>
         </div>
       </div>
     </template>
-    <template #footer>
+    <!-- <template #footer>
       <div class="contactBox">
         <div>
           <i class="ri-chat-smile-3-line" />
@@ -46,7 +46,7 @@
           <span>文件共享</span>
         </div>
       </div>
-    </template>
+    </template> -->
   </Card>
 </template>
 <script setup lang="ts">

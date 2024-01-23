@@ -42,8 +42,10 @@
         </el-col>
         <el-col :span="col || COL">
           <el-form-item label-width="0">
-            <el-button type="primary" @click="submit">搜索</el-button>
-            <el-button @click="reset">重置</el-button>
+            <el-button type="primary" @click="submit">{{
+              $t('msg.search')
+            }}</el-button>
+            <el-button @click="reset">{{ $t('msg.reset') }}</el-button>
           </el-form-item>
         </el-col>
       </el-row>

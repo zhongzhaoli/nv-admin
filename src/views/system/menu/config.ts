@@ -5,6 +5,8 @@ import {
   TableExtraConfigProps
 } from '@/components/TableContainer/types';
 import { _RouteRecordBase } from 'vue-router';
+import { useI18n } from '@/hooks/useI18n';
+const { t } = useI18n();
 
 export interface DataProp extends _RouteRecordBase {
   id: number | string;
@@ -72,7 +74,7 @@ export const tableExtraConfig: TableExtraConfigProps = {
 
 export const leftButtons: HandleLeftProps[] = [
   {
-    label: '新增',
+    label: t('msg.create'),
     type: 'primary',
     key: 'create'
   }

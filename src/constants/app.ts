@@ -5,25 +5,14 @@ export const SIDEBAR_OPENED: boolean = true;
 /** 侧边栏关闭状态常量 */
 export const SIDEBAR_CLOSED: boolean = false;
 
+/** 语言 */
+export type LANGUAGE = 'zh' | 'en';
+export const DEFAULT_LANGUAGE: LANGUAGE = 'zh';
+
 /** Element Size */
 export type ELEMENT_UI_SIZE = 'large' | 'small' | 'default';
 /** Table Size */
 export const TABLE_SIZE: ELEMENT_UI_SIZE = 'large';
-/** Table Size 列表 */
-export const TABLE_SIZE_LIST: { key: ELEMENT_UI_SIZE; label: string }[] = [
-  {
-    key: 'small',
-    label: '紧凑'
-  },
-  {
-    key: 'default',
-    label: '普通'
-  },
-  {
-    key: 'large',
-    label: '宽松'
-  }
-];
 
 /** Pagination Layout */
 export const PAGINATION_LAYOUT: string =

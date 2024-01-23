@@ -29,13 +29,13 @@
           />
         </template>
         <template #table-action="{ row }">
-          <el-button type="primary" link @click="editDialogOpen(row)"
-            >编辑</el-button
-          >
-          <el-button type="primary" link>权限</el-button>
-          <el-button type="primary" link @click="deleteRole(row.id)"
-            >删除</el-button
-          >
+          <el-button type="primary" link @click="editDialogOpen(row)">{{
+            $t('msg.edit')
+          }}</el-button>
+          <el-button type="primary" link>{{ $t('msg.permission') }}</el-button>
+          <el-button type="primary" link @click="deleteRole(row.id)">{{
+            $t('msg.delete')
+          }}</el-button>
         </template>
       </TableContainer>
     </div>

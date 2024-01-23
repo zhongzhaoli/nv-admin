@@ -1,5 +1,5 @@
 <template>
-  <el-tooltip content="路由搜索">
+  <el-tooltip :content="$t('msg.navbar.search.tooltip')">
     <div class="navbarFunItem">
       <i class="ri-menu-search-line" />
     </div>

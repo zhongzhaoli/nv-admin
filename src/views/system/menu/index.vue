@@ -27,12 +27,12 @@
           <el-tag type="danger" v-else>否</el-tag>
         </template>
         <template #table-action="{ row }">
-          <el-button type="primary" link @click="editDialogOpen(row)"
-            >编辑</el-button
-          >
-          <el-button type="primary" link @click="deleteMenu(row)"
-            >删除</el-button
-          >
+          <el-button type="primary" link @click="editDialogOpen(row)">{{
+            $t('msg.create')
+          }}</el-button>
+          <el-button type="primary" link @click="deleteMenu(row)">{{
+            $t('msg.delete')
+          }}</el-button>
         </template>
       </TableContainer>
     </div>

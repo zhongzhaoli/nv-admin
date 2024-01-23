@@ -5,8 +5,12 @@
     </div>
     <template #dropdown>
       <el-dropdown-menu>
-        <el-dropdown-item command="profile"> Profile </el-dropdown-item>
-        <el-dropdown-item command="logout"> Logout </el-dropdown-item>
+        <el-dropdown-item command="profile">
+          {{ $t('msg.navbar.userDropdown.profile') }}
+        </el-dropdown-item>
+        <el-dropdown-item command="logout">
+          {{ $t('msg.navbar.userDropdown.logout') }}
+        </el-dropdown-item>
       </el-dropdown-menu>
     </template>
   </el-dropdown>

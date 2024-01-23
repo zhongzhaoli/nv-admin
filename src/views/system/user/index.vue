@@ -38,7 +38,7 @@
               data: tableData,
               extraColumns: tableExtraColumns
             }"
-            :handle="{ leftButtons: leftButtons }"
+            :handle="{ leftButtons }"
             :page="{ total, currentPage, pageSize }"
             @pageChange="pageChange"
             @refresh="refresh"
@@ -55,13 +55,13 @@
               />
             </template>
             <template #table-action="{ row }">
-              <el-button type="primary" link @click="editDialogOpen(row)"
-                >编辑</el-button
-              >
-              <el-button type="primary" link>角色</el-button>
-              <el-button type="primary" link @click="deleteUser(row)"
-                >删除</el-button
-              >
+              <el-button type="primary" link @click="editDialogOpen(row)">{{
+                $t('msg.edit')
+              }}</el-button>
+              <el-button type="primary" link>{{ $t('msg.role') }}</el-button>
+              <el-button type="primary" link @click="deleteUser(row)">{{
+                $t('msg.delete')
+              }}</el-button>
             </template>
           </TableContainer>
         </div>
@@ -118,11 +118,11 @@ import { PAGE_SIZE, PAGE } from '@/constants/app';
 import * as API_USERS from '@/api/users';
 import { useDeptDataList } from '@/hooks/useDeptDataList';
 import {
+  DataProp,
+  filterColumns,
   tableColumns,
   tableExtraColumns,
-  leftButtons,
-  filterColumns,
-  DataProp
+  leftButtons
 } from './config';
 import { cloneDeep } from 'lodash-es';
 import { ElMessage } from 'element-plus';

@@ -1,7 +1,9 @@
 <template>
-  <Card title="待办事项">
+  <Card :title="$t('msg.workbenches.toDo.title')">
     <template #action>
-      <el-button type="primary" link>查看全部</el-button>
+      <el-button type="primary" link>{{
+        $t('msg.workbenches.refresh')
+      }}</el-button>
     </template>
     <template #default>
       <div class="cardBody">
@@ -19,7 +21,10 @@
     </template>
     <template #footer>
       <div class="inputBox">
-        <el-input placeholder="请输入事项" v-model="todoText" />
+        <el-input
+          :placeholder="$t('msg.workbenches.toDo.placeholder')"
+          v-model="todoText"
+        />
       </div>
     </template>
   </Card>

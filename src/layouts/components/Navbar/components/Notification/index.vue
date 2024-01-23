@@ -1,5 +1,5 @@
 <template>
-  <el-tooltip content="信息通知">
+  <el-tooltip :content="$t('msg.navbar.notification.tooltip')">
     <div class="navbarFunItem">
       <i class="ri-notification-4-line" />
     </div>

@@ -14,18 +14,18 @@
             <el-form-item>
               <el-input
                 v-model="loginPayload.username"
-                placeholder="请输入用户名"
+                :placeholder="$t('msg.login.usernamePlaceholder')"
               />
             </el-form-item>
             <el-form-item>
               <el-input
                 type="password"
                 v-model="loginPayload.password"
-                placeholder="请输入密码"
+                :placeholder="$t('msg.login.passwordPlaceholder')"
               />
               <div class="checkBox">
                 <el-checkbox>
-                  <span class="remember">记住密码</span>
+                  <span class="remember">{{ $t('msg.login.rememberMe') }}</span>
                 </el-checkbox>
               </div>
             </el-form-item>
@@ -37,7 +37,7 @@
                 :loading="loading"
                 @click="loginHandle"
               >
-                登录
+                {{ $t('msg.login.btnText') }}
               </el-button>
             </el-form-item>
           </el-form>

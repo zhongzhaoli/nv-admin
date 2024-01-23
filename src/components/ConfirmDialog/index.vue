@@ -18,8 +18,11 @@
 </template>
 <script setup lang="ts">
 import { withDefaults } from 'vue';
-const CONFIRM_BTN_TEXT = '确认';
-const CANCEL_BTN_TEXT = '关闭';
+import { useI18n } from 'vue-i18n';
+
+const i18n = useI18n();
+const CONFIRM_BTN_TEXT = i18n.t('msg.confirm');
+const CANCEL_BTN_TEXT = i18n.t('msg.close');
 
 interface ComponentProps {
   modelValue: boolean;

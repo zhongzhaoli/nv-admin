@@ -7,6 +7,8 @@ import {
   TableColumnsProps,
   TableExtraColumnsProps
 } from '@/components/TableContainer/types';
+import { useI18n } from '@/hooks/useI18n';
+const { t } = useI18n();
 
 export interface DataProp {
   id: string;
@@ -76,7 +78,7 @@ export const tableColumns: TableColumnsProps[] = [
   {
     prop: 'action',
     label: '操作',
-    width: '180',
+    width: '190',
     slot: true,
     fixed: 'right',
     align: 'center'
@@ -113,7 +115,7 @@ export const tableExtraColumns: TableExtraColumnsProps = {
 
 export const leftButtons: HandleLeftProps[] = [
   {
-    label: '新增',
+    label: t('msg.create'),
     type: 'primary',
     key: 'create'
   }
