@@ -37,7 +37,7 @@ import DealCard from './components/DealCard/index.vue';
 import StoreVisitCard from './components/StoreVisitCard/index.vue';
 import { getCssVariableValue } from '@/utils/css';
 defineOptions({
-  name: 'DashboardIndex'
+  name: 'Dashboard'
 });
 let normalPadding: string | number = getCssVariableValue('--normal-padding');
 normalPadding = parseFloat(normalPadding.replace('px', ''));
