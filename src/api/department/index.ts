@@ -22,6 +22,13 @@ export function getDeptList(params: DeptListParams): Promise<ResponsePageJson> {
   });
 }
 
+export function getAllDeptList<T>(): Promise<ResponseJson<T>> {
+  return request({
+    url: '/system/department',
+    method: 'get'
+  });
+}
+
 export function createDept(data: DeptDto): Promise<ResponseJson> {
   return request({
     url: '/system/department',

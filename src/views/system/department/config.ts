@@ -42,6 +42,13 @@ export const tableColumns: TableColumnsProps[] = [
     align: 'center'
   },
   {
+    label: '描述',
+    prop: 'description',
+    width: '150',
+    align: 'center',
+    showOverflowTooltip: true
+  },
+  {
     label: '状态',
     prop: 'status',
     slot: true,
@@ -109,10 +116,5 @@ export const leftButtons: HandleLeftProps[] = [
     label: '新增',
     type: 'primary',
     key: 'create'
-  },
-  {
-    label: '删除',
-    type: 'danger',
-    key: 'delete'
   }
 ];

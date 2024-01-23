@@ -7,9 +7,11 @@ export interface UsersListParams {
   pageSize?: number;
   username?: string;
   status?: number;
+  deptId?: string;
 }
 
 export interface UsersDto {
+  deptId: string | number;
   username: string;
   avatar: string;
   phone: string;

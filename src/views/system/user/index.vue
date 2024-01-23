@@ -1,43 +1,71 @@
 <template>
   <div class="container">
-    <FilterContainer
-      v-model="filterObject"
-      :columns="filterColumns"
-      :submit-fn="getListFun"
-    />
-    <div class="tableBox" v-loading="loading">
-      <TableContainer
-        :table="{
-          columns: tableColumns,
-          data: tableData,
-          extraColumns: tableExtraColumns
-        }"
-        :handle="{ leftButtons: leftButtons }"
-        :page="{ total, currentPage, pageSize }"
-        @pageChange="pageChange"
-        @refresh="refresh"
-        @handleLeftClick="handleLeftClick"
-      >
-        <template #table-avatar="{ row }">
-          <el-avatar :src="row.avatar" :size="32" />
-        </template>
-        <template #table-status="{ row }">
-          <el-switch
-            :active-value="1"
-            :inactive-value="2"
-            v-model="row.status"
-          />
-        </template>
-        <template #table-action="{ row }">
-          <el-button type="primary" link @click="editDialogOpen(row)"
-            >编辑</el-button
+    <div class="flexBox">
+      <div class="departmentBox">
+        <div class="department" v-loading="deptLoading">
+          <div class="header flex-center">
+            <div class="title">部门列表</div>
+            <div class="icon flex-center" @click="deptRefresh">
+              <i class="ri-restart-line" />
+            </div>
+          </div>
+          <div class="body">
+            <el-tree
+              node-key="id"
+              :data="deptList"
+              :props="{ label: 'name' }"
+              :expand-on-click-node="false"
+              :current-node-key="deptId"
+              :highlight-current="true"
+              default-expand-all
+              @node-click="deptChange"
+              check-strictly
+            />
+          </div>
+        </div>
+      </div>
+      <div class="user">
+        <FilterContainer
+          :col="8"
+          v-model="filterObject"
+          :columns="filterColumns"
+          :submit-fn="getListFun"
+        />
+        <div class="tableBox" v-loading="loading">
+          <TableContainer
+            :table="{
+              columns: tableColumns,
+              data: tableData,
+              extraColumns: tableExtraColumns
+            }"
+            :handle="{ leftButtons: leftButtons }"
+            :page="{ total, currentPage, pageSize }"
+            @pageChange="pageChange"
+            @refresh="refresh"
+            @handleLeftClick="handleLeftClick"
           >
-          <el-button type="primary" link>角色</el-button>
-          <el-button type="primary" link @click="deleteUser(row)"
-            >删除</el-button
-          >
-        </template>
-      </TableContainer>
+            <template #table-avatar="{ row }">
+              <el-avatar :src="row.avatar" :size="32" />
+            </template>
+            <template #table-status="{ row }">
+              <el-switch
+                :active-value="1"
+                :inactive-value="2"
+                v-model="row.status"
+              />
+            </template>
+            <template #table-action="{ row }">
+              <el-button type="primary" link @click="editDialogOpen(row)"
+                >编辑</el-button
+              >
+              <el-button type="primary" link>角色</el-button>
+              <el-button type="primary" link @click="deleteUser(row)"
+                >删除</el-button
+              >
+            </template>
+          </TableContainer>
+        </div>
+      </div>
     </div>
     <ConfirmDialog
       v-model="editVisible"
@@ -50,6 +78,15 @@
         <div class="avatarBox flex-center">
           <UploadAvatar v-model="editFormValue.avatar" />
         </div>
+        <el-form-item label="所属部门">
+          <el-tree-select
+            node-key="id"
+            v-model="editFormValue.deptId"
+            check-strictly
+            :data="deptList"
+            :props="{ label: 'name' }"
+          />
+        </el-form-item>
         <el-form-item label="用户名：">
           <el-input
             v-model="editFormValue.username"
@@ -79,6 +116,7 @@ import ConfirmDialog from '@/components/ConfirmDialog/index.vue';
 import UploadAvatar from '@/components/UploadAvatar/index.vue';
 import { PAGE_SIZE, PAGE } from '@/constants/app';
 import * as API_USERS from '@/api/users';
+import { useDeptDataList } from '@/hooks/useDeptDataList';
 import {
   tableColumns,
   tableExtraColumns,
@@ -99,6 +137,12 @@ const total = ref(0);
 const tableData = ref<DataProp[]>([]);
 const loading = ref<boolean>(true);
 const filterObject = ref<any>({});
+const deptId = ref<string | number>(0);
+const {
+  deptList,
+  loading: deptLoading,
+  refresh: deptRefresh
+} = useDeptDataList(true);
 
 // 获取用户列表
 const getListFun = async () => {
@@ -107,6 +151,7 @@ const getListFun = async () => {
     const { data } = await API_USERS.getUsersList({
       page: currentPage.value,
       pageSize: pageSize.value,
+      deptId: deptId.value,
       ...filterObject.value
     });
     currentPage.value = data.page;
@@ -146,7 +191,9 @@ const openDialog = (title: string) => {
 const handleLeftClick = (obj: { item: HandleLeftProps }) => {
   const { item } = obj;
   if (item.key === 'create') {
-    editFormValue.value = {};
+    editFormValue.value = {
+      deptId: deptId.value
+    };
     openDialog('创建用户');
   }
 };
@@ -190,22 +237,75 @@ const deleteUser = (row: DataProp) => {
   });
 };
 
+// 部门点击
+const deptChange = (val: any) => {
+  deptId.value = val.id;
+  getListFun();
+};
+
 getListFun();
 </script>
 <style lang="scss" scoped>
 .container {
-  padding: var(--normal-padding);
-  .searchBox {
-    background-color: #fff;
-    border-radius: 5px;
-    border: 1px solid var(--normal-border-color);
-    padding: var(--normal-padding);
-    padding-bottom: 0;
+  height: 100%;
+  min-height: 100%;
+  position: relative;
+  overflow: hidden;
 
-    :deep(.el-form-item) {
-      margin-bottom: var(--normal-padding);
+  & > .flexBox {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    & > .departmentBox {
+      position: fixed;
+      height: calc(100vh - var(--navbar-height) - var(--tagsView-height));
+      width: 250px;
+      padding: var(--normal-padding);
+      padding-right: 0;
+      & > .department {
+        height: 100%;
+        width: 100%;
+        background-color: #fff;
+        border-radius: 5px;
+        border: 1px solid var(--normal-border-color);
+        overflow: auto;
+        & > .header {
+          padding-bottom: var(--normal-padding);
+          justify-content: space-between;
+          padding: var(--normal-padding);
+          border-bottom: 1px solid var(--normal-border-color);
+          & > .title {
+            font-size: 16px;
+            font-weight: bold;
+          }
+          & > .icon {
+            color: #eaeaea;
+            font-weight: bold;
+            width: 25px;
+            height: 25px;
+            transition: background-color 0.3s;
+            border-radius: 5px;
+            font-size: 12px;
+            color: var(--navbar-function-icon-color);
+            background-color: rgba(0, 0, 0, 0.06);
+            cursor: pointer;
+          }
+        }
+        & > .body {
+          padding: var(--normal-padding);
+        }
+      }
+    }
+    & > .user {
+      width: calc(100% - 250px - var(--normal-padding));
+      margin-left: calc(250px + var(--normal-padding));
+      height: 100%;
+      overflow: auto;
+      padding: var(--normal-padding);
+      padding-left: 0;
     }
   }
+
   .tableBox {
     background-color: #fff;
     border-radius: 5px;

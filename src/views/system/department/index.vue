@@ -55,12 +55,12 @@
         <el-form-item label="部门名称：">
           <el-input v-model="editFormValue.name" placeholder="请输入部门名称" />
         </el-form-item>
-        <el-form-item label="备注：">
+        <el-form-item label="描述：">
           <el-input
             type="textarea"
             v-model="editFormValue.description"
             :rows="4"
-            placeholder="请输入备注"
+            placeholder="请输入描述"
           />
         </el-form-item>
       </el-form>

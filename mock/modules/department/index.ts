@@ -16,34 +16,57 @@ export default [
           msg: '用户未登录'
         } as ResponsePageJson;
       }
-      const pageSize = parseInt(query.pageSize) || 10;
-      const page = parseInt(query.page) || 1;
-      const total = 10;
-      const list = Mock.mock({
-        [`list|${pageSize}`]: [
-          {
-            id: '@id',
-            name: '@cname',
-            avatar: '@image',
-            createUser: '@cname',
-            memberCount: '@integer(1, 100)',
-            description: '@cword(5, 20)',
-            status: '@pick([1, 2])',
-            createTime: '@datetime',
-            updateTime: '@datetime'
-          }
-        ]
-      }).list;
-      return {
-        code: ResponseCode.SUCCESS,
-        data: {
-          list,
-          total,
-          page,
-          pageSize
-        },
-        msg: '请求成功'
-      };
+      if (query.page) {
+        const pageSize = parseInt(query.pageSize) || 10;
+        const page = parseInt(query.page) || 1;
+        const total = 10;
+        const list = Mock.mock({
+          [`list|${pageSize}`]: [
+            {
+              id: '@id',
+              name: '@cname',
+              avatar: '@image',
+              createUser: '@cname',
+              memberCount: '@integer(1, 100)',
+              description: '@cword(5, 20)',
+              status: '@pick([1, 2])',
+              createTime: '@datetime',
+              updateTime: '@datetime'
+            }
+          ]
+        }).list;
+        return {
+          code: ResponseCode.SUCCESS,
+          data: {
+            list,
+            total,
+            page,
+            pageSize
+          },
+          msg: '请求成功'
+        };
+      } else {
+        const list = Mock.mock({
+          'list|15': [
+            {
+              id: '@id',
+              name: '@cname',
+              avatar: '@image',
+              createUser: '@cname',
+              memberCount: '@integer(1, 100)',
+              description: '@cword(5, 20)',
+              status: '@pick([1, 2])',
+              createTime: '@datetime',
+              updateTime: '@datetime'
+            }
+          ]
+        }).list;
+        return {
+          code: ResponseCode.SUCCESS,
+          data: list,
+          msg: '请求成功'
+        };
+      }
     }
   },
   {
