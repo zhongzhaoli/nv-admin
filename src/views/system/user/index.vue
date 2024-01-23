@@ -47,7 +47,7 @@
       @submit="editFun"
     >
       <el-form label-position="left" label-width="85px">
-        <div class="avatarBox">
+        <div class="avatarBox flex-center">
           <UploadAvatar v-model="editFormValue.avatar" />
         </div>
         <el-form-item label="用户名：">
@@ -76,7 +76,7 @@ import TableContainer from '@/components/TableContainer/index.vue';
 import { HandleLeftProps } from '@/components/TableContainer/types';
 import FilterContainer from '@/components/FilterContainer/index.vue';
 import ConfirmDialog from '@/components/ConfirmDialog/index.vue';
-import UploadAvatar from './components/UploadAvatar.vue';
+import UploadAvatar from '@/components/UploadAvatar/index.vue';
 import { PAGE_SIZE, PAGE } from '@/constants/app';
 import * as API_USERS from '@/api/users';
 import {
@@ -236,8 +236,6 @@ getListFun();
   }
 
   .avatarBox {
-    display: flex;
-    justify-content: center;
     margin-bottom: 24px;
   }
 }

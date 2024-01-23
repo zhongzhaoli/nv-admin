@@ -28,7 +28,7 @@ export const tableColumns: TableColumnsProps[] = [
     label: '状态',
     prop: 'status',
     slot: true,
-    minWidth: '140',
+    width: '120',
     align: 'center'
   },
   {
