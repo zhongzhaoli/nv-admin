@@ -1,6 +1,7 @@
 <template>
   <div
     class="uploadAvatarComponent"
+    :class="shape"
     :style="{
       width: size || DEFAULT_SIZE + 'px',
       height: size || DEFAULT_SIZE + 'px'
@@ -19,7 +20,7 @@
     <div class="uploadBtn" v-else>
       <el-upload
         class="avatar-uploader"
-        action="/common/fileUpload"
+        :action="action"
         :headers="uploadHeader"
         :show-file-list="false"
         :before-upload="beforeUpload"
@@ -35,17 +36,19 @@
 <script setup lang="ts">
 import { computed, ref, withDefaults } from 'vue';
 import { useUserStore } from '@/store/modules/user';
-import { ResponseCode, ResponseJson } from '@/config/request';
+import { baseURL, ResponseCode, ResponseJson } from '@/config/request';
 const DEFAULT_SIZE = 80;
 const userStore = useUserStore();
 
 interface ComponentProps {
   modelValue: string;
+  shape?: 'circle' | 'square';
   size?: number;
 }
 
 withDefaults(defineProps<ComponentProps>(), {
-  modelValue: ''
+  modelValue: '',
+  shape: 'circle'
 });
 const emits = defineEmits(['update:modelValue']);
 
@@ -54,6 +57,7 @@ const uploadHeader = computed(() => {
     Authorization: `Bearer ${userStore.token}`
   };
 });
+const action = baseURL + '/common/fileUpload';
 const loading = ref<boolean>(false);
 
 // 上传之前
@@ -82,10 +86,16 @@ const reset = () => {
 .uploadAvatarComponent {
   overflow: hidden;
   border-radius: 50%;
+  &.circle {
+    border-radius: 50%;
+  }
+  &.square {
+    border-radius: 8px;
+  }
   & > .uploadBtn {
     width: 100%;
     height: 100%;
-    border-radius: 50%;
+    border-radius: inherit;
     border: 1px rgba(0, 0, 0, 0.1) dashed;
     font-size: 28px;
     display: flex;
