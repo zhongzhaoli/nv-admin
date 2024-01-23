@@ -27,7 +27,7 @@ export default {
         morning: {
           text1: 'Good morning',
           text2: ',',
-          text3: "Start your day's work!"
+          text3: " Start your day's work!"
         },
         afternoon: {
           text1: 'Good afternoon',
