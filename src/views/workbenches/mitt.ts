@@ -1,4 +1,5 @@
 import mitt, { type Handler } from 'mitt';
+import { onBeforeUnmount } from 'vue';
 
 const emitter = mitt();
 const key = Symbol('WORKBENCHES_DATA_CHANGE');
@@ -17,6 +18,10 @@ const dataChange = (prop: Prop) => {
 const addListener = (callback: (prop: Prop) => void) => {
   emitter.on(key, callback as Handler);
 };
+
+onBeforeUnmount(() => {
+  emitter.off(key);
+});
 
 export default {
   dataChange,

@@ -1,4 +1,5 @@
 import mitt, { type Handler } from 'mitt';
+import { onBeforeUnmount } from 'vue';
 
 const emitter = mitt();
 const key = Symbol('TODOLIST_CHANGE');
@@ -14,6 +15,10 @@ const dataChange = <T>(prop: Prop<T>) => {
 const addListener = <T>(callback: (prop: Prop<T>) => void) => {
   emitter.on(key, callback as Handler);
 };
+
+onBeforeUnmount(() => {
+  emitter.off(key);
+});
 
 export default {
   dataChange,
