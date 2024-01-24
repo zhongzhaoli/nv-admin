@@ -16,7 +16,7 @@
           </template>
         </draggable>
         <div class="tag" v-if="listData.length && endData.length">
-          <el-tag type="info">已完成</el-tag>
+          <el-tag disable-transitions type="info">已完成</el-tag>
         </div>
         <div class="item" v-for="item in endData" :key="item.id">
           <Item
