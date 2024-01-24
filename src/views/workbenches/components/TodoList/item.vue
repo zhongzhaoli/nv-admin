@@ -21,6 +21,7 @@ const activeChange = (val: boolean) => {
 };
 </script>
 <style lang="scss" scoped>
+@import '@/styles/mixins.scss';
 .needDoComponent {
   display: flex;
   align-items: center;
@@ -28,12 +29,10 @@ const activeChange = (val: boolean) => {
   & > .title {
     font-size: 14px;
     color: #424242;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
+    @include text-ellipsis(2);
   }
   & > .checkBox {
+    margin-left: 20px;
     & > .item {
       transform: scale(1.3);
       :deep(.el-checkbox__inner) {
