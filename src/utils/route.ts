@@ -10,7 +10,6 @@ export const isLoginWhiteList = (path: string): boolean => {
 
 // 注册路由
 export const addRoutes = (routes: RouteRecordRaw[]) => {
-  console.log(routes);
   routes.forEach((route) => {
     router.addRoute(route);
   });

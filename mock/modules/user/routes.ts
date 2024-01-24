@@ -33,7 +33,6 @@ const routes = [
         meta: {
           keepAlive: true,
           title: '待办事项',
-          hidden: true,
           icon: 'ri-task-line'
         }
       }

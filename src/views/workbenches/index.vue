@@ -19,7 +19,7 @@
       <div class="countBox">
         <div class="item">
           <div class="title">{{ $t('msg.workbenches.toDo.title') }}</div>
-          <div class="num">10</div>
+          <div class="num">{{ todoListNum }}</div>
         </div>
         <div class="item">
           <div class="title">{{ $t('msg.workbenches.latestNotice') }}</div>
@@ -58,6 +58,7 @@ import TodoList from './components/TodoList/index.vue';
 import Department from './components/Department/index.vue';
 import { useUserStore } from '@/store/modules/user';
 import { getCssVariableValue } from '@/utils/css';
+import WorkbenchesMitt, { type Prop } from './mitt';
 import { ref } from 'vue';
 const userStore = useUserStore();
 
@@ -74,6 +75,11 @@ if (currentHour >= 6 && currentHour < 12) {
 } else {
   greeting.value = 'night';
 }
+
+const todoListNum = ref<number>(0);
+WorkbenchesMitt.addListener((prop: Prop) => {
+  if (prop.key === 'todoList') todoListNum.value = prop.value;
+});
 
 defineOptions({
   name: 'Workbenches'

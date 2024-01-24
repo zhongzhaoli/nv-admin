@@ -32,7 +32,7 @@ const menus = [
       icon: 'ri-task-line',
       type: 'SINGLEMENU',
       sort: 1,
-      hidden: true,
+      hidden: false,
       affix: false
     }
   },

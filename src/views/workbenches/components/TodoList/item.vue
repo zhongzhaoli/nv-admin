@@ -2,21 +2,23 @@
   <div class="needDoComponent">
     <div class="title">{{ toDo.title }}</div>
     <div class="checkBox">
-      <el-checkbox class="item" v-model="active" />
+      <el-checkbox class="item" v-model="active" @change="activeChange" />
     </div>
   </div>
 </template>
 <script setup lang="ts">
 import { ref } from 'vue';
-export interface Todo {
-  title: string;
-  active: boolean;
-}
+import { type Todo } from '@/views/todoList/components/item.vue';
 interface TodoProps {
   toDo: Todo;
 }
-defineProps<TodoProps>();
-const active = ref<boolean>(false);
+const props = defineProps<TodoProps>();
+const emits = defineEmits(['change', 'remove', 'edit']);
+const active = ref<boolean>(props.toDo.active);
+
+const activeChange = (val: boolean) => {
+  emits('change', { ...props.toDo, active: val });
+};
 </script>
 <style lang="scss" scoped>
 .needDoComponent {
@@ -26,6 +28,10 @@ const active = ref<boolean>(false);
   & > .title {
     font-size: 14px;
     color: #424242;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
   & > .checkBox {
     & > .item {
