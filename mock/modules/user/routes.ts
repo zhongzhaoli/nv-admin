@@ -22,6 +22,24 @@ const routes = [
     ]
   },
   {
+    path: '/',
+    name: 'Root',
+    component: 'Layout',
+    children: [
+      {
+        path: 'todoList',
+        name: 'TodoList',
+        component: 'todoList/index.vue',
+        meta: {
+          keepAlive: true,
+          title: '待办事项',
+          hidden: true,
+          icon: 'ri-task-line'
+        }
+      }
+    ]
+  },
+  {
     path: '/system',
     name: 'System',
     component: 'Layout',

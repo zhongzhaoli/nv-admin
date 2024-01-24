@@ -18,7 +18,7 @@ export const useRouterStore = defineStore('router', () => {
 
   const getRoutes = async () => {
     const data = (await getRoutesApi()) as ResponseJson<any>;
-    // 模拟异步获取路由
+    // 组件的动态引入
     asyncRoutes.value = routesComponentInstance(data.data);
     // 处理数据
     handledRoutes.value = handleRoutes([...staticRoutes, ...asyncRoutes.value]);

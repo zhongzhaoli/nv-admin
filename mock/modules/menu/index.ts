@@ -21,6 +21,22 @@ const menus = [
     }
   },
   {
+    id: 7,
+    pid: 0,
+    path: 'todoList',
+    name: 'TodoList',
+    component: 'todoList/index.vue',
+    meta: {
+      keepAlive: true,
+      title: '待办事项',
+      icon: 'ri-task-line',
+      type: 'SINGLEMENU',
+      sort: 1,
+      hidden: true,
+      affix: false
+    }
+  },
+  {
     id: 2,
     pid: 0,
     path: '/system',

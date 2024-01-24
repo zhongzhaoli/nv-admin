@@ -10,6 +10,7 @@ export const isLoginWhiteList = (path: string): boolean => {
 
 // 注册路由
 export const addRoutes = (routes: RouteRecordRaw[]) => {
+  console.log(routes);
   routes.forEach((route) => {
     router.addRoute(route);
   });
@@ -51,6 +52,7 @@ const dynamicImport = (
 
 // 合并相同path的children r1为主，r2合并入r1
 export const mergeRoutes = (r1: RouteRecordRaw[], r2: RouteRecordRaw[]) => {
+  // 第一步：静动态合并
   r2.forEach((route2: RouteRecordRaw) => {
     const route1 = r1.find((route) => route.path === route2.path);
     if (route1) {
@@ -63,7 +65,18 @@ export const mergeRoutes = (r1: RouteRecordRaw[], r2: RouteRecordRaw[]) => {
       route1.redirect = route1.children[0].path;
     }
   });
-  return r1;
+  // 第二步：动态同path合并（第一级）
+  const newR1: RouteRecordRaw[] = [];
+  r1.forEach((item) => {
+    const { path, children } = item;
+    const route = newR1.find((v) => v.path === path);
+    if (route) {
+      route.children = [...(route.children || []), ...(children || [])];
+    } else {
+      newR1.push(item);
+    }
+  });
+  return newR1;
 };
 
 // 处理侧边栏展示路由数据
@@ -88,7 +101,9 @@ export const handleRoutes = (
     ) {
       // 只取第一个子路由
       const childRoute = handleRoutes(route.children, newPath)[0];
-      res.push(childRoute);
+      if (childRoute) {
+        res.push(childRoute);
+      }
     } else {
       const tmp = { ...route, path: newPath };
       if (tmp.children) {

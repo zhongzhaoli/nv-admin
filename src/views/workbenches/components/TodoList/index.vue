@@ -2,7 +2,7 @@
   <Card :title="$t('msg.workbenches.toDo.title')">
     <template #action>
       <el-button type="primary" link>{{
-        $t('msg.workbenches.refresh')
+        $t('msg.workbenches.more')
       }}</el-button>
     </template>
     <template #default>
