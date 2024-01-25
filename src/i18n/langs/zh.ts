@@ -19,7 +19,12 @@ export default {
         tooltip_close: '退出全屏'
       },
       search: {
-        tooltip: '路由搜索'
+        tooltip: '菜单搜索',
+        placeholder: '搜索',
+        confirm: '确认',
+        shift: '切换',
+        close: '关闭',
+        noData: '暂无搜索结果'
       }
     },
     workbenches: {

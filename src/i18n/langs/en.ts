@@ -19,7 +19,12 @@ export default {
         tooltip_close: 'Exit Full Screen'
       },
       search: {
-        tooltip: 'Route Search'
+        tooltip: 'Menu Search',
+        placeholder: 'Search',
+        noData: 'No search results yet',
+        confirm: 'Confirm',
+        shift: 'Switch',
+        close: 'Close'
       }
     },
     workbenches: {
