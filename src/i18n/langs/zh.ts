@@ -47,7 +47,8 @@ export default {
       },
       toDo: {
         title: '待办事项',
-        placeholder: '请输入事项'
+        placeholder: '请输入待办事项',
+        noData: '暂无待办事项'
       },
       latestNotice: '最新公告',
       project: '我的项目',
@@ -72,7 +73,9 @@ export default {
       large: '宽松'
     },
     todoList: {
-      title: '我的待办事项'
+      title: '我的待办事项',
+      noData: '暂无待办事项',
+      placeholder: '请输入待办事项'
     },
     messageBox: {
       confirm: '确认',

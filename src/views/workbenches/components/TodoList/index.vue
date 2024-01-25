@@ -7,7 +7,7 @@
     </template>
     <template #default>
       <div class="cardBody">
-        <el-scrollbar class="scrollbar">
+        <el-scrollbar class="scrollbar" v-if="listData.length">
           <div class="listBox">
             <draggable v-model="listData" item-key="id">
               <template #item="{ element }">
@@ -16,6 +16,9 @@
             </draggable>
           </div>
         </el-scrollbar>
+        <div class="noData flex-center" v-else>
+          {{ $t('msg.workbenches.toDo.noData') }}
+        </div>
       </div>
     </template>
     <template #footer>
@@ -39,8 +42,11 @@ import { useRouter } from 'vue-router';
 import draggable from 'vuedraggable';
 import * as API_TODOLIST from '@/api/todoList/index';
 import { todoListDto } from '@/api/todoList/index';
-import WorkbenchesMitt from '../../mitt';
-import TodoListMitt from '@/views/todoList/mitt';
+import { useMitt } from '@/hooks/useMitt';
+import { TODOLIST_MITT_KEY, WORKBENCHES_MITT_KEY } from '@/constants/mittKey';
+const { addListener } = useMitt(TODOLIST_MITT_KEY);
+const { send } = useMitt(WORKBENCHES_MITT_KEY);
+
 const router = useRouter();
 
 const todoText = ref<string>('');
@@ -50,7 +56,7 @@ const toAll = () => {
   router.push('/todoList');
 };
 
-TodoListMitt.addListener<Todo[]>((val: Todo[]) => {
+addListener((val: Todo[]) => {
   listData.value = val;
 });
 
@@ -60,7 +66,7 @@ const getListFun = async (load: boolean = true) => {
   try {
     const { data } = await API_TODOLIST.getTodoList<ApiDataProps>();
     listData.value = data!.list;
-    WorkbenchesMitt.dataChange({
+    send({
       key: 'todoList',
       value: listData.value.length
     });
@@ -110,6 +116,12 @@ getListFun();
         }
       }
     }
+  }
+  & > .noData {
+    height: 100%;
+    width: 100%;
+    color: #969faf;
+    font-size: 14px;
   }
 }
 .inputBox {

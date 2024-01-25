@@ -47,7 +47,8 @@ export default {
       },
       toDo: {
         title: 'To-do List',
-        placeholder: 'To do'
+        placeholder: 'To do Something',
+        noData: 'No to-do items'
       },
       latestNotice: 'Latest Notice',
       project: 'My Project',
@@ -72,7 +73,9 @@ export default {
       large: 'Large'
     },
     todoList: {
-      title: 'My To-do List'
+      title: 'My To-do List',
+      noData: 'No to-do items',
+      placeholder: 'To do Something'
     },
     messageBox: {
       confirm: 'Confirm',

@@ -28,10 +28,13 @@
         </div>
       </div>
       <div class="loading" v-if="loading" v-loading="loading" />
+      <div class="noData flex-center" v-if="!loading">
+        {{ $t('msg.todoList.noData') }}
+      </div>
     </div>
     <div class="inputBox">
       <el-input
-        :placeholder="$t('msg.workbenches.toDo.placeholder')"
+        :placeholder="$t('msg.todoList.placeholder')"
         v-model="todoText"
         @keyup.enter="addTodo"
       />
@@ -88,8 +91,10 @@ import { cloneDeep } from 'lodash-es';
 import * as API_TODOLIST from '@/api/todoList/index';
 import { todoListDto } from '@/api/todoList/index';
 import { ElMessage } from 'element-plus';
-import WorkbenchesMitt from '@/views/workbenches/mitt';
-import TodoListMitt from './mitt';
+import { useMitt } from '@/hooks/useMitt';
+import { TODOLIST_MITT_KEY, WORKBENCHES_MITT_KEY } from '@/constants/mittKey';
+const tMitt = useMitt(TODOLIST_MITT_KEY);
+const wMitt = useMitt(WORKBENCHES_MITT_KEY);
 
 const todoText = ref<string>('');
 
@@ -107,11 +112,11 @@ const getListFun = async (load: boolean = true) => {
     const { data } = await API_TODOLIST.getTodoList<ApiDataProps>();
     listData.value = data!.list;
     endData.value = data!.end;
-    WorkbenchesMitt.dataChange({
+    tMitt.send(listData.value);
+    wMitt.send({
       key: 'todoList',
       value: listData.value.length
     });
-    TodoListMitt.dataChange<Todo[]>(listData.value);
   } catch (err) {
     console.error(err);
   } finally {
@@ -234,6 +239,16 @@ getListFun();
       background-color: #fff;
       border-radius: 4px;
       border: 1px solid var(--normal-border-color);
+    }
+
+    & > .noData {
+      width: 100%;
+      height: 100px;
+      background-color: #fff;
+      border-radius: 4px;
+      border: 1px solid var(--normal-border-color);
+      color: #969faf;
+      font-size: 14px;
     }
   }
   .inputBox {

@@ -58,7 +58,9 @@ import TodoList from './components/TodoList/index.vue';
 import Department from './components/Department/index.vue';
 import { useUserStore } from '@/store/modules/user';
 import { getCssVariableValue } from '@/utils/css';
-import WorkbenchesMitt, { type Prop } from './mitt';
+import { useMitt } from '@/hooks/useMitt';
+import { WORKBENCHES_MITT_KEY } from '@/constants/mittKey';
+const { addListener } = useMitt(WORKBENCHES_MITT_KEY);
 import { ref } from 'vue';
 const userStore = useUserStore();
 
@@ -77,7 +79,12 @@ if (currentHour >= 6 && currentHour < 12) {
 }
 
 const todoListNum = ref<number>(0);
-WorkbenchesMitt.addListener((prop: Prop) => {
+interface Prop {
+  key: 'todoList' | 'project' | 'notification';
+  value: number;
+}
+addListener((prop: Prop) => {
+  console.log(prop);
   if (prop.key === 'todoList') todoListNum.value = prop.value;
 });
 
