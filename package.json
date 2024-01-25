@@ -12,6 +12,8 @@
   "dependencies": {
     "@types/lodash-es": "^4.17.12",
     "@vueuse/core": "^10.7.0",
+    "@wangeditor/editor": "^5.1.23",
+    "@wangeditor/editor-for-vue": "^5.1.12",
     "axios": "^1.6.2",
     "echarts": "^5.4.3",
     "element-plus": "^2.4.4",
@@ -20,6 +22,7 @@
     "path-browserify": "^1.0.1",
     "pinia": "^2.1.7",
     "pinia-plugin-persistedstate": "^3.2.0",
+    "prismjs": "^1.29.0",
     "remixicon": "^3.7.0",
     "screenfull": "^6.0.2",
     "vue": "^3.3.11",
@@ -30,6 +33,7 @@
   "devDependencies": {
     "@types/node": "^20.10.4",
     "@types/path-browserify": "^1.0.2",
+    "@types/prismjs": "^1.26.3",
     "@typescript-eslint/eslint-plugin": "^6.14.0",
     "@typescript-eslint/parser": "^6.14.0",
     "@vitejs/plugin-vue": "^4.5.2",
