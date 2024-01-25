@@ -172,7 +172,7 @@ const generatePidList = (arr: DataProp[]): MenusProps[] => {
 
 // 删除菜单
 const deleteMenu = (row: DataProp) => {
-  useMessageBox('提示', '确定删除该菜单吗？', async () => {
+  useMessageBox('确定删除该菜单吗？', async () => {
     try {
       await API_MENU.deleteMenu(row.id);
       ElMessage.success('删除成功');

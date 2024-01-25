@@ -175,7 +175,7 @@ const editFun = async () => {
 
 // 删除部门
 const deleteDept = (row: DataProp) => {
-  useMessageBox('提示', '确定删除该部门吗？', async () => {
+  useMessageBox('确定删除该部门吗？', async () => {
     try {
       await API_DEPARTMENT.deleteDept(row.id);
       ElMessage.success('删除成功');

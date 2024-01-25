@@ -176,7 +176,7 @@ const tableSelection = ref<any[]>([]);
 const deleteRole = (ids: string[]) => {
   if (!ids || !ids.length) return ElMessage.error('请选择角色');
   const desc: string = `确定删除${ids.length === 1 ? '该' : '这些'}角色吗？`;
-  useMessageBox('提示', desc, async () => {
+  useMessageBox(desc, async () => {
     try {
       await API_ROLE.deleteRole(ids.toString());
       ElMessage.success('删除成功');

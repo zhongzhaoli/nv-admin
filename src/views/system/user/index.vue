@@ -226,7 +226,7 @@ const editFun = async () => {
 
 // 删除用户
 const deleteUser = (row: DataProp) => {
-  useMessageBox('提示', '确定删除该用户吗？', async () => {
+  useMessageBox('确定删除该用户吗？', async () => {
     try {
       await API_USERS.deleteUsers(row.id);
       ElMessage.success('删除成功');

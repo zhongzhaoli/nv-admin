@@ -66,6 +66,26 @@ export default {
       default: 'Default',
       large: 'Large'
     },
+    todoList: {
+      title: 'My To-do List'
+    },
+    messageBox: {
+      confirm: 'Confirm',
+      cancel: 'Cancel',
+      warning: 'Warning'
+    },
+    notification: {
+      title: 'Notification List',
+      shortText1: 'sends a notification titled',
+      shortText2: '.',
+      loadMore: 'Load More',
+      read: 'Read',
+      unRead: 'UnRead',
+      send: 'Send',
+      draft: 'Save Draft',
+      draftMessage: 'Save Draft Success',
+      restoreDraft: 'Do you have a saved draft, would you like to restore it?'
+    },
     cancel: 'Cancel',
     close: 'Close',
     confirm: 'Confirm',

@@ -66,6 +66,26 @@ export default {
       default: '普通',
       large: '宽松'
     },
+    todoList: {
+      title: '我的待办事项'
+    },
+    messageBox: {
+      confirm: '确认',
+      cancel: '取消',
+      warning: '提示'
+    },
+    notification: {
+      title: '通知列表',
+      shortText1: '发送标题为',
+      shortText2: '的通知。',
+      loadMore: '加载更多',
+      read: '已读',
+      unRead: '未读',
+      send: '发送',
+      draft: '保存草稿',
+      draftMessage: '保存草稿成功',
+      restoreDraft: '您有保存的草稿，是否恢复？'
+    },
     cancel: '取消',
     close: '关闭',
     confirm: '确认',
