@@ -27,7 +27,7 @@ const menus = [
     name: 'TodoList',
     component: 'todoList/index.vue',
     meta: {
-      keepAlive: true,
+      keepAlive: false,
       title: '待办事项',
       icon: 'ri-task-line',
       type: 'SINGLEMENU',
@@ -35,6 +35,60 @@ const menus = [
       hidden: false,
       affix: false
     }
+  },
+  {
+    id: 7,
+    pid: 0,
+    path: 'notification',
+    name: 'Notification',
+    component: 'Layout',
+    meta: {
+      title: '信息通知',
+      hidden: true,
+      icon: 'ri-notification-4-line',
+      type: 'CATA'
+    },
+    children: [
+      {
+        path: 'list',
+        name: 'NotificationList',
+        component: 'notification/index.vue',
+        meta: {
+          keepAlive: false,
+          title: '通知列表',
+          type: 'MENU',
+          sort: 1,
+          hidden: false,
+          affix: false
+        }
+      },
+      {
+        path: 'detail/:id',
+        name: 'NotificationDetail',
+        component: 'notification/detail.vue',
+        meta: {
+          keepAlive: true,
+          title: '通知详情',
+          type: 'MENU',
+          sort: 1,
+          hidden: false,
+          affix: false
+        }
+      },
+      {
+        path: 'create',
+        name: 'NotificationCreate',
+        component: 'notification/create.vue',
+        meta: {
+          keepAlive: true,
+          title: '发布通知',
+          type: 'MENU',
+          sort: 1,
+          hidden: false,
+          affix: false
+        }
+      }
+    ]
   },
   {
     id: 2,

@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="listBox">
-      <div class="header">我的待办事项</div>
+      <div class="header">{{ $t('msg.todoList.title') }}</div>
       <div class="list" v-if="!loading">
         <draggable v-model="listData" item-key="id">
           <template #item="{ element }">
@@ -152,7 +152,7 @@ const activeChange = (nV: Todo) => {
 
 // 删除
 const removeFun = (item: Todo, type: 'list' | 'end') => {
-  useMessageBox('提示', '确定删除该事项吗？', async () => {
+  useMessageBox('确定删除该事项吗？', async () => {
     try {
       await API_TODOLIST.deleteTodo(item.id);
       ElMessage.success('删除成功');
