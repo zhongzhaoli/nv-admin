@@ -3,6 +3,7 @@
     :model-value="modelValue"
     :title="title"
     :width="width"
+    :align-center="alignCenter"
     @closed="closed"
   >
     <slot />
@@ -27,6 +28,7 @@ const CANCEL_BTN_TEXT = i18n.t('msg.close');
 interface ComponentProps {
   modelValue: boolean;
   title?: string;
+  alignCenter?: boolean;
   width?: string | number;
   confirmBtnText?: string;
   cancelBtnText?: string;
@@ -34,12 +36,14 @@ interface ComponentProps {
 }
 
 withDefaults(defineProps<ComponentProps>(), {
-  submitLoading: false
+  submitLoading: false,
+  alignCenter: false
 });
 const emits = defineEmits(['close', 'closed', 'update:modelValue', 'submit']);
 
 const closed = () => {
   emits('update:modelValue', false);
+  emits('closed');
 };
 
 const submit = () => {
