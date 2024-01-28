@@ -23,8 +23,9 @@ export default [
       if (!isLogin(headers)) {
         return {
           code: ResponseCode.UNAUTHORIZED,
+          data: {},
           msg: '用户未登录'
-        } as ResponsePageJson;
+        } as ResponseJson;
       }
       const newList = list.filter((item) => !item.active);
       const endList = list.filter((item) => item.active);
@@ -46,8 +47,9 @@ export default [
       if (!isLogin(headers)) {
         return {
           code: ResponseCode.UNAUTHORIZED,
+          data: {},
           msg: '用户未登录'
-        } as ResponsePageJson;
+        };
       }
       console.log('todoList: 新增', body);
       list.push({
@@ -58,6 +60,7 @@ export default [
       });
       return {
         code: ResponseCode.SUCCESS,
+        data: {},
         msg: '操作成功'
       };
     }
@@ -70,18 +73,21 @@ export default [
       if (!isLogin(headers)) {
         return {
           code: ResponseCode.UNAUTHORIZED,
+          data: {},
           msg: '用户未登录'
-        } as ResponsePageJson;
+        };
       }
       if (!query.id)
         return {
           code: ResponseCode.ERROR,
+          data: {},
           msg: '找不到此待办事项'
         };
       const listIndex = list.findIndex((item) => item.id === query.id);
       if (listIndex === -1)
         return {
           code: ResponseCode.ERROR,
+          data: {},
           msg: '找不到此待办事项'
         };
       list[listIndex] = {
@@ -91,6 +97,7 @@ export default [
       console.log(`todo(ID：${query.id}): 修改`, body);
       return {
         code: ResponseCode.SUCCESS,
+        data: {},
         msg: '操作成功'
       };
     }
@@ -103,24 +110,28 @@ export default [
       if (!isLogin(headers)) {
         return {
           code: ResponseCode.UNAUTHORIZED,
+          data: {},
           msg: '用户未登录'
         };
       }
       if (!query.id)
         return {
           code: ResponseCode.ERROR,
+          data: {},
           msg: '找不到此待办事项'
         };
       const listIndex = list.findIndex((item) => item.id === query.id);
       if (listIndex === -1)
         return {
           code: ResponseCode.ERROR,
+          data: {},
           msg: '找不到此待办事项'
         };
       list.splice(listIndex, 1);
       console.log(`todo(ID:${query.id}): 删除`);
       return {
         code: ResponseCode.SUCCESS,
+        data: {},
         msg: '操作成功'
       };
     }

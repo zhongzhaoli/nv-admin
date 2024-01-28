@@ -4,10 +4,10 @@ export enum ResponseCode {
   UNAUTHORIZED = 401
 }
 
-export interface ResponseJson<T = string> {
+export interface ResponseJson<T = any> {
   code: ResponseCode;
   msg: string;
-  data?: T;
+  data: T;
 }
 
 export interface ResponsePageJson<T = any> {

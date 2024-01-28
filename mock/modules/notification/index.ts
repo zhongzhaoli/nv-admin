@@ -13,8 +13,9 @@ export default [
       if (!isLogin(headers)) {
         return {
           code: ResponseCode.UNAUTHORIZED,
+          data: {},
           msg: '用户未登录'
-        } as ResponsePageJson;
+        };
       }
       const pageSize = parseInt(query.pageSize) || 10;
       const page = parseInt(query.page) || 1;
@@ -53,6 +54,7 @@ export default [
       if (!isLogin(headers)) {
         return {
           code: ResponseCode.UNAUTHORIZED,
+          data: {},
           msg: '用户未登录'
         };
       }
@@ -98,6 +100,7 @@ export default [
       console.log('notification: 新增', body);
       return {
         code: ResponseCode.SUCCESS,
+        data: {},
         msg: '操作成功'
       };
     }

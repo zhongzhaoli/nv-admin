@@ -13,6 +13,7 @@ export default [
       if (!isLogin(headers)) {
         return {
           code: ResponseCode.UNAUTHORIZED,
+          data: {},
           msg: '用户未登录'
         };
       }

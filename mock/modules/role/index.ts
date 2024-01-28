@@ -13,8 +13,9 @@ export default [
       if (!isLogin(headers)) {
         return {
           code: ResponseCode.UNAUTHORIZED,
+          data: {},
           msg: '用户未登录'
-        } as ResponsePageJson;
+        };
       }
       const pageSize = parseInt(query.pageSize) || 10;
       const page = parseInt(query.page) || 1;
@@ -51,12 +52,14 @@ export default [
       if (!isLogin(headers)) {
         return {
           code: ResponseCode.UNAUTHORIZED,
+          data: {},
           msg: '用户未登录'
-        } as ResponsePageJson;
+        };
       }
       console.log('role: 新增', body);
       return {
         code: ResponseCode.SUCCESS,
+        data: {},
         msg: '操作成功'
       };
     }
@@ -69,17 +72,20 @@ export default [
       if (!isLogin(headers)) {
         return {
           code: ResponseCode.UNAUTHORIZED,
+          data: {},
           msg: '用户未登录'
-        } as ResponsePageJson;
+        };
       }
       if (!query.id)
         return {
           code: ResponseCode.ERROR,
+          data: {},
           msg: '找不到此角色'
         };
       console.log(`role(ID：${query.id}): 修改`, body);
       return {
         code: ResponseCode.SUCCESS,
+        data: {},
         msg: '操作成功'
       };
     }
@@ -92,17 +98,20 @@ export default [
       if (!isLogin(headers)) {
         return {
           code: ResponseCode.UNAUTHORIZED,
+          data: {},
           msg: '用户未登录'
         };
       }
       if (!query.id)
         return {
           code: ResponseCode.ERROR,
+          data: {},
           msg: '找不到此角色'
         };
       console.log(`role(ID:${query.id}): 删除`);
       return {
         code: ResponseCode.SUCCESS,
+        data: {},
         msg: '操作成功'
       };
     }

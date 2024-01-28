@@ -21,6 +21,7 @@ export default [
       } else {
         return {
           code: ResponseCode.ERROR,
+          data: {},
           msg: '账号或密码错误'
         };
       }

@@ -6,6 +6,47 @@ import { PREFIX } from '../../constant';
 
 export default [
   {
+    url: `${PREFIX}/system/department/memberList/:id`,
+    method: 'get',
+    timeout: 500,
+    response: ({ query, headers }): ResponseJson => {
+      if (!isLogin(headers)) {
+        return {
+          code: ResponseCode.UNAUTHORIZED,
+          data: {},
+          msg: '用户未登录'
+        };
+      }
+      if (!query.id) {
+        return {
+          code: ResponseCode.ERROR,
+          data: {},
+          msg: '找不到此部门'
+        };
+      }
+      const list = Mock.mock({
+        'list|8': [
+          {
+            id: '@id',
+            username: '@name',
+            avatar: '@image',
+            phone: /^1[34578]\d{9}$/,
+            status: '@pick([1, 2])',
+            role: '@cword(2, 5)',
+            realName: '@cword(2, 3)',
+            createTime: '@datetime',
+            updateTime: '@datetime'
+          }
+        ]
+      }).list;
+      return {
+        code: ResponseCode.SUCCESS,
+        data: list,
+        msg: '操作成功'
+      };
+    }
+  },
+  {
     url: `${PREFIX}/system/department`,
     method: 'get',
     timeout: 500,
@@ -13,8 +54,9 @@ export default [
       if (!isLogin(headers)) {
         return {
           code: ResponseCode.UNAUTHORIZED,
+          data: {},
           msg: '用户未登录'
-        } as ResponsePageJson;
+        };
       }
       if (query.page) {
         const pageSize = parseInt(query.pageSize) || 10;
@@ -77,12 +119,14 @@ export default [
       if (!isLogin(headers)) {
         return {
           code: ResponseCode.UNAUTHORIZED,
+          data: {},
           msg: '用户未登录'
-        } as ResponsePageJson;
+        };
       }
       console.log('department: 新增', body);
       return {
         code: ResponseCode.SUCCESS,
+        data: {},
         msg: '操作成功'
       };
     }
@@ -95,17 +139,20 @@ export default [
       if (!isLogin(headers)) {
         return {
           code: ResponseCode.UNAUTHORIZED,
+          data: {},
           msg: '用户未登录'
-        } as ResponsePageJson;
+        };
       }
       if (!query.id)
         return {
           code: ResponseCode.ERROR,
+          data: {},
           msg: '找不到此部门'
         };
       console.log(`department(ID：${query.id}): 修改`, body);
       return {
         code: ResponseCode.SUCCESS,
+        data: {},
         msg: '操作成功'
       };
     }
@@ -118,17 +165,20 @@ export default [
       if (!isLogin(headers)) {
         return {
           code: ResponseCode.UNAUTHORIZED,
+          data: {},
           msg: '用户未登录'
         };
       }
       if (!query.id)
         return {
           code: ResponseCode.ERROR,
+          data: {},
           msg: '找不到此部门'
         };
       console.log(`department(ID:${query.id}): 删除`);
       return {
         code: ResponseCode.SUCCESS,
+        data: {},
         msg: '操作成功'
       };
     }
