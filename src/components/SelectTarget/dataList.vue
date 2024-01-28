@@ -77,7 +77,6 @@ watchEffect(() => {
   uNameKey.value = props.nameKey;
   defaultList.value = props.defaultSelectList;
   if (props.defaultSelectList) {
-    console.log(props.defaultSelectList);
     handleDefaultSelect();
   }
   if (props.type === 'User') {

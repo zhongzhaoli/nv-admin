@@ -158,7 +158,6 @@
         <SelectDialog
           type="User"
           name-key="username"
-          title="选择用户"
           v-model="uVisible"
           :default-select-list="selectListObject[accessType].userList"
           @submit="submitFun"
@@ -166,7 +165,6 @@
         <SelectDialog
           type="Department"
           name-key="name"
-          title="选择部门"
           v-model="dVisible"
           :default-select-list="selectListObject[accessType].departmentList"
           @submit="submitFun"

@@ -7,7 +7,6 @@
         @closed="closed"
         @close="close"
         v-model="cVisible"
-        :title="title"
         class="bodyNoPadding hideHeader"
         @submit="submitFun"
       >
@@ -37,7 +36,6 @@ interface ComponentProps {
   modelValue: boolean;
   nameKey: string;
   defaultSelectList: any[];
-  title: string;
 }
 const props = defineProps<ComponentProps>();
 const emits = defineEmits(['submit', 'update:modelValue']);
