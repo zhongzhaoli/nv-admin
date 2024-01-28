@@ -1,5 +1,5 @@
 import { MockMethod } from 'vite-plugin-mock';
-import { ResponseCode, ResponseJson, ResponsePageJson } from '../../types';
+import { ResponseCode, ResponseJson } from '../../types';
 import { isLogin } from '../../utils';
 import Mock from 'mockjs';
 import { PREFIX } from '../../constant';
