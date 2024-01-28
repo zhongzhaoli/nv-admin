@@ -15,6 +15,7 @@
           <div v-if="!closedVisible">
             <DataList
               :type="type"
+              :nameKey="nameKey"
               :defaultSelectList="defaultSelectList"
               @change="selectChange"
             />
@@ -34,6 +35,7 @@ export type SelectTargetType = 'User' | 'Department';
 interface ComponentProps {
   type: SelectTargetType;
   modelValue: boolean;
+  nameKey: string;
   defaultSelectList: any[];
   title: string;
 }

@@ -27,7 +27,7 @@
         >
           <div class="dataItemLeft">
             <el-avatar :src="item.avatar" :size="32" :shape="avatarShape" />
-            <span class="username">{{ item[nameKey] }}</span>
+            <span class="username">{{ item[uNameKey] }}</span>
           </div>
           <div class="dataItemRight">
             <div class="checkBox">
@@ -49,6 +49,7 @@ import { watchEffect } from 'vue';
 
 interface ComponentProps {
   type: SelectTargetType;
+  nameKey: string;
   defaultSelectList: any[];
 }
 
@@ -56,7 +57,7 @@ const props = defineProps<ComponentProps>();
 const emits = defineEmits(['change']);
 
 const {
-  nameKey,
+  uNameKey,
   avatarShape,
   loading,
   api,
@@ -73,6 +74,7 @@ const {
 } = useDataList(emits);
 
 watchEffect(() => {
+  uNameKey.value = props.nameKey;
   defaultList.value = props.defaultSelectList;
   if (props.defaultSelectList) {
     console.log(props.defaultSelectList);
@@ -80,11 +82,9 @@ watchEffect(() => {
   }
   if (props.type === 'User') {
     api.value = API_USERS.getUsersList;
-    nameKey.value = 'username';
     avatarShape.value = 'circle';
   } else if (props.type === 'Department') {
     api.value = API_DEPARTMENT.getDeptList;
-    nameKey.value = 'name';
     avatarShape.value = 'square';
   }
 });
