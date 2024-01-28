@@ -5,16 +5,19 @@
         width="400px"
         align-center
         @closed="closed"
-        :model-value="visible"
+        @close="close"
+        v-model="cVisible"
         :title="title"
-        class="bodyNoPadding"
+        class="bodyNoPadding hideHeader"
+        @submit="submitFun"
       >
         <div class="Dialogbody">
-          <div v-if="type === 'User' && visible">
-            <User />
-          </div>
-          <div v-if="type === 'Department' && visible">
-            <Department />
+          <div v-if="!closedVisible">
+            <DataList
+              :type="type"
+              :defaultSelectList="defaultSelectList"
+              @change="selectChange"
+            />
           </div>
         </div>
       </ConfirmDialog>
@@ -22,19 +25,48 @@
   </div>
 </template>
 <script setup lang="ts">
+import { ref, unref, watch } from 'vue';
 import ConfirmDialog from '../ConfirmDialog/index.vue';
-import User from './user.vue';
-import Department from './department.vue';
+import DataList from './dataList.vue';
+
+export type SelectTargetType = 'User' | 'Department';
+
 interface ComponentProps {
-  type: 'User' | 'Department';
-  visible: boolean;
+  type: SelectTargetType;
+  modelValue: boolean;
+  defaultSelectList: any[];
   title: string;
 }
-defineProps<ComponentProps>();
-const emits = defineEmits(['closed']);
+const props = defineProps<ComponentProps>();
+const emits = defineEmits(['submit', 'update:modelValue']);
+
+const selectList = ref<any[]>([]);
+const closedVisible = ref<boolean>(false);
+const cVisible = ref<boolean>(false);
+watch(
+  () => props.modelValue,
+  (nV: boolean) => {
+    cVisible.value = nV;
+    if (nV) closedVisible.value = false;
+  }
+);
 
 const closed = () => {
-  emits('closed');
+  closedVisible.value = true;
+};
+
+const close = () => {
+  emits('update:modelValue', false);
+};
+
+const selectChange = (list: any[]) => {
+  selectList.value = list;
+};
+
+// 确认
+const submitFun = () => {
+  emits('update:modelValue', false);
+  emits('submit', { type: unref(props.type), list: unref(selectList) });
 };
 </script>
 <style lang="scss" scoped></style>

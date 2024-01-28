@@ -4,14 +4,16 @@
     :title="title"
     :width="width"
     :align-center="alignCenter"
+    :show-close="showClose"
     @closed="closed"
+    @close="close"
   >
     <slot />
     <template #footer>
       <el-button type="primary" :loading="submitLoading" @click="submit">{{
         confirmBtnText || CONFIRM_BTN_TEXT
       }}</el-button>
-      <el-button @click="closed">{{
+      <el-button @click="closeFun">{{
         cancelBtnText || CANCEL_BTN_TEXT
       }}</el-button>
     </template>
@@ -33,16 +35,25 @@ interface ComponentProps {
   confirmBtnText?: string;
   cancelBtnText?: string;
   submitLoading?: boolean;
+  showClose?: boolean;
 }
 
 withDefaults(defineProps<ComponentProps>(), {
   submitLoading: false,
-  alignCenter: false
+  alignCenter: false,
+  showClose: true
 });
 const emits = defineEmits(['close', 'closed', 'update:modelValue', 'submit']);
 
-const closed = () => {
+const close = () => {
+  emits('close');
+};
+
+const closeFun = () => {
   emits('update:modelValue', false);
+};
+
+const closed = () => {
   emits('closed');
 };
 

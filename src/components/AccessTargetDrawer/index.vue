@@ -1,7 +1,12 @@
 <template>
   <div class="AccessTargetDrawerComponent">
     <Teleport to="body">
-      <el-drawer @closed="closed" :model-value="drawerOpen" title="发送对象">
+      <el-drawer
+        @closed="closed"
+        @close="close"
+        v-model="drawerVisible"
+        title="发送对象"
+      >
         <div class="listBox">
           <div class="item success" @click="accessType = 'all'">
             <div class="leftBox">
@@ -39,12 +44,20 @@
             </div>
           </div>
           <div class="smallItem" v-if="accessType === 'can'">
-            <div class="item" @click="dVisible = true">
+            <div class="item success" @click="dVisible = true">
               <div class="rightBox">
                 <div class="titleBox">
                   <div class="textBox">
                     <div class="title">选择部门</div>
-                    <div class="desc">部门里的用户可见</div>
+                    <div
+                      class="desc"
+                      v-if="!selectListObject.can.departmentList.length"
+                    >
+                      部门里的用户可见
+                    </div>
+                    <div class="selectActive" v-else>
+                      {{ selectListObject.can.departmentNameString }}
+                    </div>
                   </div>
                 </div>
                 <div class="descBox">
@@ -52,12 +65,20 @@
                 </div>
               </div>
             </div>
-            <div class="item" @click="uVisible = true">
+            <div class="item success" @click="uVisible = true">
               <div class="rightBox">
                 <div class="titleBox">
                   <div class="textBox">
                     <div class="title">选择用户</div>
-                    <div class="desc">选中的用户可见</div>
+                    <div
+                      class="desc"
+                      v-if="!selectListObject.can.userList.length"
+                    >
+                      选中的用户可见
+                    </div>
+                    <div class="selectActive" v-else>
+                      {{ selectListObject.can.userNameString }}
+                    </div>
                   </div>
                 </div>
                 <div class="descBox">
@@ -84,12 +105,20 @@
             </div>
           </div>
           <div class="smallItem" v-if="accessType === 'cant'">
-            <div class="item" @click="dVisible = true">
+            <div class="item danger" @click="dVisible = true">
               <div class="rightBox">
                 <div class="titleBox">
                   <div class="textBox">
                     <div class="title">选择部门</div>
-                    <div class="desc">部门里的用户可见</div>
+                    <div
+                      class="desc"
+                      v-if="!selectListObject.cant.departmentList.length"
+                    >
+                      部门里的用户不可见
+                    </div>
+                    <div class="selectActive" v-else>
+                      {{ selectListObject.cant.departmentNameString }}
+                    </div>
                   </div>
                 </div>
                 <div class="descBox">
@@ -97,12 +126,20 @@
                 </div>
               </div>
             </div>
-            <div class="item" @click="uVisible = true">
+            <div class="item danger" @click="uVisible = true">
               <div class="rightBox">
                 <div class="titleBox">
                   <div class="textBox">
                     <div class="title">选择用户</div>
-                    <div class="desc">选中的用户可见</div>
+                    <div
+                      class="desc"
+                      v-if="!selectListObject.cant.userList.length"
+                    >
+                      选中的用户不可见
+                    </div>
+                    <div class="selectActive" v-else>
+                      {{ selectListObject.cant.userNameString }}
+                    </div>
                   </div>
                 </div>
                 <div class="descBox">
@@ -113,45 +150,84 @@
           </div>
         </div>
         <template #footer>
-          <el-button type="primary">保存</el-button>
-          <el-button @click="closed">取消</el-button>
+          <el-button type="primary" @click="submit">保存</el-button>
+          <el-button @click="drawerVisible = false">取消</el-button>
         </template>
       </el-drawer>
-      <SelectDialog
-        type="User"
-        :visible="uVisible"
-        @closed="uVisible = false"
-        title="选择用户"
-      />
-      <SelectDialog
-        type="Department"
-        :visible="dVisible"
-        @closed="dVisible = false"
-        title="选择部门"
-      />
+      <div v-if="accessType !== 'all'">
+        <SelectDialog
+          type="User"
+          title="选择用户"
+          v-model="uVisible"
+          :default-select-list="selectListObject[accessType].userList"
+          @submit="submitFun"
+        />
+        <SelectDialog
+          type="Department"
+          title="选择部门"
+          v-model="dVisible"
+          :default-select-list="selectListObject[accessType].departmentList"
+          @submit="submitFun"
+        />
+      </div>
     </Teleport>
   </div>
 </template>
 <script setup lang="ts">
-import { ref } from 'vue';
-import { useAccessTarget } from './useAccessTarget';
+import { watch } from 'vue';
+import { SelectListObjectProp, useAccessTarget } from './useAccessTarget';
 import SelectDialog from '@/components/SelectTarget/dialog.vue';
+import { ACCESS_TYPE } from '@/constants/accessTarget';
 interface ComponentProps {
-  drawerOpen: boolean;
+  modelValue: boolean;
+  defaultSelectListObject: SelectListObjectProp | null;
+  type: ACCESS_TYPE;
 }
-defineProps<ComponentProps>();
-const emits = defineEmits(['closed']);
+const props = defineProps<ComponentProps>();
+const emits = defineEmits(['closed', 'update:modelValue', 'submit', 'close']);
 
-const { accessType } = useAccessTarget();
+const {
+  accessType,
+  uVisible,
+  dVisible,
+  submitFun,
+  selectListObject,
+  drawerVisible,
+  defaultSelectSet,
+  submit
+} = useAccessTarget(emits, props.type);
 
-// 关闭
+// 关闭之后
 const closed = () => {
   emits('closed');
 };
 
-// 选择用户/部门
-const uVisible = ref<boolean>(false);
-const dVisible = ref<boolean>(false);
+// 关闭
+const close = () => {
+  emits('update:modelValue', false);
+  emits('close');
+};
+
+watch(
+  () => props.modelValue,
+  (nV) => {
+    drawerVisible.value = nV;
+  },
+  {
+    immediate: true
+  }
+);
+
+watch(
+  () => props.defaultSelectListObject,
+  (nV: SelectListObjectProp | null) => {
+    if (nV) defaultSelectSet(nV);
+  },
+  {
+    immediate: true,
+    deep: true
+  }
+);
 </script>
 <style lang="scss" scoped>
 .flex-align-center {
@@ -160,6 +236,9 @@ const dVisible = ref<boolean>(false);
 }
 @mixin colorChange($color) {
   .checkBox > i {
+    color: $color;
+  }
+  .selectActive {
     color: $color;
   }
 }
@@ -173,6 +252,12 @@ const dVisible = ref<boolean>(false);
     padding-left: 50px;
     & > .item {
       padding: 10px 0 10px 14px;
+    }
+    &.danger {
+      @include colorChange(#f56c6c);
+    }
+    &.success {
+      @include colorChange(#67c23a);
     }
   }
   & .item {

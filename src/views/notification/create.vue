@@ -4,15 +4,25 @@
       <el-form label-position="top">
         <el-form-item label="发送对象：">
           <div class="accessDiv" @click="openDrawer">
-            <div class="leftBox">
-              <i class="ri-user-3-line" />
-              <div class="type">
-                {{ whoType === 'can' ? '谁可以看' : '谁不可看' }}
+            <div class="titleBox">
+              <div class="leftBox" :class="whoType">
+                <i class="ri-user-fill" />
+                <div class="type">
+                  {{ whoType === 'cant' ? '谁不可看' : '谁可以看' }}
+                </div>
+              </div>
+              <div class="rightBox">
+                <div class="text" v-if="whoType === 'all'">公开</div>
+                <i class="ri-arrow-right-s-line" />
               </div>
             </div>
-            <div class="rightBox">
-              <div class="text">公开</div>
-              <i class="ri-arrow-right-s-line" />
+            <div class="selectObject" v-if="selectListObject">
+              <div v-if="selectListObject.departmentList.length">
+                - 部门：{{ selectListObject.departmentNameString }}
+              </div>
+              <div v-if="selectListObject.userList.length">
+                - 用户：{{ selectListObject.userNameString }}
+              </div>
             </div>
           </div>
         </el-form-item>
@@ -35,7 +45,12 @@
         </div>
       </div>
     </div>
-    <AccessTargetDrawer @closed="drawerOpen = false" :drawerOpen="drawerOpen" />
+    <AccessTargetDrawer
+      :type="whoType"
+      :defaultSelectListObject="selectListObject"
+      v-model="drawerOpen"
+      @submit="accessTargetSubmit"
+    />
   </div>
 </template>
 <script setup lang="ts">
@@ -47,6 +62,7 @@ import { useI18n } from '@/hooks/useI18n';
 import { useMessageBox } from '@/hooks/useMessageBox';
 import { ACCESS_TYPE } from '@/constants/accessTarget';
 import AccessTargetDrawer from '@/components/AccessTargetDrawer/index.vue';
+import { SelectListObjectProp } from '@/components/AccessTargetDrawer/useAccessTarget';
 const { t } = useI18n();
 defineOptions({
   name: 'NotificationCreate'
@@ -55,8 +71,9 @@ defineOptions({
 const editRef = ref();
 const title = ref<string>('');
 const content = ref<string>('');
-const whoType = ref<ACCESS_TYPE>('can');
+const whoType = ref<ACCESS_TYPE>('all');
 const drawerOpen = ref<boolean>(false);
+const selectListObject = ref<SelectListObjectProp | null>(null);
 
 // 打开抽屉
 const openDrawer = () => {
@@ -79,6 +96,15 @@ const submit = () => {
   console.log(content.value);
 };
 
+// 选择对象回调
+const accessTargetSubmit = (
+  type: ACCESS_TYPE,
+  obj: SelectListObjectProp | null
+) => {
+  whoType.value = type;
+  selectListObject.value = obj;
+};
+
 onMounted(() => {
   const draft = localStorage.getItem(DRAFT_LOCALSTORAGE_KEY);
   if (draft) {
@@ -92,6 +118,7 @@ onMounted(() => {
 });
 </script>
 <style lang="scss" scoped>
+@import '@/styles/mixins.scss';
 .container {
   padding: var(--normal-padding);
 
@@ -102,37 +129,59 @@ onMounted(() => {
     padding: 20px;
     & .accessDiv {
       display: flex;
-      align-items: center;
-      justify-content: space-between;
+      justify-content: center;
+      flex-direction: column;
       background-color: #f8f8f8;
       cursor: pointer;
-      padding: 0 14px;
+      padding: 4px 14px;
       border-radius: 4px;
-      width: 300px;
-      height: 40px;
+      width: 350px;
       font-size: 14px;
       transition: all 0.3s;
+      color: #555555;
       &:hover {
         background-color: #f6f6f6;
       }
-      & > .leftBox {
+      & > .titleBox {
         display: flex;
         align-items: center;
-        & > i {
-          font-size: 14px;
+        justify-content: space-between;
+        & > .leftBox {
+          display: flex;
+          align-items: center;
+          &.cant {
+            color: #f56c6c;
+          }
+          &.can {
+            color: #67c23a;
+          }
+          & > i {
+            font-size: 14px;
+          }
+          & > div.type {
+            margin-left: 8px;
+          }
         }
-        & > div.type {
-          margin-left: 8px;
+        & > .rightBox {
+          display: flex;
+          align-items: center;
+          & > i {
+            font-size: 18px;
+          }
+          & > div.text {
+            margin-right: 4px;
+          }
         }
       }
-      & > .rightBox {
-        display: flex;
-        align-items: center;
-        & > i {
-          font-size: 18px;
-        }
-        & > div.text {
-          margin-right: 4px;
+      & > .selectObject {
+        padding-left: 22px;
+        font-size: 12px;
+        margin-bottom: 4px;
+        & > div {
+          height: 20px;
+          line-height: 20px;
+          @include text-ellipsis(1);
+          color: #5c5c5c;
         }
       }
     }
