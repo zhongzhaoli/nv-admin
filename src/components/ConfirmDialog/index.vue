@@ -1,6 +1,6 @@
 <template>
   <el-dialog
-    :model-value="modelValue"
+    v-model="visible"
     :title="title"
     :width="width"
     :align-center="alignCenter"
@@ -10,17 +10,21 @@
   >
     <slot />
     <template #footer>
-      <el-button type="primary" :loading="submitLoading" @click="submit">{{
-        confirmBtnText || CONFIRM_BTN_TEXT
-      }}</el-button>
-      <el-button @click="closeFun">{{
+      <el-button
+        type="primary"
+        v-if="showConfirmBtn"
+        :loading="submitLoading"
+        @click="submit"
+        >{{ confirmBtnText || CONFIRM_BTN_TEXT }}</el-button
+      >
+      <el-button v-if="showCancelBtn" @click="close">{{
         cancelBtnText || CANCEL_BTN_TEXT
       }}</el-button>
     </template>
   </el-dialog>
 </template>
 <script setup lang="ts">
-import { withDefaults } from 'vue';
+import { withDefaults, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 const i18n = useI18n();
@@ -36,21 +40,32 @@ interface ComponentProps {
   cancelBtnText?: string;
   submitLoading?: boolean;
   showClose?: boolean;
+  showConfirmBtn?: boolean;
+  showCancelBtn?: boolean;
 }
 
-withDefaults(defineProps<ComponentProps>(), {
+const props = withDefaults(defineProps<ComponentProps>(), {
   submitLoading: false,
   alignCenter: false,
-  showClose: true
+  showClose: true,
+  showCancelBtn: true,
+  showConfirmBtn: true
 });
 const emits = defineEmits(['close', 'closed', 'update:modelValue', 'submit']);
+const visible = ref<boolean>(false);
+watch(
+  () => props.modelValue,
+  (nV) => {
+    visible.value = nV;
+  },
+  {
+    immediate: true
+  }
+);
 
 const close = () => {
-  emits('close');
-};
-
-const closeFun = () => {
   emits('update:modelValue', false);
+  emits('close');
 };
 
 const closed = () => {
