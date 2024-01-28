@@ -6,7 +6,7 @@ import { PREFIX } from '../../constant';
 
 export default [
   {
-    url: `${PREFIX}/system/department/memberList/:id`,
+    url: `${PREFIX}/system/department/:id/memberList`,
     method: 'get',
     timeout: 500,
     response: ({ query, headers }): ResponseJson => {
@@ -25,7 +25,7 @@ export default [
         };
       }
       const list = Mock.mock({
-        'list|8': [
+        'list|30': [
           {
             id: '@id',
             username: '@name',
@@ -42,6 +42,59 @@ export default [
       return {
         code: ResponseCode.SUCCESS,
         data: list,
+        msg: '操作成功'
+      };
+    }
+  },
+  {
+    url: `${PREFIX}/system/department/memberList`,
+    method: 'post',
+    timeout: 500,
+    response: ({ headers, body }): ResponseJson => {
+      if (!isLogin(headers)) {
+        return {
+          code: ResponseCode.UNAUTHORIZED,
+          data: {},
+          msg: '用户未登录'
+        };
+      }
+      console.log(`department memberList: 新增`, body);
+      return {
+        code: ResponseCode.SUCCESS,
+        data: {},
+        msg: '操作成功'
+      };
+    }
+  },
+  {
+    url: `${PREFIX}/system/department/:id/memberList/:mid`,
+    method: 'delete',
+    timeout: 500,
+    response: ({ headers, query }): ResponseJson => {
+      if (!isLogin(headers)) {
+        return {
+          code: ResponseCode.UNAUTHORIZED,
+          data: {},
+          msg: '用户未登录'
+        };
+      }
+      if (!query.id)
+        return {
+          code: ResponseCode.ERROR,
+          data: {},
+          msg: '找不到此部门'
+        };
+      if (!query.mid) {
+        return {
+          code: ResponseCode.ERROR,
+          data: {},
+          msg: '找不到此用户'
+        };
+      }
+      console.log(`department memberList(ID:${query.id}): 删除`);
+      return {
+        code: ResponseCode.SUCCESS,
+        data: {},
         msg: '操作成功'
       };
     }

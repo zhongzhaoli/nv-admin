@@ -1,0 +1,147 @@
+<template>
+  <div class="memberListComponent" v-loading="memberListLoading">
+    <div class="memberList" v-if="!memberListLoading">
+      <div class="addItem item" @click="openSelectTarget">
+        <div class="add flex-center">
+          <i class="ri-add-line" v-if="!addLoading" />
+          <div class="loading-circle" v-else />
+        </div>
+        <div class="text">添加成员</div>
+      </div>
+      <div class="item" v-for="item in memberList" :key="item.id">
+        <MemberItem
+          @delete-member="deleteMember"
+          :avatar="item.avatar"
+          :name="item.username"
+          :id="item.id"
+        />
+      </div>
+    </div>
+    <Teleport to="body">
+      <SelectTarget
+        type="User"
+        name-key="username"
+        :default-select-list="memberList"
+        v-model="selectVisible"
+        @submit="submitAddUserList"
+      />
+    </Teleport>
+  </div>
+</template>
+<script setup lang="ts">
+import { ref } from 'vue';
+import * as API_DEPARTMENT from '@/api/department/index';
+import MemberItem from './memberItem.vue';
+import SelectTarget from '@/components/SelectTarget/dialog.vue';
+import { useMessageBox } from '@/hooks/useMessageBox';
+import { ElMessage } from 'element-plus';
+import { unref } from 'vue';
+
+interface ComponentProps {
+  id: string | number;
+}
+
+const props = defineProps<ComponentProps>();
+
+// 获取部门成员列表
+const memberListLoading = ref<boolean>(false);
+const memberList = ref<any[]>([]);
+const getMemberList = async () => {
+  memberListLoading.value = true;
+  try {
+    const { data } = await API_DEPARTMENT.getDeptMemberList<any[]>(props.id);
+    memberList.value = data;
+  } catch (err) {
+    console.log(err);
+  } finally {
+    memberListLoading.value = false;
+  }
+};
+
+// 添加成员
+const selectVisible = ref<boolean>(false);
+const addLoading = ref<boolean>(false);
+const submitAddUserList = async (selectUser: { type: string; list: any[] }) => {
+  try {
+    const { list } = selectUser;
+    addLoading.value = true;
+    await API_DEPARTMENT.addDeptMember({
+      ids: list.map((item: any) => item.id)
+    });
+    ElMessage.success('操作成功');
+    // TODO：动态添加
+  } catch (err) {
+    console.log(err);
+  } finally {
+    addLoading.value = false;
+  }
+};
+const openSelectTarget = () => {
+  if (addLoading.value) return;
+  selectVisible.value = true;
+};
+
+// 移除成员
+const deleteMember = (mid: string | number) => {
+  useMessageBox('确定移除此成员吗？', async () => {
+    await API_DEPARTMENT.deleteDeptMember(props.id, mid);
+    ElMessage.success('操作成功');
+    const index = unref(memberList).findIndex((item) => item.id === mid);
+    if (index > -1) memberList.value.splice(index, 1);
+  });
+};
+
+defineExpose({ getMemberList });
+
+// 首次打开
+getMemberList();
+</script>
+<style lang="scss" scoped>
+.memberListComponent {
+  height: 340px;
+  & > .memberList {
+    height: 100%;
+    overflow-y: auto;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0 10px;
+    & > .item {
+      width: calc(25% - 20px);
+      padding: 12px 10px;
+      box-sizing: content-box;
+      &.addItem {
+        cursor: pointer;
+        &:hover {
+          & > div.text {
+            color: var(--el-color-primary);
+          }
+          & > .add {
+            color: var(--el-color-primary);
+            border-color: var(--el-color-primary);
+          }
+        }
+        & > .add {
+          width: 40px;
+          height: 40px;
+          margin: 0 auto;
+          border-radius: 50%;
+          border: 1px dashed rgba(0, 0, 0, 0.1);
+          font-size: 20px;
+          transition: all 0.3s;
+          & > .loading-circle {
+            width: 20px;
+            height: 20px;
+            border-width: 2px;
+          }
+        }
+        & > div.text {
+          font-size: 14px;
+          margin-top: 5px;
+          text-align: center;
+          transition: all 0.3s;
+        }
+      }
+    }
+  }
+}
+</style>

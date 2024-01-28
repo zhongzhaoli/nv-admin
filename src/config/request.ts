@@ -15,7 +15,7 @@ export enum ResponseCode {
 export interface ResponseJson<T = string> {
   code: ResponseCode;
   msg: string;
-  data?: T;
+  data: T;
 }
 
 // 返回分页信息格式

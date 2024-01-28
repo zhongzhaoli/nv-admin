@@ -34,7 +34,9 @@
           <el-button type="primary" link @click="editDialogOpen(row)">{{
             $t('msg.edit')
           }}</el-button>
-          <el-button type="primary" link>{{ $t('msg.member') }}</el-button>
+          <el-button type="primary" link @click="getMemberList(row.id)">{{
+            $t('msg.member')
+          }}</el-button>
           <el-button type="primary" link @click="deleteDept(row.id)">{{
             $t('msg.delete')
           }}</el-button>
@@ -65,6 +67,16 @@
         </el-form-item>
       </el-form>
     </ConfirmDialog>
+    <ConfirmDialog
+      v-model="memberListVisible"
+      class="bodyNoPadding"
+      title="成员列表"
+      width="500px"
+      :submitLoading="submitLoading"
+      :show-confirm-btn="false"
+    >
+      <MemberList ref="memberListRef" :id="departmentId" />
+    </ConfirmDialog>
   </div>
 </template>
 <script setup lang="ts">
@@ -73,6 +85,7 @@ import FilterContainer from '@/components/FilterContainer/index.vue';
 import TableContainer from '@/components/TableContainer/index.vue';
 import ConfirmDialog from '@/components/ConfirmDialog/index.vue';
 import UploadAvatar from '@/components/UploadAvatar/index.vue';
+import MemberList from './components/memberList.vue';
 import * as API_DEPARTMENT from '@/api/department/index';
 import {
   DataProp,
@@ -90,7 +103,7 @@ defineOptions({
   name: 'SystemDepartment'
 });
 
-const tableData = ref<any>();
+const tableData = ref<any[]>([]);
 const total = ref<number>(0);
 const currentPage = ref<number>(PAGE);
 const pageSize = ref<number>(PAGE_SIZE);
@@ -112,6 +125,18 @@ const getListFun = async () => {
     console.error(err);
   } finally {
     loading.value = false;
+  }
+};
+
+// 获取部门成员列表
+const departmentId = ref<string | number>('');
+const memberListVisible = ref<boolean>(false);
+const memberListRef = ref<{ getMemberList: Function } | null>(null);
+const getMemberList = (id: string | number) => {
+  memberListVisible.value = true;
+  departmentId.value = id;
+  if (memberListRef.value) {
+    memberListRef.value.getMemberList();
   }
 };
 
@@ -200,6 +225,10 @@ getListFun();
   }
   .avatarBox {
     margin-bottom: 24px;
+  }
+
+  .memberListBox {
+    min-height: 300px;
   }
 }
 </style>

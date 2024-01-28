@@ -7,6 +7,10 @@ export interface DeptDto {
   description: string;
 }
 
+export interface DeptMemberDto {
+  ids: number[];
+}
+
 export interface DeptListParams {
   page: number;
   pageSize?: number;
@@ -19,6 +23,33 @@ export function getDeptList(params: DeptListParams): Promise<ResponsePageJson> {
     url: '/system/department',
     method: 'get',
     params
+  });
+}
+
+export function getDeptMemberList<T>(
+  id: number | string
+): Promise<ResponseJson<T>> {
+  return request({
+    url: `system/department/${id}/memberList`,
+    method: 'get'
+  });
+}
+
+export function deleteDeptMember(
+  id: number | string,
+  mid: number | string
+): Promise<ResponseJson> {
+  return request({
+    url: `system/department/${id}/memberList/${mid}`,
+    method: 'delete'
+  });
+}
+
+export function addDeptMember(data: DeptMemberDto): Promise<ResponseJson> {
+  return request({
+    url: `system/department/memberList`,
+    method: 'post',
+    data
   });
 }
 
