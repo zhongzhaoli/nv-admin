@@ -4,7 +4,7 @@
       :model-value="dialogVisible"
       :close-on-press-escape="false"
       width="40%"
-      class="searchDialog"
+      class="searchDialog bodyNoPadding"
       @opened="opened"
       @closed="handleClose"
     >
