@@ -45,6 +45,7 @@ import * as API_DEPARTMENT from '@/api/department';
 import Scroll from './scroll.vue';
 import { SelectTargetType } from './dialog.vue';
 import { useDataList } from './useDataList';
+import { watchEffect } from 'vue';
 
 interface ComponentProps {
   type: SelectTargetType;
@@ -62,22 +63,31 @@ const {
   list,
   loadingMore,
   searchKey,
+  defaultList,
   loadMore,
   searchFun,
   getListFun,
   checkBoxChange,
-  clickItem
-} = useDataList(emits, props.defaultSelectList);
+  clickItem,
+  handleDefaultSelect
+} = useDataList(emits);
 
-if (props.type === 'User') {
-  api.value = API_USERS.getUsersList;
-  nameKey.value = 'username';
-  avatarShape.value = 'circle';
-} else if (props.type === 'Department') {
-  api.value = API_DEPARTMENT.getDeptList;
-  nameKey.value = 'name';
-  avatarShape.value = 'square';
-}
+watchEffect(() => {
+  defaultList.value = props.defaultSelectList;
+  if (props.defaultSelectList) {
+    console.log(props.defaultSelectList);
+    handleDefaultSelect();
+  }
+  if (props.type === 'User') {
+    api.value = API_USERS.getUsersList;
+    nameKey.value = 'username';
+    avatarShape.value = 'circle';
+  } else if (props.type === 'Department') {
+    api.value = API_DEPARTMENT.getDeptList;
+    nameKey.value = 'name';
+    avatarShape.value = 'square';
+  }
+});
 
 getListFun();
 </script>

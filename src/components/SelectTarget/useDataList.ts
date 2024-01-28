@@ -1,7 +1,7 @@
 import { PAGE } from '@/constants/app';
 import { ref, unref } from 'vue';
 
-export function useDataList(emits: any, defaultSelectList: any[]) {
+export function useDataList(emits: any) {
   const currentPage = ref<number>(PAGE);
   const pageSize = ref<number>(15);
   const total = ref(0);
@@ -12,6 +12,7 @@ export function useDataList(emits: any, defaultSelectList: any[]) {
   const avatarShape = ref<'square' | 'circle'>('square');
   const api = ref<Function | null>(null);
   const searchKey = ref<string>('');
+  const defaultList = ref<any[]>([]);
 
   // 获户列表
   const getListFun = async (load: boolean = false) => {
@@ -30,21 +31,12 @@ export function useDataList(emits: any, defaultSelectList: any[]) {
         const { data } = await api.value(params);
         currentPage.value = data.page;
         const newList = data.list.map((item: any) => {
-          let checked: boolean = false;
-          if (defaultSelectList.length) {
-            const index = defaultSelectList.findIndex((v) => v.id === item.id);
-            if (index > -1) {
-              checked = true;
-            } else {
-              checked = false;
-            }
-          }
           return {
             ...item,
-            checked
+            checked: false
           };
         });
-        list.value = [...list.value, ...newList];
+        list.value = [...list.value, ...handleDefaultSelect(newList)];
         total.value = data.total;
       }
       if (unref(list).length < unref(total)) {
@@ -56,6 +48,27 @@ export function useDataList(emits: any, defaultSelectList: any[]) {
       console.error(err);
     } finally {
       loading.value = false;
+    }
+  };
+
+  // 处理回显
+  const handleDefaultSelect = (cList: any[] = list.value): any[] => {
+    if (unref(defaultList) && unref(defaultList).length) {
+      return cList.map((item: any) => {
+        let checked: boolean = false;
+        const index = unref(defaultList).findIndex((v) => v.id === item.id);
+        if (index > -1) {
+          checked = true;
+        } else {
+          checked = false;
+        }
+        return {
+          ...item,
+          checked
+        };
+      });
+    } else {
+      return cList;
     }
   };
 
@@ -91,12 +104,14 @@ export function useDataList(emits: any, defaultSelectList: any[]) {
     getListFun,
     clickItem,
     searchFun,
+    handleDefaultSelect,
     nameKey,
     avatarShape,
     list,
     loadingMore,
     loading,
     api,
-    searchKey
+    searchKey,
+    defaultList
   };
 }

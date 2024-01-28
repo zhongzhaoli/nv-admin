@@ -174,7 +174,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import { watch } from 'vue';
+import { watchEffect } from 'vue';
 import { SelectListObjectProp, useAccessTarget } from './useAccessTarget';
 import SelectDialog from '@/components/SelectTarget/dialog.vue';
 import { ACCESS_TYPE } from '@/constants/accessTarget';
@@ -208,26 +208,13 @@ const close = () => {
   emits('close');
 };
 
-watch(
-  () => props.modelValue,
-  (nV) => {
-    drawerVisible.value = nV;
-  },
-  {
-    immediate: true
+watchEffect(() => {
+  drawerVisible.value = props.modelValue;
+  if (props.defaultSelectListObject) {
+    defaultSelectSet(props.defaultSelectListObject);
   }
-);
-
-watch(
-  () => props.defaultSelectListObject,
-  (nV: SelectListObjectProp | null) => {
-    if (nV) defaultSelectSet(nV);
-  },
-  {
-    immediate: true,
-    deep: true
-  }
-);
+  accessType.value = props.type;
+});
 </script>
 <style lang="scss" scoped>
 .flex-align-center {
