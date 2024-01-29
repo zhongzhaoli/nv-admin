@@ -78,6 +78,21 @@ export const mergeRoutes = (r1: RouteRecordRaw[], r2: RouteRecordRaw[]) => {
   return newR1;
 };
 
+// 判断children中是否只有一个需要展示路由
+const handleChildrenOnlyOneShow = (
+  list: RouteRecordRaw[]
+): RouteRecordRaw | null => {
+  if (!list.length) return null;
+  if (list.length === 1) return list[0];
+  const showList = list.filter(
+    (item) =>
+      item.meta &&
+      (item.meta.hidden === undefined || item.meta.hidden === false)
+  );
+  if (showList.length === 1) return showList[0];
+  else return null;
+};
+
 // 处理侧边栏展示路由数据
 export const handleRoutes = (
   routes: RouteRecordRaw[],
@@ -93,13 +108,16 @@ export const handleRoutes = (
       route.redirect = resolve(newPath, route.children[0].path);
     }
     // 只有一个children 只展示children
+    const onlyOneShow: RouteRecordRaw | null = route.children
+      ? handleChildrenOnlyOneShow(route.children)
+      : null;
     if (
       (!route.meta || !route.meta.alwaysShow) &&
       route.children &&
-      route.children.length === 1
+      onlyOneShow
     ) {
       // 只取第一个子路由
-      const childRoute = handleRoutes(route.children, newPath)[0];
+      const childRoute = handleRoutes([onlyOneShow], newPath)[0];
       if (childRoute) {
         res.push(childRoute);
       }
