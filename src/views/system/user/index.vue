@@ -48,10 +48,10 @@
               <el-avatar :src="row.avatar" :size="32" />
             </template>
             <template #table-status="{ row }">
-              <el-switch
-                :active-value="1"
-                :inactive-value="2"
+              <SwitchHandle
                 v-model="row.status"
+                :pId="row.id"
+                :api="API_USERS.changeUsersStatus"
               />
             </template>
             <template #table-action="{ row }">
@@ -124,6 +124,7 @@ import FilterContainer from '@/components/FilterContainer/index.vue';
 import ConfirmDialog from '@/components/ConfirmDialog/index.vue';
 import UploadAvatar from '@/components/UploadAvatar/index.vue';
 import SelectTarget from '@/components/SelectTarget/dialog.vue';
+import SwitchHandle from '@/components/SwitchHandle/index.vue';
 import { PAGE_SIZE, PAGE } from '@/constants/app';
 import * as API_USERS from '@/api/users';
 import * as API_ROLE from '@/api/role';

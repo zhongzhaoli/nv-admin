@@ -60,6 +60,17 @@ export function updateUsers<T>(
   });
 }
 
+export function changeUsersStatus(
+  id: string | number,
+  data: { status: any }
+): Promise<ResponseJson> {
+  return request({
+    url: `/system/users/${id}/changeStatus`,
+    method: 'put',
+    data
+  });
+}
+
 export function deleteUsers(id: string): Promise<ResponseJson> {
   return request({
     url: `/system/users/${id}`,
