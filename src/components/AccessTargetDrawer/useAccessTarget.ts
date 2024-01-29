@@ -59,9 +59,11 @@ export function useAccessTarget(emits: any, type: ACCESS_TYPE) {
       if (type === 'User') {
         obj.userList = list;
         obj.userNameString = getNameList(list, 'username');
+        uVisible.value = false;
       } else {
         obj.departmentList = list;
         obj.departmentNameString = getNameList(list, 'name');
+        dVisible.value = false;
       }
     }
   };

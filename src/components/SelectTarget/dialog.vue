@@ -7,6 +7,7 @@
         @closed="closed"
         @close="close"
         v-model="cVisible"
+        :submit-loading="submitLoading"
         class="bodyNoPadding hideHeader"
         @submit="submitFun"
       >
@@ -36,12 +37,14 @@ interface ComponentProps {
   modelValue: boolean;
   nameKey: string;
   api: Function;
+  submitLoading?: boolean;
   defaultSelectList?: any;
   avatarShape?: AVATAR_SHAPE;
 }
 const props = withDefaults(defineProps<ComponentProps>(), {
   avatarShape: DEFAULT_AVATAR_SHAPE,
-  defaultSelectList: []
+  defaultSelectList: [],
+  submitLoading: false
 });
 const emits = defineEmits(['submit', 'update:modelValue']);
 
@@ -70,7 +73,6 @@ const selectChange = (list: any[]) => {
 
 // 确认
 const submitFun = () => {
-  emits('update:modelValue', false);
   emits('submit', cloneDeep(unref(selectList)));
 };
 </script>
