@@ -40,16 +40,16 @@
   </div>
 </template>
 <script setup lang="ts">
-import * as API_USERS from '@/api/users';
-import * as API_DEPARTMENT from '@/api/department';
 import Scroll from './scroll.vue';
 import { SelectTargetType } from './dialog.vue';
 import { useDataList } from './useDataList';
 import { watchEffect } from 'vue';
+import { cloneDeep } from 'lodash-es';
 
 interface ComponentProps {
   type: SelectTargetType;
   nameKey: string;
+  api: Function;
   defaultSelectList: any[];
 }
 
@@ -60,8 +60,8 @@ const {
   uNameKey,
   avatarShape,
   loading,
-  api,
   list,
+  uApi,
   loadingMore,
   searchKey,
   defaultList,
@@ -75,15 +75,14 @@ const {
 
 watchEffect(() => {
   uNameKey.value = props.nameKey;
-  defaultList.value = props.defaultSelectList;
+  defaultList.value = cloneDeep(props.defaultSelectList);
+  uApi.value = props.api;
   if (props.defaultSelectList) {
     handleDefaultSelect();
   }
   if (props.type === 'User') {
-    api.value = API_USERS.getUsersList;
     avatarShape.value = 'circle';
   } else if (props.type === 'Department') {
-    api.value = API_DEPARTMENT.getDeptList;
     avatarShape.value = 'square';
   }
 });

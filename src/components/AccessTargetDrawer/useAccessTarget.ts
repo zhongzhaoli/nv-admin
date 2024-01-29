@@ -45,8 +45,7 @@ export function useAccessTarget(emits: any, type: ACCESS_TYPE) {
   };
 
   // 确认回调
-  const submitFun = (data: { type: string; list: any[] }) => {
-    const { type, list } = data;
+  const submitFun = (list: any[], type: string) => {
     if (accessType.value !== 'all') {
       const obj = selectListObject.value[accessType.value];
       if (type === 'User') {

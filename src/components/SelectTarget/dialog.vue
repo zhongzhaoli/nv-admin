@@ -14,6 +14,7 @@
           <div v-if="!closedVisible">
             <DataList
               :type="type"
+              :api="api"
               :nameKey="nameKey"
               :defaultSelectList="defaultSelectList"
               @change="selectChange"
@@ -28,6 +29,7 @@
 import { ref, unref, watch } from 'vue';
 import ConfirmDialog from '../ConfirmDialog/index.vue';
 import DataList from './dataList.vue';
+import { cloneDeep } from 'lodash-es';
 
 export type SelectTargetType = 'User' | 'Department';
 
@@ -35,6 +37,7 @@ interface ComponentProps {
   type: SelectTargetType;
   modelValue: boolean;
   nameKey: string;
+  api: Function;
   defaultSelectList: any[];
 }
 const props = defineProps<ComponentProps>();
@@ -66,7 +69,7 @@ const selectChange = (list: any[]) => {
 // 确认
 const submitFun = () => {
   emits('update:modelValue', false);
-  emits('submit', { type: unref(props.type), list: unref(selectList) });
+  emits('submit', cloneDeep(unref(selectList)));
 };
 </script>
 <style lang="scss" scoped></style>

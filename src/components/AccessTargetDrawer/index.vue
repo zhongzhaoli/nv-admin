@@ -158,16 +158,18 @@
         <SelectDialog
           type="User"
           name-key="username"
+          :api="API_USERS.getUsersList"
           v-model="uVisible"
           :default-select-list="selectListObject[accessType].userList"
-          @submit="submitFun"
+          @submit="(v) => submitFun(v, 'User')"
         />
         <SelectDialog
           type="Department"
           name-key="name"
+          :api="API_DEPARTMENT.getDeptList"
           v-model="dVisible"
           :default-select-list="selectListObject[accessType].departmentList"
-          @submit="submitFun"
+          @submit="(v) => submitFun(v, 'Department')"
         />
       </div>
     </Teleport>
@@ -178,6 +180,9 @@ import { watchEffect } from 'vue';
 import { SelectListObjectProp, useAccessTarget } from './useAccessTarget';
 import SelectDialog from '@/components/SelectTarget/dialog.vue';
 import { ACCESS_TYPE } from '@/constants/accessTarget';
+import * as API_DEPARTMENT from '@/api/department';
+import * as API_USERS from '@/api/users';
+import { cloneDeep } from 'lodash-es';
 interface ComponentProps {
   modelValue: boolean;
   defaultSelectListObject: SelectListObjectProp | null;
@@ -211,7 +216,7 @@ const close = () => {
 watchEffect(() => {
   drawerVisible.value = props.modelValue;
   if (props.defaultSelectListObject) {
-    defaultSelectSet(props.defaultSelectListObject);
+    defaultSelectSet(cloneDeep(props.defaultSelectListObject));
   }
   accessType.value = props.type;
 });

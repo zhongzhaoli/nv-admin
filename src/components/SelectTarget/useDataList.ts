@@ -9,7 +9,7 @@ export function useDataList(emits: any) {
   const list = ref<any[]>([]);
   const loadingMore = ref<boolean>(false);
   const avatarShape = ref<'square' | 'circle'>('square');
-  const api = ref<Function | null>(null);
+  const uApi = ref<Function | null>(null);
   const uNameKey = ref<string>('');
   const searchKey = ref<string>('');
   const defaultList = ref<any[]>([]);
@@ -22,13 +22,13 @@ export function useDataList(emits: any) {
       loading.value = true;
     }
     try {
-      if (api.value) {
+      if (uApi.value) {
         const params: { [name: string]: any } = {
           page: unref(currentPage),
           pageSize: unref(pageSize)
         };
         if (unref(searchKey)) params[unref(uNameKey)] = unref(searchKey);
-        const { data } = await api.value(params);
+        const { data } = await uApi.value(params);
         currentPage.value = data.page;
         const newList = data.list.map((item: any) => {
           return {
@@ -110,7 +110,7 @@ export function useDataList(emits: any) {
     list,
     loadingMore,
     loading,
-    api,
+    uApi,
     searchKey,
     defaultList
   };
