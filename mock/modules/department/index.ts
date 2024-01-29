@@ -211,6 +211,32 @@ export default [
     }
   },
   {
+    url: `${PREFIX}/system/department/:id/changeStatus`,
+    method: 'put',
+    timeout: 500,
+    response: ({ headers, body, query }): ResponseJson => {
+      if (!isLogin(headers)) {
+        return {
+          code: ResponseCode.UNAUTHORIZED,
+          data: {},
+          msg: '用户未登录'
+        };
+      }
+      if (!query.id)
+        return {
+          code: ResponseCode.ERROR,
+          data: {},
+          msg: '找不到此部门'
+        };
+      console.log(`department(ID：${query.id}): 修改状态`, body);
+      return {
+        code: ResponseCode.SUCCESS,
+        data: {},
+        msg: '操作成功'
+      };
+    }
+  },
+  {
     url: `${PREFIX}/system/department/:id`,
     method: 'delete',
     timeout: 500,

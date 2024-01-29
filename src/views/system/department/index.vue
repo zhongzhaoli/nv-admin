@@ -24,10 +24,10 @@
           <el-avatar :src="row.avatar" :size="32" shape="square" />
         </template>
         <template #table-status="{ row }">
-          <el-switch
-            :active-value="1"
-            :inactive-value="2"
+          <SwitchHandle
             v-model="row.status"
+            :pId="row.id"
+            :api="API_DEPARTMENT.changeDeptStatus"
           />
         </template>
         <template #table-action="{ row }">
@@ -86,6 +86,7 @@ import TableContainer from '@/components/TableContainer/index.vue';
 import ConfirmDialog from '@/components/ConfirmDialog/index.vue';
 import UploadAvatar from '@/components/UploadAvatar/index.vue';
 import MemberList from './components/memberList.vue';
+import SwitchHandle from '@/components/SwitchHandle/index.vue';
 import * as API_DEPARTMENT from '@/api/department/index';
 import {
   DataProp,

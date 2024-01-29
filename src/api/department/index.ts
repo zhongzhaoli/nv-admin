@@ -79,6 +79,17 @@ export function updateDept<T>(
   });
 }
 
+export function changeDeptStatus(
+  id: string | number,
+  data: { status: any }
+): Promise<ResponseJson> {
+  return request({
+    url: `/system/department/${id}/changeStatus`,
+    method: 'put',
+    data
+  });
+}
+
 export function deleteDept(id: string): Promise<ResponseJson> {
   return request({
     url: `/system/department/${id}`,
