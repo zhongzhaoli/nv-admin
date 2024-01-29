@@ -48,15 +48,22 @@ export default [
     }
   },
   {
-    url: `${PREFIX}/system/users/setRole`,
+    url: `${PREFIX}/system/users/:id/setRole`,
     method: 'post',
     timeout: 500,
-    response: ({ headers, body }): ResponseJson => {
+    response: ({ headers, body, query }): ResponseJson => {
       if (!isLogin(headers)) {
         return {
           code: ResponseCode.UNAUTHORIZED,
           data: {},
           msg: '用户未登录'
+        };
+      }
+      if (!query.id) {
+        return {
+          code: ResponseCode.ERROR,
+          data: {},
+          msg: '找不到此用户'
         };
       }
       console.log('users: 设置角色', body);

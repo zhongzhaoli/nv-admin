@@ -58,12 +58,9 @@
               <el-button type="primary" link @click="editDialogOpen(row)">{{
                 $t('msg.edit')
               }}</el-button>
-              <el-button
-                type="primary"
-                link
-                @click="selectRoleVisible = true"
-                >{{ $t('msg.role') }}</el-button
-              >
+              <el-button type="primary" link @click="openSelectRole(row.id)">{{
+                $t('msg.role')
+              }}</el-button>
               <el-button type="primary" link @click="deleteUser(row)">{{
                 $t('msg.delete')
               }}</el-button>
@@ -254,10 +251,13 @@ const deleteUser = (row: DataProp) => {
 // 选择角色
 const selectRoleVisible = ref<boolean>(false);
 const selectRoleSubmitLoading = ref<boolean>(false);
+const userId = ref<string | number>('');
 const submitFun = async (list: any) => {
   selectRoleSubmitLoading.value = true;
   try {
-    await API_USERS.usersSetRoles({ ids: list.map((item: any) => item.id) });
+    await API_USERS.usersSetRoles(userId.value, {
+      ids: list.map((item: any) => item.id)
+    });
     ElMessage.success('操作成功');
   } catch (err) {
     console.log(err);
@@ -265,6 +265,10 @@ const submitFun = async (list: any) => {
     selectRoleSubmitLoading.value = false;
     selectRoleVisible.value = false;
   }
+};
+const openSelectRole = (id: number | string) => {
+  userId.value = id;
+  selectRoleVisible.value = true;
 };
 
 // 部门点击
