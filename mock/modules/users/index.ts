@@ -48,6 +48,26 @@ export default [
     }
   },
   {
+    url: `${PREFIX}/system/users/setRole`,
+    method: 'post',
+    timeout: 500,
+    response: ({ headers, body }): ResponseJson => {
+      if (!isLogin(headers)) {
+        return {
+          code: ResponseCode.UNAUTHORIZED,
+          data: {},
+          msg: '用户未登录'
+        };
+      }
+      console.log('users: 设置角色', body);
+      return {
+        code: ResponseCode.SUCCESS,
+        data: {},
+        msg: '操作成功'
+      };
+    }
+  },
+  {
     url: `${PREFIX}/system/users`,
     method: 'post',
     timeout: 500,

@@ -58,7 +58,12 @@
               <el-button type="primary" link @click="editDialogOpen(row)">{{
                 $t('msg.edit')
               }}</el-button>
-              <el-button type="primary" link>{{ $t('msg.role') }}</el-button>
+              <el-button
+                type="primary"
+                link
+                @click="selectRoleVisible = true"
+                >{{ $t('msg.role') }}</el-button
+              >
               <el-button type="primary" link @click="deleteUser(row)">{{
                 $t('msg.delete')
               }}</el-button>
@@ -105,6 +110,13 @@
         </el-form-item>
       </el-form>
     </ConfirmDialog>
+    <SelectTarget
+      name-key="name"
+      :submit-loading="selectRoleSubmitLoading"
+      :api="API_ROLE.getRoleList"
+      v-model="selectRoleVisible"
+      @submit="submitFun"
+    />
   </div>
 </template>
 <script setup lang="ts">
@@ -114,8 +126,10 @@ import { HandleLeftProps } from '@/components/TableContainer/types';
 import FilterContainer from '@/components/FilterContainer/index.vue';
 import ConfirmDialog from '@/components/ConfirmDialog/index.vue';
 import UploadAvatar from '@/components/UploadAvatar/index.vue';
+import SelectTarget from '@/components/SelectTarget/dialog.vue';
 import { PAGE_SIZE, PAGE } from '@/constants/app';
 import * as API_USERS from '@/api/users';
+import * as API_ROLE from '@/api/role';
 import { useDeptDataList } from '@/hooks/useDeptDataList';
 import {
   DataProp,
@@ -235,6 +249,22 @@ const deleteUser = (row: DataProp) => {
       console.error(err);
     }
   });
+};
+
+// 选择角色
+const selectRoleVisible = ref<boolean>(false);
+const selectRoleSubmitLoading = ref<boolean>(false);
+const submitFun = async (list: any) => {
+  selectRoleSubmitLoading.value = true;
+  try {
+    await API_USERS.usersSetRoles({ ids: list.map((item: any) => item.id) });
+    ElMessage.success('操作成功');
+  } catch (err) {
+    console.log(err);
+  } finally {
+    selectRoleSubmitLoading.value = false;
+    selectRoleVisible.value = false;
+  }
 };
 
 // 部门点击

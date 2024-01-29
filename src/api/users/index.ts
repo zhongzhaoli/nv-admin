@@ -36,6 +36,16 @@ export function createUsers(data: UsersDto): Promise<ResponseJson> {
   });
 }
 
+export function usersSetRoles(data: {
+  ids: Array<string | number>;
+}): Promise<ResponseJson> {
+  return request({
+    url: '/system/users/setRole',
+    method: 'post',
+    data
+  });
+}
+
 export function updateUsers<T>(
   id: string,
   data: Partial<T>
