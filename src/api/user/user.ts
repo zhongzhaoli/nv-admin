@@ -6,3 +6,16 @@ export function getUserInfo() {
     method: 'get'
   });
 }
+
+export interface PasswordDto {
+  oldPassword: string;
+  newPassword: string;
+  confirmPassword: string;
+}
+export function changePassword(data: PasswordDto) {
+  return request({
+    url: '/changePassword',
+    method: 'post',
+    data
+  });
+}

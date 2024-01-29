@@ -8,8 +8,18 @@ export default {
     },
     navbar: {
       userDropdown: {
-        profile: 'Profile',
-        logout: 'Logout'
+        updatePassword: 'Change Password',
+        logout: 'Logout',
+        oldPassword: 'Old Password',
+        oldPasswordPlaceholder: 'Please enter the old password',
+        newPassword: 'New Password',
+        newPasswordPlaceholder: 'Please enter the new password',
+        confirmPassword: 'Confirm New Password',
+        confirmPasswordPlaceholder: 'Please enter the new password again',
+        passwordNotEqual: 'The two passwords are inconsistent',
+        oldPasswordNotEmpty: 'The old password cannot be empty',
+        newPasswordNotEmpty: 'The new password cannot be empty',
+        confirmPasswordNotEmpty: 'The confirm password cannot be empty'
       },
       notification: {
         tooltip: 'Notification'

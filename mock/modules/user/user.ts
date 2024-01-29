@@ -55,5 +55,33 @@ export default [
         msg: '获取成功'
       };
     }
+  },
+  {
+    url: `${PREFIX}/changePassword`,
+    method: 'post',
+    timeout: 500,
+    response: ({ headers, body }): ResponseJson<any> => {
+      if (!isLogin(headers)) {
+        return {
+          code: ResponseCode.UNAUTHORIZED,
+          data: {},
+          msg: '用户未登录'
+        };
+      }
+      const { newPassword, oldPassword, confirmPassword } = body;
+      if (newPassword !== confirmPassword) {
+        return {
+          code: ResponseCode.ERROR,
+          data: {},
+          msg: '两次输入密码不一致'
+        };
+      }
+      console.log(`修改密码：旧${oldPassword}，新${newPassword}`);
+      return {
+        code: ResponseCode.SUCCESS,
+        data: {},
+        msg: '修改成功'
+      };
+    }
   }
 ] as MockMethod[];

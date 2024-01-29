@@ -8,8 +8,18 @@ export default {
     },
     navbar: {
       userDropdown: {
-        profile: '个人信息',
-        logout: '退出登录'
+        updatePassword: '修改密码',
+        logout: '退出登录',
+        oldPassword: '旧密码',
+        oldPasswordPlaceholder: '请输入旧密码',
+        newPassword: '新密码',
+        newPasswordPlaceholder: '请输入新密码',
+        confirmPassword: '确认密码',
+        confirmPasswordPlaceholder: '请再次输入新密码',
+        passwordNotEqual: '两次输入密码不一致',
+        oldPasswordNotEmpty: '旧密码不能为空',
+        newPasswordNotEmpty: '新密码不能为空',
+        confirmPasswordNotEmpty: '确认密码不能为空'
       },
       notification: {
         tooltip: '信息通知'
