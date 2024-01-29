@@ -1,5 +1,6 @@
 import { ACCESS_TYPE } from '@/constants/accessTarget';
 import { cloneDeep } from 'lodash-es';
+import { type SelectTargetInstance } from '@/components/SelectTarget/useSelectTarget';
 import { ref, unref } from 'vue';
 
 export interface SelectListObjectProp {
@@ -32,8 +33,8 @@ export function useAccessTarget(emits: any, type: ACCESS_TYPE) {
   const accessType = ref<ACCESS_TYPE>(type);
 
   // 选择用户/部门
-  const uVisible = ref<boolean>(false);
-  const dVisible = ref<boolean>(false);
+  const selectUserRef = ref<SelectTargetInstance | null>(null);
+  const selectDeptRef = ref<SelectTargetInstance | null>(null);
 
   const drawerVisible = ref<boolean>(false);
   const selectListObject = ref<SelectListObject>(
@@ -59,11 +60,11 @@ export function useAccessTarget(emits: any, type: ACCESS_TYPE) {
       if (type === 'User') {
         obj.userList = list;
         obj.userNameString = getNameList(list, 'username');
-        uVisible.value = false;
+        selectUserRef.value && selectUserRef.value.closeDialog();
       } else {
         obj.departmentList = list;
         obj.departmentNameString = getNameList(list, 'name');
-        dVisible.value = false;
+        selectDeptRef.value && selectDeptRef.value.closeDialog();
       }
     }
   };
@@ -82,20 +83,57 @@ export function useAccessTarget(emits: any, type: ACCESS_TYPE) {
     } else if (type === 'cant') {
       obj = cloneDeep(selectListObject.value.cant);
     }
-    emits('update:modelValue', false);
     emits('submit', type, obj);
+    closeDrawer();
+  };
+
+  // 关闭之后
+  const closed = () => {
+    initSelectListFun();
+    emits('closed');
+  };
+
+  // 关闭
+  const close = () => {
+    emits('close');
+  };
+
+  // 打开抽屉
+  const openDrawer = () => {
+    drawerVisible.value = true;
+  };
+
+  // 关闭抽屉
+  const closeDrawer = () => {
+    drawerVisible.value = false;
+  };
+
+  // 打开UserDialog
+  const openUserDialog = () => {
+    selectUserRef.value && selectUserRef.value.openDialog();
+  };
+
+  // 打开DeptDialog
+  const openDeptDialog = () => {
+    selectDeptRef.value && selectDeptRef.value.openDialog();
   };
 
   return {
+    selectUserRef,
+    selectDeptRef,
     accessType,
-    uVisible,
-    dVisible,
     selectListObject,
     drawerVisible,
+    closeDrawer,
     submitFun,
     defaultSelectSet,
     initSelectListFun,
     getNameList,
-    submit
+    submit,
+    closed,
+    close,
+    openDrawer,
+    openUserDialog,
+    openDeptDialog
   };
 }

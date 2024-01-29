@@ -1,5 +1,5 @@
 <template>
-  <div class="selectTargetDialogComponent">
+  <div class="selectTargetComponent">
     <Teleport to="body">
       <ConfirmDialog
         width="400px"
@@ -27,53 +27,40 @@
   </div>
 </template>
 <script setup lang="ts">
-import { ref, unref, watch, withDefaults } from 'vue';
+import { withDefaults } from 'vue';
 import ConfirmDialog from '../ConfirmDialog/index.vue';
 import DataList from './dataList.vue';
-import { cloneDeep } from 'lodash-es';
 import { DEFAULT_AVATAR_SHAPE, AVATAR_SHAPE } from '@/constants/app';
+import { useSelectTarget } from './useSelectTarget';
 
 interface ComponentProps {
-  modelValue: boolean;
   nameKey: string;
   api: Function;
   submitLoading?: boolean;
   defaultSelectList?: any;
   avatarShape?: AVATAR_SHAPE;
 }
-const props = withDefaults(defineProps<ComponentProps>(), {
+withDefaults(defineProps<ComponentProps>(), {
   avatarShape: DEFAULT_AVATAR_SHAPE,
   defaultSelectList: [],
   submitLoading: false
 });
-const emits = defineEmits(['submit', 'update:modelValue']);
+const emits = defineEmits(['submit', 'close', 'closed']);
 
-const selectList = ref<any[]>([]);
-const closedVisible = ref<boolean>(false);
-const cVisible = ref<boolean>(false);
-watch(
-  () => props.modelValue,
-  (nV: boolean) => {
-    cVisible.value = nV;
-    if (nV) closedVisible.value = false;
-  }
-);
+const {
+  openDialog,
+  closeDialog,
+  closed,
+  close,
+  submitFun,
+  selectChange,
+  cVisible,
+  closedVisible
+} = useSelectTarget(emits);
 
-const closed = () => {
-  closedVisible.value = true;
-};
-
-const close = () => {
-  emits('update:modelValue', false);
-};
-
-const selectChange = (list: any[]) => {
-  selectList.value = list;
-};
-
-// 确认
-const submitFun = () => {
-  emits('submit', cloneDeep(unref(selectList)));
-};
+defineExpose({
+  openDialog,
+  closeDialog
+});
 </script>
 <style lang="scss" scoped></style>

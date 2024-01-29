@@ -44,7 +44,7 @@
             </div>
           </div>
           <div class="smallItem" v-if="accessType === 'can'">
-            <div class="item success" @click="dVisible = true">
+            <div class="item success" @click="openDeptDialog">
               <div class="rightBox">
                 <div class="titleBox">
                   <div class="textBox">
@@ -65,7 +65,7 @@
                 </div>
               </div>
             </div>
-            <div class="item success" @click="uVisible = true">
+            <div class="item success" @click="openUserDialog">
               <div class="rightBox">
                 <div class="titleBox">
                   <div class="textBox">
@@ -105,7 +105,7 @@
             </div>
           </div>
           <div class="smallItem" v-if="accessType === 'cant'">
-            <div class="item danger" @click="dVisible = true">
+            <div class="item danger" @click="openDeptDialog">
               <div class="rightBox">
                 <div class="titleBox">
                   <div class="textBox">
@@ -126,7 +126,7 @@
                 </div>
               </div>
             </div>
-            <div class="item danger" @click="uVisible = true">
+            <div class="item danger" @click="openUserDialog">
               <div class="rightBox">
                 <div class="titleBox">
                   <div class="textBox">
@@ -156,17 +156,17 @@
       </el-drawer>
       <div v-if="accessType !== 'all'">
         <SelectDialog
+          ref="selectUserRef"
           name-key="username"
           :api="API_USERS.getUsersList"
-          v-model="uVisible"
           :default-select-list="selectListObject[accessType].userList"
           @submit="(v) => submitFun(v, 'User')"
         />
         <SelectDialog
+          ref="selectDeptRef"
           name-key="name"
           avatarShape="square"
           :api="API_DEPARTMENT.getDeptList"
-          v-model="dVisible"
           :default-select-list="selectListObject[accessType].departmentList"
           @submit="(v) => submitFun(v, 'Department')"
         />
@@ -177,49 +177,50 @@
 <script setup lang="ts">
 import { watchEffect } from 'vue';
 import { SelectListObjectProp, useAccessTarget } from './useAccessTarget';
-import SelectDialog from '@/components/SelectTarget/dialog.vue';
+import SelectDialog from '@/components/SelectTarget/index.vue';
 import { ACCESS_TYPE } from '@/constants/accessTarget';
 import * as API_DEPARTMENT from '@/api/department';
 import * as API_USERS from '@/api/users';
 import { cloneDeep } from 'lodash-es';
 interface ComponentProps {
-  modelValue: boolean;
   defaultSelectListObject: SelectListObjectProp | null;
   type: ACCESS_TYPE;
 }
 const props = defineProps<ComponentProps>();
-const emits = defineEmits(['closed', 'update:modelValue', 'submit', 'close']);
+const emits = defineEmits(['closed', 'submit', 'close']);
 
 const {
+  selectUserRef,
+  selectDeptRef,
   accessType,
-  uVisible,
-  dVisible,
   submitFun,
   selectListObject,
   drawerVisible,
-  initSelectListFun,
   defaultSelectSet,
-  submit
+  submit,
+  closed,
+  close,
+  openDrawer,
+  closeDrawer,
+  openUserDialog,
+  openDeptDialog
 } = useAccessTarget(emits, props.type);
 
-// 关闭之后
-const closed = () => {
-  initSelectListFun();
-  emits('closed');
-};
-
-// 关闭
-const close = () => {
-  emits('update:modelValue', false);
-  emits('close');
-};
-
 watchEffect(() => {
-  drawerVisible.value = props.modelValue;
   if (props.defaultSelectListObject) {
     defaultSelectSet(cloneDeep(props.defaultSelectListObject));
   }
   accessType.value = props.type;
+});
+
+export interface AccessTargetDrawerInstance {
+  openDrawer: () => void;
+  closeDrawer: () => void;
+}
+
+defineExpose({
+  openDrawer,
+  closeDrawer
 });
 </script>
 <style lang="scss" scoped>
