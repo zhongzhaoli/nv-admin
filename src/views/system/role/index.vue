@@ -32,7 +32,12 @@
           <el-button type="primary" link @click="editDialogOpen(row)">{{
             $t('msg.edit')
           }}</el-button>
-          <el-button type="primary" link>{{ $t('msg.permission') }}</el-button>
+          <el-button
+            type="primary"
+            link
+            @click="openSelectPermission(row.id)"
+            >{{ $t('msg.permission') }}</el-button
+          >
           <el-button type="primary" link @click="deleteRole(row.id)">{{
             $t('msg.delete')
           }}</el-button>
@@ -43,7 +48,7 @@
       v-model="editVisible"
       :title="dialogTitle"
       width="400px"
-      :submitLoading="submitLoading"
+      :submit-loading="submitLoading"
       @submit="editFun"
     >
       <el-form label-position="left" label-width="85px">
@@ -60,6 +65,26 @@
         </el-form-item>
       </el-form>
     </ConfirmDialog>
+    <ConfirmDialog
+      v-model="selectPermissionVisible"
+      title="设置权限"
+      width="400px"
+      :submit-loading="selectPermissionSubmitLoading"
+      @closed="closed"
+      @submit="selectPermission"
+    >
+      <div class="permissionBox" v-loading="permissionLoading">
+        <el-tree
+          node-key="id"
+          ref="perimissionTreeRef"
+          :data="menuList"
+          show-checkbox
+          default-expand-all
+          :default-checked-keys="defaultCheckedKeys"
+          :props="{ label: (data: any) => data.meta.title }"
+        />
+      </div>
+    </ConfirmDialog>
   </div>
 </template>
 <script setup lang="ts">
@@ -68,6 +93,7 @@ import FilterContainer from '@/components/FilterContainer/index.vue';
 import TableContainer from '@/components/TableContainer/index.vue';
 import ConfirmDialog from '@/components/ConfirmDialog/index.vue';
 import * as API_ROLE from '@/api/role/index';
+import { getMenuList } from '@/api/menu/index';
 import {
   filterColumns,
   tableColumns,
@@ -80,6 +106,7 @@ import { HandleLeftProps } from '@/components/TableContainer/types';
 import { cloneDeep } from 'lodash-es';
 import { ElMessage } from 'element-plus';
 import { useMessageBox } from '@/hooks/useMessageBox';
+import { RouteRecordRaw } from 'vue-router';
 defineOptions({
   name: 'SystemRole'
 });
@@ -190,6 +217,64 @@ const handleSelectionChange = (selection: any[]) => {
   tableSelection.value = selection;
 };
 
+// 获取菜单列表
+const menuList = ref<RouteRecordRaw[]>([]);
+const getMenuListFun = async () => {
+  try {
+    const { data } = await getMenuList<RouteRecordRaw[]>();
+    menuList.value = data;
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+// 选择权限
+const selectPermissionVisible = ref<boolean>(false);
+const selectPermissionSubmitLoading = ref<boolean>(false);
+const perimissionTreeRef = ref<{
+  getCheckedNodes: Function;
+  setCheckedKeys: Function;
+} | null>(null);
+const roleId = ref<string | number>('');
+const selectPermission = async () => {
+  selectPermissionSubmitLoading.value = true;
+  if (!perimissionTreeRef.value) return;
+  const checkedNodes = perimissionTreeRef.value.getCheckedNodes();
+  try {
+    await API_ROLE.roleSetPermission(
+      roleId.value,
+      checkedNodes.map((item: any) => item.id)
+    );
+    ElMessage.success('操作成功');
+  } catch (err) {
+    console.log(err);
+  } finally {
+    selectPermissionSubmitLoading.value = false;
+    selectPermissionVisible.value = false;
+  }
+};
+// 打开权限选择框
+const permissionLoading = ref<boolean>(false);
+const defaultCheckedKeys = ref<Array<string | number>>([]);
+const openSelectPermission = async (id: string | number) => {
+  selectPermissionVisible.value = true;
+  roleId.value = id;
+  try {
+    permissionLoading.value = true;
+    const { data } = await API_ROLE.roleGetPermission<any[]>(id);
+    defaultCheckedKeys.value = data.map((item: any) => item.id);
+  } catch (err) {
+    console.error(err);
+  } finally {
+    permissionLoading.value = false;
+  }
+};
+const closed = () => {
+  if (!perimissionTreeRef.value) return;
+  perimissionTreeRef.value.setCheckedKeys([], false);
+};
+
+getMenuListFun();
 getListFun();
 </script>
 <style lang="scss" scoped>
@@ -201,6 +286,11 @@ getListFun();
     border: 1px solid var(--normal-border-color);
     padding: var(--normal-padding);
     margin-top: var(--normal-padding);
+  }
+
+  .permissionBox {
+    max-height: 300px;
+    overflow: auto;
   }
 }
 </style>

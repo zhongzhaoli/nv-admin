@@ -22,6 +22,28 @@ export function getRoleList(params: RoleListParams): Promise<ResponsePageJson> {
   });
 }
 
+export function roleSetPermission<T>(
+  id: number | string,
+  data: {
+    ids: Array<string | number>;
+  }
+): Promise<ResponseJson<T>> {
+  return request({
+    url: `/system/role/${id}/setPermission`,
+    method: 'post',
+    data
+  });
+}
+
+export function roleGetPermission<T>(
+  id: number | string
+): Promise<ResponseJson<T>> {
+  return request({
+    url: `/system/role/${id}/getPermission`,
+    method: 'get'
+  });
+}
+
 export function createRole(data: RoleDto): Promise<ResponseJson> {
   return request({
     url: '/system/role',
