@@ -8,7 +8,6 @@ export function useDataList(emits: any) {
   const loading = ref<boolean>(true);
   const list = ref<any[]>([]);
   const loadingMore = ref<boolean>(false);
-  const avatarShape = ref<'square' | 'circle'>('square');
   const uApi = ref<Function | null>(null);
   const uNameKey = ref<string>('');
   const searchKey = ref<string>('');
@@ -106,7 +105,6 @@ export function useDataList(emits: any) {
     searchFun,
     handleDefaultSelect,
     uNameKey,
-    avatarShape,
     list,
     loadingMore,
     loading,

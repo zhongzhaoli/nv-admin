@@ -13,6 +13,9 @@ export const DEFAULT_LANGUAGE: LANGUAGE = 'zh';
 export type ELEMENT_UI_SIZE = 'large' | 'small' | 'default';
 /** Table Size */
 export const TABLE_SIZE: ELEMENT_UI_SIZE = 'large';
+/** Avatar Shape */
+export type AVATAR_SHAPE = 'circle' | 'square';
+export const DEFAULT_AVATAR_SHAPE: AVATAR_SHAPE = 'circle';
 
 /** Pagination Layout */
 export const PAGINATION_LAYOUT: string =

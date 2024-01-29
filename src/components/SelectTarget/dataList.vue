@@ -26,7 +26,9 @@
           @click.prevent="clickItem(item)"
         >
           <div class="dataItemLeft">
-            <el-avatar :src="item.avatar" :size="32" :shape="avatarShape" />
+            <div class="avatar" v-if="item.avatar">
+              <el-avatar :src="item.avatar" :size="32" :shape="avatarShape" />
+            </div>
             <span class="username">{{ item[uNameKey] }}</span>
           </div>
           <div class="dataItemRight">
@@ -41,16 +43,16 @@
 </template>
 <script setup lang="ts">
 import Scroll from './scroll.vue';
-import { SelectTargetType } from './dialog.vue';
 import { useDataList } from './useDataList';
 import { watchEffect } from 'vue';
 import { cloneDeep } from 'lodash-es';
+import { AVATAR_SHAPE } from '@/constants/app';
 
 interface ComponentProps {
-  type: SelectTargetType;
   nameKey: string;
   api: Function;
   defaultSelectList: any[];
+  avatarShape: AVATAR_SHAPE;
 }
 
 const props = defineProps<ComponentProps>();
@@ -58,7 +60,6 @@ const emits = defineEmits(['change']);
 
 const {
   uNameKey,
-  avatarShape,
   loading,
   list,
   uApi,
@@ -79,11 +80,6 @@ watchEffect(() => {
   uApi.value = props.api;
   if (props.defaultSelectList) {
     handleDefaultSelect();
-  }
-  if (props.type === 'User') {
-    avatarShape.value = 'circle';
-  } else if (props.type === 'Department') {
-    avatarShape.value = 'square';
   }
 });
 
@@ -109,8 +105,10 @@ getListFun();
         flex: 1;
         display: flex;
         align-items: center;
+        & > .avatar {
+          margin-right: 14px;
+        }
         & > .username {
-          margin-left: 14px;
           @include text-ellipsis(1);
         }
       }

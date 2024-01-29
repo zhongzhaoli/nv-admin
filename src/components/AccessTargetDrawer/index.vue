@@ -156,7 +156,6 @@
       </el-drawer>
       <div v-if="accessType !== 'all'">
         <SelectDialog
-          type="User"
           name-key="username"
           :api="API_USERS.getUsersList"
           v-model="uVisible"
@@ -164,8 +163,8 @@
           @submit="(v) => submitFun(v, 'User')"
         />
         <SelectDialog
-          type="Department"
           name-key="name"
+          avatarShape="square"
           :api="API_DEPARTMENT.getDeptList"
           v-model="dVisible"
           :default-select-list="selectListObject[accessType].departmentList"

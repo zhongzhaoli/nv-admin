@@ -13,8 +13,8 @@
         <div class="Dialogbody">
           <div v-if="!closedVisible">
             <DataList
-              :type="type"
               :api="api"
+              :avatarShape="avatarShape"
               :nameKey="nameKey"
               :defaultSelectList="defaultSelectList"
               @change="selectChange"
@@ -26,21 +26,22 @@
   </div>
 </template>
 <script setup lang="ts">
-import { ref, unref, watch } from 'vue';
+import { ref, unref, watch, withDefaults } from 'vue';
 import ConfirmDialog from '../ConfirmDialog/index.vue';
 import DataList from './dataList.vue';
 import { cloneDeep } from 'lodash-es';
-
-export type SelectTargetType = 'User' | 'Department';
+import { DEFAULT_AVATAR_SHAPE, AVATAR_SHAPE } from '@/constants/app';
 
 interface ComponentProps {
-  type: SelectTargetType;
   modelValue: boolean;
   nameKey: string;
   api: Function;
   defaultSelectList: any[];
+  avatarShape?: AVATAR_SHAPE;
 }
-const props = defineProps<ComponentProps>();
+const props = withDefaults(defineProps<ComponentProps>(), {
+  avatarShape: DEFAULT_AVATAR_SHAPE
+});
 const emits = defineEmits(['submit', 'update:modelValue']);
 
 const selectList = ref<any[]>([]);
