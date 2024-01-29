@@ -29,7 +29,6 @@ const appStore = useAppStore();
   background-color: var(--layout-background-color);
   & > .sidebar {
     width: var(--sidebar-width);
-    z-index: 10;
   }
   & > .right {
     transition: width var(--normal-transition-duration);

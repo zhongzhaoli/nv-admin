@@ -84,7 +84,6 @@ interface Prop {
   value: number;
 }
 addListener((prop: Prop) => {
-  console.log(prop);
   if (prop.key === 'todoList') todoListNum.value = prop.value;
 });
 
