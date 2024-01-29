@@ -44,18 +44,20 @@
 <script setup lang="ts">
 import Scroll from './scroll.vue';
 import { useDataList } from './useDataList';
-import { watchEffect } from 'vue';
+import { watchEffect, withDefaults } from 'vue';
 import { cloneDeep } from 'lodash-es';
 import { AVATAR_SHAPE } from '@/constants/app';
 
 interface ComponentProps {
   nameKey: string;
   api: Function;
-  defaultSelectList: any[];
+  defaultSelectList?: any;
   avatarShape: AVATAR_SHAPE;
 }
 
-const props = defineProps<ComponentProps>();
+const props = withDefaults(defineProps<ComponentProps>(), {
+  defaultSelectList: []
+});
 const emits = defineEmits(['change']);
 
 const {

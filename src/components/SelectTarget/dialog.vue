@@ -36,11 +36,12 @@ interface ComponentProps {
   modelValue: boolean;
   nameKey: string;
   api: Function;
-  defaultSelectList: any[];
+  defaultSelectList?: any;
   avatarShape?: AVATAR_SHAPE;
 }
 const props = withDefaults(defineProps<ComponentProps>(), {
-  avatarShape: DEFAULT_AVATAR_SHAPE
+  avatarShape: DEFAULT_AVATAR_SHAPE,
+  defaultSelectList: []
 });
 const emits = defineEmits(['submit', 'update:modelValue']);
 
