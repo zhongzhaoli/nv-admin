@@ -1,10 +1,10 @@
 <template>
   <div class="memberItemComponent">
+    <div class="close" @click="deleteMember">
+      <i class="ri-close-line" />
+    </div>
     <div class="avatar">
       <el-avatar :size="40" :src="avatar" />
-      <div class="close" @click="deleteMember">
-        <i class="ri-close-line" />
-      </div>
     </div>
     <el-tooltip :content="name">
       <div class="name">{{ name }}</div>
@@ -30,28 +30,23 @@ const deleteMember = () => {
   display: flex;
   flex-direction: column;
   align-items: center;
-  &:hover {
-    & > .avatar > .close {
-      display: block;
-    }
-  }
-  & > .avatar {
-    position: relative;
-    & > .close {
-      position: absolute;
-      top: -4px;
-      right: -4px;
-      background-color: var(--el-color-danger);
-      width: 16px;
-      height: 16px;
-      line-height: 16px;
-      font-size: 14px;
-      text-align: center;
-      border-radius: 50%;
-      color: #fff;
-      cursor: pointer;
-      display: none;
-    }
+  border: 1px solid var(--normal-border-color);
+  border-radius: 4px;
+  padding: 12px 10px;
+  position: relative;
+  & > .close {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    background-color: var(--el-color-danger);
+    width: 16px;
+    height: 16px;
+    line-height: 16px;
+    font-size: 14px;
+    text-align: center;
+    border-radius: 50%;
+    color: #fff;
+    cursor: pointer;
   }
   & > div.name {
     font-size: 14px;

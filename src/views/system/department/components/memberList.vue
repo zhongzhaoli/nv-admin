@@ -1,12 +1,14 @@
 <template>
   <div class="memberListComponent" v-loading="memberListLoading">
     <div class="memberList" v-if="!memberListLoading">
-      <div class="addItem item" @click="openSelectTarget">
-        <div class="add flex-center">
-          <i class="ri-add-line" v-if="!addLoading" />
-          <div class="loading-circle" v-else />
+      <div class="item" @click="openSelectTarget">
+        <div class="addItem">
+          <div class="add flex-center">
+            <i class="ri-add-line" v-if="!addLoading" />
+            <div class="loading-circle" v-else />
+          </div>
+          <div class="text">添加成员</div>
         </div>
-        <div class="text">添加成员</div>
       </div>
       <div class="item" v-for="item in memberList" :key="item.id">
         <MemberItem
@@ -104,13 +106,19 @@ getMemberList();
     overflow-y: auto;
     display: flex;
     flex-wrap: wrap;
-    padding: 0 10px;
+    padding: 0 20px;
     & > .item {
-      width: calc(25% - 20px);
-      padding: 12px 10px;
+      width: calc(25% - 12px);
       box-sizing: content-box;
-      &.addItem {
+      padding: 6px;
+      & > .addItem {
         cursor: pointer;
+        border: 1px solid var(--normal-border-color);
+        border-radius: 4px;
+        display: flex;
+        padding: 12px 10px;
+        flex-direction: column;
+        align-items: center;
         &:hover {
           & > div.text {
             color: var(--el-color-primary);
