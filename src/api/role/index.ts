@@ -63,6 +63,17 @@ export function updateRole<T>(
   });
 }
 
+export function changeRoleStatus(
+  id: string | number,
+  data: { status: any }
+): Promise<ResponseJson> {
+  return request({
+    url: `/system/role/${id}/changeStatus`,
+    method: 'put',
+    data
+  });
+}
+
 export function deleteRole(id: string): Promise<ResponseJson> {
   return request({
     url: `/system/role/${id}`,

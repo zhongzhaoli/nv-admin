@@ -118,6 +118,32 @@ export default [
     }
   },
   {
+    url: `${PREFIX}/system/role/:id/changeStatus`,
+    method: 'put',
+    timeout: 500,
+    response: ({ headers, body, query }): ResponseJson => {
+      if (!isLogin(headers)) {
+        return {
+          code: ResponseCode.UNAUTHORIZED,
+          data: {},
+          msg: '用户未登录'
+        };
+      }
+      if (!query.id)
+        return {
+          code: ResponseCode.ERROR,
+          data: {},
+          msg: '找不到此角色'
+        };
+      console.log(`role(ID：${query.id}): 修改状态`, body);
+      return {
+        code: ResponseCode.SUCCESS,
+        data: {},
+        msg: '操作成功'
+      };
+    }
+  },
+  {
     url: `${PREFIX}/system/role/:id`,
     method: 'put',
     timeout: 500,

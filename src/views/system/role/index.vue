@@ -22,10 +22,10 @@
         @selection-change="handleSelectionChange"
       >
         <template #table-status="{ row }">
-          <el-switch
-            :active-value="1"
-            :inactive-value="2"
+          <SwitchHandle
+            :pId="row.id"
             v-model="row.status"
+            :api="API_ROLE.changeRoleStatus"
           />
         </template>
         <template #table-action="{ row }">
@@ -92,6 +92,7 @@ import { ref } from 'vue';
 import FilterContainer from '@/components/FilterContainer/index.vue';
 import TableContainer from '@/components/TableContainer/index.vue';
 import ConfirmDialog from '@/components/ConfirmDialog/index.vue';
+import SwitchHandle from '@/components/SwitchHandle/index.vue';
 import * as API_ROLE from '@/api/role/index';
 import { getMenuList } from '@/api/menu/index';
 import {
