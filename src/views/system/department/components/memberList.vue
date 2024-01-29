@@ -23,6 +23,7 @@
       <SelectTarget
         type="User"
         name-key="username"
+        :api="API_USERS.getUsersList"
         :default-select-list="memberList"
         v-model="selectVisible"
         @submit="submitAddUserList"
@@ -33,6 +34,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import * as API_DEPARTMENT from '@/api/department/index';
+import * as API_USERS from '@/api/users/index';
 import MemberItem from './memberItem.vue';
 import SelectTarget from '@/components/SelectTarget/dialog.vue';
 import { useMessageBox } from '@/hooks/useMessageBox';
@@ -63,9 +65,8 @@ const getMemberList = async () => {
 // 添加成员
 const selectVisible = ref<boolean>(false);
 const addLoading = ref<boolean>(false);
-const submitAddUserList = async (selectUser: { type: string; list: any[] }) => {
+const submitAddUserList = async (list: any[]) => {
   try {
-    const { list } = selectUser;
     addLoading.value = true;
     await API_DEPARTMENT.addDeptMember({
       ids: list.map((item: any) => item.id)
