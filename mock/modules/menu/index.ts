@@ -21,7 +21,7 @@ const menus = [
     }
   },
   {
-    id: 7,
+    id: 8,
     pid: 0,
     path: 'todoList',
     name: 'TodoList',
@@ -50,6 +50,8 @@ const menus = [
     },
     children: [
       {
+        id: 71,
+        pid: 7,
         path: 'list',
         name: 'NotificationList',
         component: 'notification/index.vue',
@@ -63,6 +65,8 @@ const menus = [
         }
       },
       {
+        id: 72,
+        pid: 7,
         path: 'detail/:id',
         name: 'NotificationDetail',
         component: 'notification/detail.vue',
@@ -76,6 +80,8 @@ const menus = [
         }
       },
       {
+        id: 73,
+        pid: 7,
         path: 'create',
         name: 'NotificationCreate',
         component: 'notification/create.vue',
