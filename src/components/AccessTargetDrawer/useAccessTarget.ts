@@ -13,6 +13,21 @@ export interface SelectListObject {
   cant: SelectListObjectProp;
 }
 
+const initSelectListObject: SelectListObject = {
+  can: {
+    userList: [],
+    userNameString: '',
+    departmentList: [],
+    departmentNameString: ''
+  },
+  cant: {
+    userList: [],
+    userNameString: '',
+    departmentList: [],
+    departmentNameString: ''
+  }
+};
+
 export function useAccessTarget(emits: any, type: ACCESS_TYPE) {
   const accessType = ref<ACCESS_TYPE>(type);
 
@@ -21,21 +36,14 @@ export function useAccessTarget(emits: any, type: ACCESS_TYPE) {
   const dVisible = ref<boolean>(false);
 
   const drawerVisible = ref<boolean>(false);
+  const selectListObject = ref<SelectListObject>(
+    cloneDeep(initSelectListObject)
+  );
 
-  const selectListObject = ref<SelectListObject>({
-    can: {
-      userList: [],
-      userNameString: '',
-      departmentList: [],
-      departmentNameString: ''
-    },
-    cant: {
-      userList: [],
-      userNameString: '',
-      departmentList: [],
-      departmentNameString: ''
-    }
-  });
+  // 重置化选中数据
+  const initSelectListFun = () => {
+    selectListObject.value = cloneDeep(initSelectListObject);
+  };
 
   // 默认值赋值
   const defaultSelectSet = (defaultSelectList: SelectListObjectProp) => {
@@ -84,6 +92,7 @@ export function useAccessTarget(emits: any, type: ACCESS_TYPE) {
     drawerVisible,
     submitFun,
     defaultSelectSet,
+    initSelectListFun,
     getNameList,
     submit
   };

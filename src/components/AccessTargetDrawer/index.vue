@@ -197,12 +197,14 @@ const {
   submitFun,
   selectListObject,
   drawerVisible,
+  initSelectListFun,
   defaultSelectSet,
   submit
 } = useAccessTarget(emits, props.type);
 
 // 关闭之后
 const closed = () => {
+  initSelectListFun();
   emits('closed');
 };
 
