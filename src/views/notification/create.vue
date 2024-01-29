@@ -46,9 +46,9 @@
       </div>
     </div>
     <AccessTargetDrawer
+      ref="accessTargetDrawer"
       :type="whoType"
       :defaultSelectListObject="selectListObject"
-      v-model="drawerOpen"
       @submit="accessTargetSubmit"
     />
   </div>
@@ -61,7 +61,9 @@ import { ElMessage } from 'element-plus';
 import { useI18n } from '@/hooks/useI18n';
 import { useMessageBox } from '@/hooks/useMessageBox';
 import { ACCESS_TYPE } from '@/constants/accessTarget';
-import AccessTargetDrawer from '@/components/AccessTargetDrawer/index.vue';
+import AccessTargetDrawer, {
+  type AccessTargetDrawerInstance
+} from '@/components/AccessTargetDrawer/index.vue';
 import { SelectListObjectProp } from '@/components/AccessTargetDrawer/useAccessTarget';
 const { t } = useI18n();
 defineOptions({
@@ -72,13 +74,8 @@ const editRef = ref();
 const title = ref<string>('');
 const content = ref<string>('');
 const whoType = ref<ACCESS_TYPE>('all');
-const drawerOpen = ref<boolean>(false);
 const selectListObject = ref<SelectListObjectProp | null>(null);
-
-// 打开抽屉
-const openDrawer = () => {
-  drawerOpen.value = true;
-};
+const accessTargetDrawer = ref<AccessTargetDrawerInstance | null>(null);
 
 // 保存草稿
 const saveDraft = () => {
@@ -88,6 +85,11 @@ const saveDraft = () => {
   };
   localStorage.setItem(DRAFT_LOCALSTORAGE_KEY, JSON.stringify(draft));
   ElMessage.success(t('msg.notification.draftMessage'));
+};
+
+// 打开抽屉
+const openDrawer = () => {
+  if (accessTargetDrawer.value) accessTargetDrawer.value.openDrawer();
 };
 
 // 发送

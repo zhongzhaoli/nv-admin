@@ -108,10 +108,10 @@
       </el-form>
     </ConfirmDialog>
     <SelectTarget
+      ref="selectRoleRef"
       name-key="name"
-      :submit-loading="selectRoleSubmitLoading"
+      :submit-loading="selectRoleLoading"
       :api="API_ROLE.getRoleList"
-      v-model="selectRoleVisible"
       @submit="submitFun"
     />
   </div>
@@ -123,7 +123,8 @@ import { HandleLeftProps } from '@/components/TableContainer/types';
 import FilterContainer from '@/components/FilterContainer/index.vue';
 import ConfirmDialog from '@/components/ConfirmDialog/index.vue';
 import UploadAvatar from '@/components/UploadAvatar/index.vue';
-import SelectTarget from '@/components/SelectTarget/dialog.vue';
+import SelectTarget from '@/components/SelectTarget/index.vue';
+import { type SelectTargetInstance } from '@/components/SelectTarget/useSelectTarget';
 import SwitchHandle from '@/components/SwitchHandle/index.vue';
 import { PAGE_SIZE, PAGE } from '@/constants/app';
 import * as API_USERS from '@/api/users';
@@ -250,11 +251,11 @@ const deleteUser = (row: DataProp) => {
 };
 
 // 选择角色
-const selectRoleVisible = ref<boolean>(false);
-const selectRoleSubmitLoading = ref<boolean>(false);
+const selectRoleRef = ref<SelectTargetInstance | null>(null);
+const selectRoleLoading = ref<boolean>(false);
 const userId = ref<string | number>('');
 const submitFun = async (list: any) => {
-  selectRoleSubmitLoading.value = true;
+  selectRoleLoading.value = true;
   try {
     await API_USERS.usersSetRoles(userId.value, {
       ids: list.map((item: any) => item.id)
@@ -263,13 +264,13 @@ const submitFun = async (list: any) => {
   } catch (err) {
     console.log(err);
   } finally {
-    selectRoleSubmitLoading.value = false;
-    selectRoleVisible.value = false;
+    selectRoleLoading.value = false;
+    selectRoleRef.value && selectRoleRef.value.closeDialog();
   }
 };
 const openSelectRole = (id: number | string) => {
   userId.value = id;
-  selectRoleVisible.value = true;
+  selectRoleRef.value && selectRoleRef.value.openDialog();
 };
 
 // 部门点击

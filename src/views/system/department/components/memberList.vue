@@ -4,8 +4,7 @@
       <div class="item" @click="openSelectTarget">
         <div class="addItem">
           <div class="add flex-center">
-            <i class="ri-add-line" v-if="!addLoading" />
-            <div class="loading-circle" v-else />
+            <i class="ri-add-line" />
           </div>
           <div class="text">添加成员</div>
         </div>
@@ -21,11 +20,11 @@
     </div>
     <Teleport to="body">
       <SelectTarget
-        type="User"
+        ref="selectUserRef"
         name-key="username"
         :api="API_USERS.getUsersList"
+        :submit-loading="selectUserLoading"
         :default-select-list="memberList"
-        v-model="selectVisible"
         @submit="submitAddUserList"
       />
     </Teleport>
@@ -36,7 +35,8 @@ import { ref } from 'vue';
 import * as API_DEPARTMENT from '@/api/department/index';
 import * as API_USERS from '@/api/users/index';
 import MemberItem from './memberItem.vue';
-import SelectTarget from '@/components/SelectTarget/dialog.vue';
+import SelectTarget from '@/components/SelectTarget/index.vue';
+import { type SelectTargetInstance } from '@/components/SelectTarget/useSelectTarget';
 import { useMessageBox } from '@/hooks/useMessageBox';
 import { ElMessage } from 'element-plus';
 import { unref } from 'vue';
@@ -63,25 +63,26 @@ const getMemberList = async () => {
 };
 
 // 添加成员
-const selectVisible = ref<boolean>(false);
-const addLoading = ref<boolean>(false);
+const selectUserRef = ref<SelectTargetInstance | null>(null);
+const selectUserLoading = ref<boolean>(false);
 const submitAddUserList = async (list: any[]) => {
   try {
-    addLoading.value = true;
+    selectUserLoading.value = true;
     await API_DEPARTMENT.addDeptMember({
       ids: list.map((item: any) => item.id)
     });
     ElMessage.success('操作成功');
+    selectUserRef.value && selectUserRef.value.closeDialog();
     // TODO：动态添加
   } catch (err) {
     console.log(err);
   } finally {
-    addLoading.value = false;
+    selectUserLoading.value = false;
   }
 };
 const openSelectTarget = () => {
-  if (addLoading.value) return;
-  selectVisible.value = true;
+  if (selectUserLoading.value) return;
+  selectUserRef.value && selectUserRef.value.openDialog();
 };
 
 // 移除成员
