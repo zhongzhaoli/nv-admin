@@ -127,6 +127,7 @@ const closeAllTags = () => {
 
 // 路由有变化，添加tag在tagsView上
 const addTags = (route: RouteLocationNormalizedLoaded) => {
+  if (route.meta && route.meta.showTagsView === false) return;
   tagsViewStore.addVisitedViews(route);
   tagsViewStore.addCachedView(route);
 };

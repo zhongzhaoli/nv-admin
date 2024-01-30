@@ -28,15 +28,17 @@ export const staticRoutes: RouteRecordRaw[] = [
           icon: 'ri-home-5-line',
           affix: true
         }
+      },
+      {
+        path: '/:pathMatch(.*)*',
+        component: () => import('@/views/errorPage/404.vue'),
+        meta: {
+          title: '404',
+          showTagsView: false,
+          hidden: true
+        }
       }
     ]
-  },
-  {
-    path: '/:pathMatch(.*)*',
-    component: () => import('@/views/errorPage/404.vue'),
-    meta: {
-      hidden: true
-    }
   }
 ];
 

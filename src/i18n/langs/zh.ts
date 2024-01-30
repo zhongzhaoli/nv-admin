@@ -6,6 +6,10 @@ export default {
       rememberMe: '记住我',
       btnText: '登录'
     },
+    errorPage: {
+      404: '抱歉，您访问的页面不存在。',
+      goHome: '返回首页'
+    },
     navbar: {
       userDropdown: {
         updatePassword: '修改密码',

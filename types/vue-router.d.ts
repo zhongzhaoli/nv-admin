@@ -22,5 +22,7 @@ declare module 'vue-router' {
     type?: ROUTE_TYPE;
     /** 排序 */
     sort?: number;
+    /** 是否在TagsView显示 */
+    showTagsView?: boolean;
   }
 }

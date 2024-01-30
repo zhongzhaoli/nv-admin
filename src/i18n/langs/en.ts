@@ -6,6 +6,10 @@ export default {
       rememberMe: 'Remember Me',
       btnText: 'Login'
     },
+    errorPage: {
+      404: 'Sorry, the page you visited does not exist.',
+      goHome: 'Back Home'
+    },
     navbar: {
       userDropdown: {
         updatePassword: 'Change Password',
