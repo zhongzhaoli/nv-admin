@@ -73,7 +73,7 @@ const currentHour = new Date().getHours();
 if (currentHour >= 6 && currentHour < 12) {
   greeting.value = 'morning';
 } else if (currentHour >= 12 && currentHour < 19) {
-  greeting.value = 'afteroon';
+  greeting.value = 'afternoon';
 } else {
   greeting.value = 'night';
 }
