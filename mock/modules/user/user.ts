@@ -22,7 +22,7 @@ const userInfoArr: Array<{ token: UserToken; userInfo: UserInfo }> = [
       phone: '13662648176',
       realname: '钟兆立',
       department: '前端开发部',
-      avatar: 'https://resource.lstaer.com/0543d7c3-9fda-49d4-ba46-1628f7ee0639'
+      avatar: 'https://resource.lstaer.com/1f967c66-5966-496d-beca-25b58622632a'
     }
   }
 ];

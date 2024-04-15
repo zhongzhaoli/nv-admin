@@ -57,16 +57,16 @@ const userList: Array<{ avatar: string }> = [
     avatar: 'https://resource.lstaer.com/1f967c66-5966-496d-beca-25b58622632a'
   },
   {
-    avatar: 'https://resource.lstaer.com/1f9ce64a-81dc-4147-beca-f7a72861b647'
+    avatar: 'http://dummyimage.com/120x600'
   },
   {
-    avatar: 'https://resource.lstaer.com/2057c545-31e2-48d4-b3f7-fb80602ffab1'
+    avatar: 'http://dummyimage.com/120x600'
   },
   {
     avatar: 'https://resource.lstaer.com/26541b3c-a630-4014-ae0d-67a59624e56d'
   },
   {
-    avatar: 'https://resource.lstaer.com/26238892-aebf-41ef-ac9c-eac4119b7044'
+    avatar: 'http://dummyimage.com/120x600'
   }
 ];
 </script>

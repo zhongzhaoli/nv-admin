@@ -2,10 +2,7 @@
   <div class="container">
     <div class="headerContentBox">
       <div class="userBox">
-        <el-avatar
-          :size="60"
-          src="https://resource.lstaer.com/283df2f7-dc52-4a0a-8110-88cd38746dff?imageView2/1/w/100/h/100"
-        />
+        <el-avatar :size="60" :src="userStore.userInfo?.avatar || ''" />
         <div class="greetBox">
           <div class="title">
             {{ $t(`msg.workbenches.hello.${greeting}.text1`) }}
