@@ -25,11 +25,11 @@ export function getRoleList(params: RoleListParams): Promise<ResponsePageJson> {
 export function roleSetPermission<T>(
   id: number | string,
   data: {
-    ids: Array<string | number>;
+    routeIds: Array<string | number>;
   }
 ): Promise<ResponseJson<T>> {
   return request({
-    url: `/system/role/${id}/setPermission`,
+    url: `/system/role/${id}/editRoutes`,
     method: 'post',
     data
   });
@@ -39,7 +39,7 @@ export function roleGetPermission<T>(
   id: number | string
 ): Promise<ResponseJson<T>> {
   return request({
-    url: `/system/role/${id}/getPermission`,
+    url: `/system/role/${id}/routes`,
     method: 'get'
   });
 }

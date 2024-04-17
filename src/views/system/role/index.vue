@@ -21,13 +21,6 @@
         @refresh="refresh"
         @selection-change="handleSelectionChange"
       >
-        <template #table-status="{ row }">
-          <SwitchHandle
-            :pId="row.id"
-            v-model="row.status"
-            :api="API_ROLE.changeRoleStatus"
-          />
-        </template>
         <template #table-action="{ row }">
           <el-button type="primary" link @click="editDialogOpen(row)">{{
             $t('msg.edit')
@@ -92,7 +85,6 @@ import { ref } from 'vue';
 import FilterContainer from '@/components/FilterContainer/index.vue';
 import TableContainer from '@/components/TableContainer/index.vue';
 import ConfirmDialog from '@/components/ConfirmDialog/index.vue';
-import SwitchHandle from '@/components/SwitchHandle/index.vue';
 import * as API_ROLE from '@/api/role/index';
 import { getMenuList } from '@/api/menu/index';
 import {
@@ -242,10 +234,9 @@ const selectPermission = async () => {
   if (!perimissionTreeRef.value) return;
   const checkedNodes = perimissionTreeRef.value.getCheckedNodes();
   try {
-    await API_ROLE.roleSetPermission(
-      roleId.value,
-      checkedNodes.map((item: any) => item.id)
-    );
+    await API_ROLE.roleSetPermission(roleId.value, {
+      routeIds: checkedNodes.map((item: any) => item.id)
+    });
     ElMessage.success('操作成功');
   } catch (err) {
     console.log(err);

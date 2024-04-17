@@ -27,13 +27,6 @@ export const tableColumns: TableColumnsProps[] = [
     align: 'center'
   },
   {
-    label: '状态',
-    prop: 'status',
-    slot: true,
-    width: '120',
-    align: 'center'
-  },
-  {
     label: '备注',
     prop: 'description',
     minWidth: '140',
@@ -62,32 +55,16 @@ export const tableColumns: TableColumnsProps[] = [
   }
 ];
 
-export const roleStatus: FilterSelectOptionsProp[] = [
-  {
-    label: '启用',
-    value: 1
-  },
-  {
-    label: '禁用',
-    value: 0
-  }
-];
-
 export const filterColumns: FilterColumnsProp[] = [
   {
     label: '角色名',
     prop: 'name'
-  },
-  {
-    label: '状态',
-    prop: 'status',
-    type: 'select',
-    selectOptions: roleStatus
   }
 ];
 
 export const tableExtraColumns: TableExtraColumnsProps = {
-  selection: true
+  index: true,
+  indexLabel: '#'
 };
 
 export const leftButtons: HandleLeftProps[] = [

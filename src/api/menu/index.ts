@@ -26,7 +26,7 @@ export function getMenuList<T>(
   params?: MenuListParams
 ): Promise<ResponseJson<T>> {
   return request({
-    url: '/system/menu',
+    url: '/system/routes',
     method: 'get',
     params
   });
