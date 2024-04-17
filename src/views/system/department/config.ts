@@ -51,13 +51,6 @@ export const tableColumns: TableColumnsProps[] = [
     showOverflowTooltip: true
   },
   {
-    label: '状态',
-    prop: 'status',
-    slot: true,
-    width: '120',
-    align: 'center'
-  },
-  {
     prop: 'createTime',
     label: '创建日期',
     width: '180',
@@ -70,7 +63,7 @@ export const tableColumns: TableColumnsProps[] = [
     align: 'center'
   },
   {
-    prop: 'createUser',
+    prop: 'createUser.realName',
     label: '创建人',
     width: '100',
     align: 'center'

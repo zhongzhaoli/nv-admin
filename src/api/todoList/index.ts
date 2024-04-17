@@ -29,7 +29,7 @@ export function updateTodo<T>(
 ): Promise<ResponseJson> {
   return request({
     url: `/todoList/${id}`,
-    method: 'put',
+    method: 'patch',
     data
   });
 }

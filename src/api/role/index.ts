@@ -58,7 +58,7 @@ export function updateRole<T>(
 ): Promise<ResponseJson> {
   return request({
     url: `/system/role/${id}`,
-    method: 'put',
+    method: 'patch',
     data
   });
 }
@@ -69,7 +69,7 @@ export function changeRoleStatus(
 ): Promise<ResponseJson> {
   return request({
     url: `/system/role/${id}/changeStatus`,
-    method: 'put',
+    method: 'patch',
     data
   });
 }

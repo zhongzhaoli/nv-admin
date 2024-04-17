@@ -66,7 +66,7 @@ export function changeUsersStatus(
 ): Promise<ResponseJson> {
   return request({
     url: `/system/users/${id}/changeStatus`,
-    method: 'put',
+    method: 'patch',
     data
   });
 }

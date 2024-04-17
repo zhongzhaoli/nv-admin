@@ -96,7 +96,7 @@ export default [
   },
   {
     url: `${PREFIX}/system/users/:id`,
-    method: 'put',
+    method: 'patch',
     timeout: 500,
     response: ({ headers, body, query }): ResponseJson => {
       if (!isLogin(headers)) {
@@ -122,7 +122,7 @@ export default [
   },
   {
     url: `${PREFIX}/system/users/:id/changeStatus`,
-    method: 'put',
+    method: 'patch',
     timeout: 500,
     response: ({ headers, body, query }): ResponseJson => {
       if (!isLogin(headers)) {

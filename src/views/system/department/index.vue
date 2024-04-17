@@ -23,13 +23,6 @@
         <template #table-avatar="{ row }">
           <el-avatar :src="row.avatar" :size="32" shape="square" />
         </template>
-        <template #table-status="{ row }">
-          <SwitchHandle
-            v-model="row.status"
-            :pId="row.id"
-            :api="API_DEPARTMENT.changeDeptStatus"
-          />
-        </template>
         <template #table-action="{ row }">
           <el-button type="primary" link @click="editDialogOpen(row)">{{
             $t('msg.edit')
@@ -86,7 +79,6 @@ import TableContainer from '@/components/TableContainer/index.vue';
 import ConfirmDialog from '@/components/ConfirmDialog/index.vue';
 import UploadAvatar from '@/components/UploadAvatar/index.vue';
 import MemberList from './components/memberList.vue';
-import SwitchHandle from '@/components/SwitchHandle/index.vue';
 import * as API_DEPARTMENT from '@/api/department/index';
 import {
   DataProp,

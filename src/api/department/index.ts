@@ -74,7 +74,7 @@ export function updateDept<T>(
 ): Promise<ResponseJson> {
   return request({
     url: `/system/department/${id}`,
-    method: 'put',
+    method: 'patch',
     data
   });
 }
@@ -85,7 +85,7 @@ export function changeDeptStatus(
 ): Promise<ResponseJson> {
   return request({
     url: `/system/department/${id}/changeStatus`,
-    method: 'put',
+    method: 'patch',
     data
   });
 }

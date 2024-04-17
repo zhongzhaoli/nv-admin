@@ -46,7 +46,7 @@ export function updateMenu<T>(
 ): Promise<ResponseJson> {
   return request({
     url: `/system/menu/${id}`,
-    method: 'put',
+    method: 'patch',
     data
   });
 }
