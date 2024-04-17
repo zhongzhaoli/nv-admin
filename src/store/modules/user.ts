@@ -35,8 +35,8 @@ export const useUserStore = defineStore(
     };
     //登录
     const login = async (payload: LoginDto) => {
-      const data = (await loginApi(payload)) as ResponseJson;
-      token.value = data.data;
+      const data = (await loginApi(payload)) as ResponseJson<{ token: string }>;
+      token.value = data.data.token;
       return data;
     };
     // 退出登录

@@ -49,7 +49,7 @@ function createService() {
         return location.reload();
       default:
         // 其他情况
-        ElMessage.error(apiData.msg);
+        ElMessage.error(apiData.message);
         return Promise.reject(apiData);
     }
   };

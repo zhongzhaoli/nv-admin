@@ -3,7 +3,7 @@ import { request } from '@/utils/request';
 
 export function getRoutes<T>(): Promise<ResponseJson<T>> {
   return request({
-    url: '/routes',
+    url: '/user/routes',
     method: 'get'
   });
 }

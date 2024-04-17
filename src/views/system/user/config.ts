@@ -17,6 +17,7 @@ export interface DataProp {
   phone: string;
   realName: string;
   role: string;
+  deptId: string | null;
   status: 1 | 2;
   updateTime: string;
   username: string;
@@ -45,7 +46,7 @@ export const tableColumns: TableColumnsProps[] = [
   },
   {
     label: '角色',
-    prop: 'role',
+    prop: 'role.name',
     align: 'center',
     showOverflowTooltip: true,
     minWidth: '200'

@@ -25,8 +25,8 @@ const switchValue = ref<any>(false);
 
 const props = withDefaults(defineProps<ComponentProps>(), {
   modelValue: false,
-  activeValue: 1,
-  inactiveValue: 2
+  activeValue: true,
+  inactiveValue: false
 });
 watch(
   () => props.modelValue,

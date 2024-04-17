@@ -39,7 +39,7 @@ export function createUsers(data: UsersDto): Promise<ResponseJson> {
 export function usersSetRoles(
   id: number | string,
   data: {
-    ids: Array<string | number>;
+    roleId: string | number;
   }
 ): Promise<ResponseJson> {
   return request({
@@ -55,7 +55,7 @@ export function updateUsers<T>(
 ): Promise<ResponseJson> {
   return request({
     url: `/system/users/${id}`,
-    method: 'put',
+    method: 'patch',
     data
   });
 }

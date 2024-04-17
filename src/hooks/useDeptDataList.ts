@@ -14,7 +14,7 @@ export function useDeptDataList(useCompany?: boolean) {
     if (useCompany) {
       const company = ref<DataProp>({
         name: import.meta.env.VITE_APP_COMPANY_NAME,
-        id: 0,
+        id: '0',
         children: data
       } as unknown as DataProp);
       list.value.push(company.value);

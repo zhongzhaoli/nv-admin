@@ -1,13 +1,14 @@
 import { cloneDeep } from 'lodash-es';
 import { ref, unref } from 'vue';
+import { type ComponentProps } from './index.vue';
 
 export interface SelectTargetInstance {
   openDialog: () => void;
   closeDialog: () => void;
 }
 
-export function useSelectTarget(emits: any) {
-  const selectList = ref<any[]>([]);
+export function useSelectTarget(emits: any, props: ComponentProps) {
+  const selectList = ref<any[] | {}>();
   const closedVisible = ref<boolean>(false);
   const cVisible = ref<boolean>(false);
 

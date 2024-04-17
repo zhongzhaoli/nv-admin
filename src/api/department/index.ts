@@ -55,7 +55,7 @@ export function addDeptMember(data: DeptMemberDto): Promise<ResponseJson> {
 
 export function getAllDeptList<T>(): Promise<ResponseJson<T>> {
   return request({
-    url: '/system/department',
+    url: '/system/department/list',
     method: 'get'
   });
 }

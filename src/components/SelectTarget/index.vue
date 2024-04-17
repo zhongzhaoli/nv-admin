@@ -17,6 +17,7 @@
               :api="api"
               :avatarShape="avatarShape"
               :nameKey="nameKey"
+              :multiple="multiple"
               :defaultSelectList="defaultSelectList"
               @change="selectChange"
             />
@@ -33,16 +34,18 @@ import DataList from './dataList.vue';
 import { DEFAULT_AVATAR_SHAPE, AVATAR_SHAPE } from '@/constants/app';
 import { useSelectTarget } from './useSelectTarget';
 
-interface ComponentProps {
+export interface ComponentProps {
   nameKey: string;
   api: Function;
+  multiple?: boolean;
   submitLoading?: boolean;
   defaultSelectList?: any;
   avatarShape?: AVATAR_SHAPE;
 }
-withDefaults(defineProps<ComponentProps>(), {
+const props = withDefaults(defineProps<ComponentProps>(), {
   avatarShape: DEFAULT_AVATAR_SHAPE,
   defaultSelectList: [],
+  multiple: true,
   submitLoading: false
 });
 const emits = defineEmits(['submit', 'close', 'closed']);
@@ -56,7 +59,7 @@ const {
   selectChange,
   cVisible,
   closedVisible
-} = useSelectTarget(emits);
+} = useSelectTarget(emits, props);
 
 defineExpose({
   openDialog,

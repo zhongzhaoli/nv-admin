@@ -58,7 +58,7 @@
               <el-button type="primary" link @click="editDialogOpen(row)">{{
                 $t('msg.edit')
               }}</el-button>
-              <el-button type="primary" link @click="openSelectRole(row.id)">{{
+              <el-button type="primary" link @click="openSelectRole(row)">{{
                 $t('msg.role')
               }}</el-button>
               <el-button type="primary" link @click="deleteUser(row)">{{
@@ -96,6 +96,9 @@
             placeholder="请输入用户名"
           />
         </el-form-item>
+        <el-form-item label="密码：" v-if="dialogTitle === '创建用户'">
+          <el-input v-model="editFormValue.password" placeholder="请输入密码" />
+        </el-form-item>
         <el-form-item label="手机号：">
           <el-input v-model="editFormValue.phone" placeholder="请输入手机号" />
         </el-form-item>
@@ -112,6 +115,8 @@
       name-key="name"
       :submit-loading="selectRoleLoading"
       :api="API_ROLE.getRoleList"
+      :default-select-list="defaultSelectRoleList"
+      :multiple="false"
       @submit="submitFun"
     />
   </div>
@@ -150,7 +155,7 @@ const total = ref(0);
 const tableData = ref<DataProp[]>([]);
 const loading = ref<boolean>(true);
 const filterObject = ref<any>({});
-const deptId = ref<string | number>(0);
+const deptId = ref<string | number>('0');
 const {
   deptList,
   loading: deptLoading,
@@ -168,7 +173,12 @@ const getListFun = async () => {
       ...filterObject.value
     });
     currentPage.value = data.page;
-    tableData.value = data.list;
+    tableData.value = data.list.map((item) => {
+      return {
+        ...item,
+        deptId: item.department?.id || '0'
+      };
+    });
     total.value = data.total;
   } catch (err) {
     console.error(err);
@@ -254,13 +264,17 @@ const deleteUser = (row: DataProp) => {
 const selectRoleRef = ref<SelectTargetInstance | null>(null);
 const selectRoleLoading = ref<boolean>(false);
 const userId = ref<string | number>('');
-const submitFun = async (list: any) => {
+const submitFun = async (obj: any) => {
+  if (!obj) {
+    return ElMessage.error('请选择角色');
+  }
   selectRoleLoading.value = true;
   try {
     await API_USERS.usersSetRoles(userId.value, {
-      ids: list.map((item: any) => item.id)
+      roleId: obj.id
     });
     ElMessage.success('操作成功');
+    getListFun();
   } catch (err) {
     console.log(err);
   } finally {
@@ -268,8 +282,12 @@ const submitFun = async (list: any) => {
     selectRoleRef.value && selectRoleRef.value.closeDialog();
   }
 };
-const openSelectRole = (id: number | string) => {
-  userId.value = id;
+const defaultSelectRoleList = ref<any[]>([]);
+const openSelectRole = (row: DataProp) => {
+  userId.value = row.id;
+  const dList = [];
+  if (row.role) dList.push(row.role);
+  defaultSelectRoleList.value = dList;
   selectRoleRef.value && selectRoleRef.value.openDialog();
 };
 

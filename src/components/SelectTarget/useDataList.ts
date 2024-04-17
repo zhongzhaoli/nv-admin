@@ -1,7 +1,8 @@
 import { PAGE } from '@/constants/app';
 import { ref, unref } from 'vue';
+import { type ComponentProps } from './dataList.vue';
 
-export function useDataList(emits: any) {
+export function useDataList(emits: any, props: ComponentProps) {
   const currentPage = ref<number>(PAGE);
   const pageSize = ref<number>(15);
   const total = ref(0);
@@ -81,6 +82,9 @@ export function useDataList(emits: any) {
 
   // 选中
   const clickItem = (item: any) => {
+    if (!props.multiple) {
+      unref(list).forEach((item) => (item.checked = false));
+    }
     item.checked = !item.checked;
     checkBoxChange();
   };
@@ -88,7 +92,11 @@ export function useDataList(emits: any) {
   // 选中checkBox
   const checkBoxChange = () => {
     const newList = unref(list).filter((item) => item.checked);
-    emits('change', newList);
+    if (props.multiple) {
+      emits('change', newList);
+    } else {
+      emits('change', newList[0]);
+    }
   };
 
   // 搜索

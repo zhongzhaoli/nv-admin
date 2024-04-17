@@ -30,10 +30,10 @@ export default (configEnv: ConfigEnv): UserConfigExport => {
       }
     },
     plugins: [
-      vue(),
-      viteMockServe({
-        mockPath: './mock'
-      })
+      vue()
+      // viteMockServe({
+      //   mockPath: './mock'
+      // })
     ]
   };
 };

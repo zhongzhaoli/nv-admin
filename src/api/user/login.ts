@@ -7,7 +7,7 @@ export interface LoginDto {
 
 export function login(data: LoginDto) {
   return request({
-    url: '/login',
+    url: '/user/login',
     method: 'post',
     data
   });

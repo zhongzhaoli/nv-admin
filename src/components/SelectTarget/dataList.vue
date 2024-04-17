@@ -48,11 +48,12 @@ import { watchEffect, withDefaults } from 'vue';
 import { cloneDeep } from 'lodash-es';
 import { AVATAR_SHAPE } from '@/constants/app';
 
-interface ComponentProps {
+export interface ComponentProps {
   nameKey: string;
   api: Function;
   defaultSelectList?: any;
   avatarShape: AVATAR_SHAPE;
+  multiple: boolean;
 }
 
 const props = withDefaults(defineProps<ComponentProps>(), {
@@ -74,7 +75,7 @@ const {
   checkBoxChange,
   clickItem,
   handleDefaultSelect
-} = useDataList(emits);
+} = useDataList(emits, props);
 
 watchEffect(() => {
   uNameKey.value = props.nameKey;
