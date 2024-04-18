@@ -1,12 +1,8 @@
-import { FilterColumnsProp } from '@/components/FilterContainer/types';
 import {
-  HandleLeftProps,
   TableColumnsProps,
   TableExtraColumnsProps
 } from '@/components/TableContainer/types';
-import { useI18n } from '@/hooks/useI18n';
 import { ref } from 'vue';
-const { t } = useI18n();
 
 export interface DataProp {
   id: string;

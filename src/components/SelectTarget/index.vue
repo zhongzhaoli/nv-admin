@@ -42,7 +42,7 @@ export interface ComponentProps {
   defaultSelectList?: any;
   avatarShape?: AVATAR_SHAPE;
 }
-const props = withDefaults(defineProps<ComponentProps>(), {
+withDefaults(defineProps<ComponentProps>(), {
   avatarShape: DEFAULT_AVATAR_SHAPE,
   defaultSelectList: [],
   multiple: true,
@@ -59,7 +59,7 @@ const {
   selectChange,
   cVisible,
   closedVisible
-} = useSelectTarget(emits, props);
+} = useSelectTarget(emits);
 
 defineExpose({
   openDialog,

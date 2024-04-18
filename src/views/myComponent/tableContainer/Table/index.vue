@@ -49,7 +49,6 @@ const total = ref<number>(3);
 const currentPage = ref<number>(PAGE);
 const pageSize = ref<number>(PAGE_SIZE);
 const loading = ref<boolean>(false);
-const filterObject = ref<any>();
 
 const refresh = () => {
   loading.value = true;
@@ -67,11 +66,6 @@ const handleLeftClick = (obj: { item: HandleLeftProps }) => {
   if (item.key === 'create') ElMessage.success('现在是新增操作');
   if (item.key === 'edit') ElMessage.warning('现在是编辑操作');
   if (item.key === 'delete') ElMessage.error('现在是删除操作');
-};
-
-const getListFun = () => {
-  ElMessage.success('提交筛选条件');
-  ElMessage.info(JSON.stringify(filterObject.value));
 };
 
 const editDialogOpen = (row: any) => {

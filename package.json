@@ -29,8 +29,7 @@
     "vue": "^3.4.21",
     "vue-clipboard3": "^2.0.0",
     "vue-i18n": "^9.9.0",
-    "vue-router": "^4.2.5",
-    "vuedraggable": "^4.1.0"
+    "vue-router": "^4.2.5"
   },
   "devDependencies": {
     "@types/node": "^20.10.4",

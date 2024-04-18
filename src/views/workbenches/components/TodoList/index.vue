@@ -45,7 +45,7 @@ import Item from './item.vue';
 import { type Todo } from '@/views/todoList/components/item.vue';
 import { type ApiDataProps } from '@/views/todoList/index.vue';
 import { useRouter } from 'vue-router';
-import draggable from 'vuedraggable';
+// import draggable from 'vuedraggable';
 import * as API_TODOLIST from '@/api/todoList/index';
 import { todoListDto } from '@/api/todoList/index';
 import { useMitt } from '@/hooks/useMitt';

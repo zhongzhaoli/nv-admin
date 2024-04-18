@@ -6,7 +6,7 @@
 </template>
 <script setup lang="ts">
 import Card from '@/components/Card/index.vue';
-import { ref, onMounted, Ref, nextTick, watch } from 'vue';
+import { ref, Ref, nextTick, watch } from 'vue';
 import { EChartsOption } from 'echarts';
 import { useEcharts } from '@/hooks/useEcharts';
 const target = ref<HTMLElement | null>(null);
