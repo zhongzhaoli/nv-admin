@@ -3,18 +3,18 @@
     <div class="listBox">
       <div class="header">{{ $t('msg.todoList.title') }}</div>
       <div class="list" v-if="!loading">
-        <draggable v-model="listData" item-key="id">
-          <template #item="{ element }">
-            <div class="item">
-              <Item
-                @change="activeChange"
-                @remove="(v) => removeFun(v, 'list')"
-                @edit="editFun"
-                :item="element"
-              />
-            </div>
-          </template>
-        </draggable>
+        <!-- <draggable v-model="listData" item-key="id"> -->
+        <!-- <template #item="{ element }"> -->
+        <div class="item" v-for="item in listData" :key="item.id">
+          <Item
+            @change="activeChange"
+            @remove="(v) => removeFun(v, 'list')"
+            @edit="editFun"
+            :item="item"
+          />
+        </div>
+        <!-- </template> -->
+        <!-- </draggable> -->
         <div class="tag" v-if="listData.length && endData.length">
           <el-tag disable-transitions type="info">已完成</el-tag>
         </div>
@@ -28,7 +28,10 @@
         </div>
       </div>
       <div class="loading" v-if="loading" v-loading="loading" />
-      <div class="noData flex-center" v-if="!loading">
+      <div
+        class="noData flex-center"
+        v-if="!loading && !endData.length && !listData.length"
+      >
         {{ $t('msg.todoList.noData') }}
       </div>
     </div>
@@ -227,7 +230,7 @@ getListFun();
       padding-left: 10px;
     }
     & .item {
-      cursor: grab;
+      // cursor: grab;
       background-color: #fff;
       border-radius: 4px;
       border: 1px solid var(--normal-border-color);

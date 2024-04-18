@@ -62,7 +62,7 @@
           <el-input-number :min="1" v-model="formValue.sort" />
         </el-form-item>
       </el-col>
-      <el-col :span="8">
+      <el-col :span="6">
         <div class="flex-center fl-column radioBtn">
           <div class="el-form-item__label customLabel">是否显示</div>
           <el-radio-group v-model="formValue.hidden">
@@ -71,7 +71,16 @@
           </el-radio-group>
         </div>
       </el-col>
-      <el-col :span="8">
+      <el-col :span="6">
+        <div class="flex-center fl-column radioBtn">
+          <div class="el-form-item__label customLabel">面包屑隐藏</div>
+          <el-radio-group v-model="formValue.breadcrumbHidden">
+            <el-radio-button :label="true">是</el-radio-button>
+            <el-radio-button :label="false">否</el-radio-button>
+          </el-radio-group>
+        </div>
+      </el-col>
+      <el-col :span="6">
         <div class="flex-center fl-column radioBtn">
           <div class="el-form-item__label customLabel">是否缓存</div>
           <el-radio-group v-model="formValue.keepAlive">
@@ -80,7 +89,7 @@
           </el-radio-group>
         </div>
       </el-col>
-      <el-col :span="8">
+      <el-col :span="6">
         <div class="flex-center fl-column radioBtn">
           <div class="el-form-item__label customLabel">历史记录固定</div>
           <el-radio-group v-model="formValue.affix">
@@ -106,7 +115,7 @@ export interface MenusProps {
 }
 
 interface ComponentProps {
-  modelValue: any;
+  defaultValue: any;
   menus: MenusProps[];
 }
 
@@ -135,8 +144,13 @@ const generateTypeList = (type: ROUTE_TYPE) => {
   );
 };
 
+const getFormValue = () => {
+  return formValue.value;
+};
+defineExpose({ getFormValue });
+
 watch(
-  () => props.modelValue,
+  () => props.defaultValue,
   (nV) => {
     formValue.value = { ...nV, ...nV.meta };
     // 生成对应的菜单类型列表

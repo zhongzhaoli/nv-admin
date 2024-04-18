@@ -159,10 +159,6 @@ const handleLeftClick = (obj: { item: HandleLeftProps }) => {
     editFormValue.value = {};
     openDialog('创建角色');
   }
-  if (item.key === 'delete') {
-    const ids: string[] = tableSelection.value.map((item) => item.id);
-    deleteRole(ids);
-  }
 };
 // 编辑按钮点击
 const editDialogOpen = (row: DataProp) => {

@@ -68,12 +68,16 @@
       :submitLoading="submitLoading"
       :show-confirm-btn="false"
     >
-      <MemberList ref="memberListRef" :id="departmentId" />
+      <MemberList
+        ref="memberListRef"
+        :id="departmentId"
+        @updateList="getListFun"
+      />
     </ConfirmDialog>
   </div>
 </template>
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, nextTick } from 'vue';
 import FilterContainer from '@/components/FilterContainer/index.vue';
 import TableContainer from '@/components/TableContainer/index.vue';
 import ConfirmDialog from '@/components/ConfirmDialog/index.vue';
@@ -128,9 +132,11 @@ const memberListRef = ref<{ getMemberList: Function } | null>(null);
 const getMemberList = (id: string | number) => {
   memberListVisible.value = true;
   departmentId.value = id;
-  if (memberListRef.value) {
-    memberListRef.value.getMemberList();
-  }
+  nextTick(() => {
+    if (memberListRef.value) {
+      memberListRef.value.getMemberList();
+    }
+  });
 };
 
 // 页数/页码改变
@@ -171,6 +177,7 @@ const editDialogOpen = (row: DataProp) => {
 };
 // 确认编辑
 const editFun = async () => {
+  if (!editFormValue.value.avatar) return ElMessage.error('请上传部门封面');
   submitLoading.value = true;
   try {
     if (editFormValue.value.id === undefined) {
@@ -192,10 +199,10 @@ const editFun = async () => {
 };
 
 // 删除部门
-const deleteDept = (row: DataProp) => {
+const deleteDept = (deptId: string | number) => {
   useMessageBox('确定删除该部门吗？', async () => {
     try {
-      await API_DEPARTMENT.deleteDept(row.id);
+      await API_DEPARTMENT.deleteDept(deptId);
       ElMessage.success('删除成功');
       getListFun();
     } catch (err) {

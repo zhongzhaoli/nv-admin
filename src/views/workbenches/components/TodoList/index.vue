@@ -9,11 +9,17 @@
       <div class="cardBody">
         <el-scrollbar class="scrollbar" v-if="listData.length">
           <div class="listBox">
-            <draggable v-model="listData" item-key="id">
-              <template #item="{ element }">
-                <Item class="item" :toDo="element" @change="activeChange" />
-              </template>
-            </draggable>
+            <!-- <draggable v-model="listData" item-key="id"> -->
+            <!-- <template #item="{ element }"> -->
+            <Item
+              class="item"
+              :toDo="item"
+              v-for="item in listData"
+              :key="item.id"
+              @change="activeChange"
+            />
+            <!-- </template> -->
+            <!-- </draggable> -->
           </div>
         </el-scrollbar>
         <div class="noData flex-center" v-else>

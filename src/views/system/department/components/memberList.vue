@@ -31,7 +31,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, watchEffect } from 'vue';
 import * as API_DEPARTMENT from '@/api/department/index';
 import * as API_USERS from '@/api/users/index';
 import MemberItem from './memberItem.vue';
@@ -39,13 +39,19 @@ import SelectTarget from '@/components/SelectTarget/index.vue';
 import { type SelectTargetInstance } from '@/components/SelectTarget/useSelectTarget';
 import { useMessageBox } from '@/hooks/useMessageBox';
 import { ElMessage } from 'element-plus';
-import { unref } from 'vue';
 
 interface ComponentProps {
   id: string | number;
 }
 
 const props = defineProps<ComponentProps>();
+const emits = defineEmits(['updateList']);
+
+const deptId = ref(props.id);
+
+watchEffect(() => {
+  deptId.value = props.id;
+});
 
 // 获取部门成员列表
 const memberListLoading = ref<boolean>(false);
@@ -53,7 +59,9 @@ const memberList = ref<any[]>([]);
 const getMemberList = async () => {
   memberListLoading.value = true;
   try {
-    const { data } = await API_DEPARTMENT.getDeptMemberList<any[]>(props.id);
+    const { data } = await API_DEPARTMENT.getDeptMemberList<any[]>(
+      deptId.value
+    );
     memberList.value = data;
   } catch (err) {
     console.log(err);
@@ -68,12 +76,13 @@ const selectUserLoading = ref<boolean>(false);
 const submitAddUserList = async (list: any[]) => {
   try {
     selectUserLoading.value = true;
-    await API_DEPARTMENT.addDeptMember({
-      ids: list.map((item: any) => item.id)
+    await API_DEPARTMENT.addDeptMember(deptId.value, {
+      userIds: list.map((item: any) => item.id)
     });
     ElMessage.success('操作成功');
     selectUserRef.value && selectUserRef.value.closeDialog();
-    // TODO：动态添加
+    getMemberList();
+    emits('updateList');
   } catch (err) {
     console.log(err);
   } finally {
@@ -88,10 +97,10 @@ const openSelectTarget = () => {
 // 移除成员
 const deleteMember = (mid: string | number) => {
   useMessageBox('确定移除此成员吗？', async () => {
-    await API_DEPARTMENT.deleteDeptMember(props.id, mid);
+    await API_DEPARTMENT.deleteDeptMember(deptId.value, mid);
     ElMessage.success('操作成功');
-    const index = unref(memberList).findIndex((item) => item.id === mid);
-    if (index > -1) memberList.value.splice(index, 1);
+    getMemberList();
+    emits('updateList');
   });
 };
 

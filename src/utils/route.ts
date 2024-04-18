@@ -101,12 +101,13 @@ export const handleRoutes = (
   const res: RouteRecordRaw[] = [];
   routes.forEach((route: RouteRecordRaw) => {
     const newPath = resolve(basePath, route.path);
-    // 需要隐藏的菜单，不显示
-    if (route.meta && route.meta.hidden) return;
     // 目录菜单重定向到第一个子路由
     if (route.children && route.children.length > 0) {
       route.redirect = resolve(newPath, route.children[0].path);
     }
+    // 需要隐藏的菜单，不显示
+    if (route.meta && route.meta.hidden) return;
+
     // 只有一个children 只展示children
     const onlyOneShow: RouteRecordRaw | null = route.children
       ? handleChildrenOnlyOneShow(route.children)

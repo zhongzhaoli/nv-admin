@@ -33,20 +33,20 @@ export const tableColumns: TableColumnsProps[] = [
   {
     label: '部门名称',
     prop: 'name',
-    minWidth: '120',
+    width: '200',
     align: 'center',
     showOverflowTooltip: true
   },
   {
     label: '成员数量',
     prop: 'memberCount',
-    width: '100',
+    width: '150',
     align: 'center'
   },
   {
     label: '描述',
     prop: 'description',
-    width: '150',
+    minWidth: '150',
     align: 'center',
     showOverflowTooltip: true
   },
@@ -78,27 +78,10 @@ export const tableColumns: TableColumnsProps[] = [
   }
 ];
 
-export const deptStatus: FilterSelectOptionsProp[] = [
-  {
-    label: '启用',
-    value: 1
-  },
-  {
-    label: '禁用',
-    value: 0
-  }
-];
-
 export const filterColumns: FilterColumnsProp[] = [
   {
     label: '部门名称',
     prop: 'name'
-  },
-  {
-    label: '状态',
-    prop: 'status',
-    type: 'select',
-    selectOptions: deptStatus
   }
 ];
 

@@ -8,7 +8,7 @@ export interface DeptDto {
 }
 
 export interface DeptMemberDto {
-  ids: number[];
+  userIds: number[];
 }
 
 export interface DeptListParams {
@@ -30,7 +30,7 @@ export function getDeptMemberList<T>(
   id: number | string
 ): Promise<ResponseJson<T>> {
   return request({
-    url: `system/department/${id}/memberList`,
+    url: `system/department/${id}/users`,
     method: 'get'
   });
 }
@@ -40,14 +40,17 @@ export function deleteDeptMember(
   mid: number | string
 ): Promise<ResponseJson> {
   return request({
-    url: `system/department/${id}/memberList/${mid}`,
+    url: `system/department/${id}/users/${mid}`,
     method: 'delete'
   });
 }
 
-export function addDeptMember(data: DeptMemberDto): Promise<ResponseJson> {
+export function addDeptMember(
+  id: string | number,
+  data: DeptMemberDto
+): Promise<ResponseJson> {
   return request({
-    url: `system/department/memberList`,
+    url: `system/department/${id}/addUser`,
     method: 'post',
     data
   });
@@ -90,7 +93,7 @@ export function changeDeptStatus(
   });
 }
 
-export function deleteDept(id: string): Promise<ResponseJson> {
+export function deleteDept(id: string | number): Promise<ResponseJson> {
   return request({
     url: `/system/department/${id}`,
     method: 'delete'

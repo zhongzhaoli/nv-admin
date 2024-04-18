@@ -34,7 +34,7 @@ export function getMenuList<T>(
 
 export function createMenu(data: MenuDto): Promise<ResponseJson> {
   return request({
-    url: '/system/menu',
+    url: '/system/routes',
     method: 'post',
     data
   });
@@ -45,7 +45,7 @@ export function updateMenu<T>(
   data: Partial<T>
 ): Promise<ResponseJson> {
   return request({
-    url: `/system/menu/${id}`,
+    url: `/system/routes/${id}`,
     method: 'patch',
     data
   });
@@ -53,7 +53,7 @@ export function updateMenu<T>(
 
 export function deleteMenu(id: number | string): Promise<ResponseJson> {
   return request({
-    url: `/system/menu/${id}`,
+    url: `/system/routes/${id}`,
     method: 'delete'
   });
 }

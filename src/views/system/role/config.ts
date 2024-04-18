@@ -72,10 +72,5 @@ export const leftButtons: HandleLeftProps[] = [
     label: t('msg.create'),
     type: 'primary',
     key: 'create'
-  },
-  {
-    label: t('msg.delete'),
-    type: 'danger',
-    key: 'delete'
   }
 ];

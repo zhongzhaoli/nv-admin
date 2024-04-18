@@ -28,7 +28,7 @@
         </template>
         <template #table-action="{ row }">
           <el-button type="primary" link @click="editDialogOpen(row)">{{
-            $t('msg.create')
+            $t('msg.edit')
           }}</el-button>
           <el-button type="primary" link @click="deleteMenu(row)">{{
             $t('msg.delete')
@@ -43,7 +43,11 @@
       width="600px"
       @submit="editFun"
     >
-      <EditForm v-model="editFormValue" :menus="treeSelectData" />
+      <EditForm
+        ref="editForm"
+        :defaultValue="editFormValue"
+        :menus="treeSelectData"
+      />
     </ConfirmDialog>
   </div>
 </template>
@@ -103,11 +107,11 @@ const handleLeftClick = (obj: { item: HandleLeftProps }) => {
   const { item } = obj;
   if (item.key === 'create') {
     editFormValue.value = {
-      pid: 0,
-      sort: 1,
-      keepAlive: true,
+      pid: '0',
       hidden: false,
-      affix: false
+      keepAlive: false,
+      affix: false,
+      sort: 1
     };
     openDialog('创建菜单');
   }
@@ -118,16 +122,16 @@ const editDialogOpen = (row: DataProp) => {
   openDialog('编辑菜单');
 };
 // 确认编辑
+const editForm = ref();
 const editFun = async () => {
+  if (!editForm.value) return;
+  const data = editForm.value.getFormValue();
   submitLoading.value = true;
   try {
-    if (editFormValue.value.id === undefined) {
-      await API_MENU.createMenu(editFormValue.value);
+    if (data.id === undefined) {
+      await API_MENU.createMenu(data);
     } else {
-      await API_MENU.updateMenu<DataProp>(
-        editFormValue.value.id,
-        editFormValue.value
-      );
+      await API_MENU.updateMenu<DataProp>(data.id, data);
     }
     editVisible.value = false;
     ElMessage.success('操作成功');
@@ -167,7 +171,7 @@ const generatePidList = (arr: DataProp[]): MenusProps[] => {
     return result;
   };
   const children: MenusProps[] = fn(arr);
-  return [{ label: '根目录', type: 'ROOT', value: 0, children }];
+  return [{ label: '根目录', type: 'ROOT', value: '0', children }];
 };
 
 // 删除菜单
