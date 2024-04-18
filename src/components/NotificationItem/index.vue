@@ -2,18 +2,18 @@
   <div class="NoticeComponent" @click="toDetail">
     <div class="leftBox">
       <div class="avatar">
-        <el-avatar :size="34" :src="notice.avatar" />
+        <el-avatar :size="34" :src="notice.createUser.avatar" />
       </div>
       <div class="content">
         <div class="message">
-          <span class="author">{{ notice.author }}</span>
+          <span class="author">{{ notice.createUser.realName }}</span>
           <span>{{ $t('msg.notification.shortText1') }}</span>
           <span class="title">{{ notice.title }}</span>
           <span>{{ $t('msg.notification.shortText2') }}</span>
         </div>
         <div class="bottom">
           <div class="time">{{ notice.timestamp }}</div>
-          <div class="read">
+          <!-- <div class="read">
             <div class="read" v-if="notice.read">
               {{ $t('msg.notification.read') }}
             </div>
@@ -21,7 +21,7 @@
               <div />
               {{ $t('msg.notification.unRead') }}
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
@@ -40,8 +40,10 @@ export interface Notice {
   id: string | number;
   title: string;
   timestamp: string;
-  avatar: string;
-  author: string;
+  createUser: {
+    avatar: string;
+    realName: string;
+  };
   createTime: string;
   read: boolean;
 }

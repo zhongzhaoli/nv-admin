@@ -32,6 +32,11 @@ const initSelectListObject: SelectListObject = {
 export function useAccessTarget(emits: any, type: ACCESS_TYPE) {
   const accessType = ref<ACCESS_TYPE>(type);
 
+  // 切换类型
+  const changeAccessType = (type: ACCESS_TYPE) => {
+    accessType.value = type;
+  };
+
   // 选择用户/部门
   const selectUserRef = ref<SelectTargetInstance | null>(null);
   const selectDeptRef = ref<SelectTargetInstance | null>(null);
@@ -84,12 +89,12 @@ export function useAccessTarget(emits: any, type: ACCESS_TYPE) {
       obj = cloneDeep(selectListObject.value.cant);
     }
     emits('submit', type, obj);
+    initSelectListFun();
     closeDrawer();
   };
 
   // 关闭之后
   const closed = () => {
-    initSelectListFun();
     emits('closed');
   };
 
@@ -134,6 +139,7 @@ export function useAccessTarget(emits: any, type: ACCESS_TYPE) {
     close,
     openDrawer,
     openUserDialog,
-    openDeptDialog
+    openDeptDialog,
+    changeAccessType
   };
 }

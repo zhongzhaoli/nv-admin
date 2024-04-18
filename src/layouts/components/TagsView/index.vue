@@ -51,6 +51,7 @@ import { useRouterStore } from '@/store/modules/router';
 import { onMounted, ref } from 'vue';
 import { onClickOutside } from '@vueuse/core';
 import { RouterLink } from 'vue-router';
+import { toLastView } from '@/utils/route';
 const tagsViewStore = useTagsViewStore();
 const { addRouteListener } = useRouteListener();
 const route = useRoute();
@@ -148,15 +149,6 @@ const closeTag = (view: TagView) => {
   tagsViewStore.delCachedView(view);
   closeMenu();
   isActive(view) && toLastView(tagsViewStore.visitedViews);
-};
-
-// 跳转到最后一个页面
-const toLastView = (visitedViews: TagView[]) => {
-  // 没有页面了，跳转到首页
-  if (visitedViews.length === 0) return router.push('/');
-  const latestView = visitedViews.slice(-1)[0];
-  if (latestView && latestView.path)
-    return router.push({ path: latestView.path, query: latestView.query });
 };
 
 // 筛选出固定在tagsView上的tag

@@ -8,7 +8,7 @@
         title="发送对象"
       >
         <div class="listBox">
-          <div class="item success" @click="accessType = 'all'">
+          <div class="item success" @click="changeAccessType('all')">
             <div class="leftBox">
               <div class="checkBox flex-center">
                 <i class="ri-check-line" v-if="accessType === 'all'" />
@@ -26,7 +26,7 @@
               </div>
             </div>
           </div>
-          <div class="item success" @click="accessType = 'can'">
+          <div class="item success" @click="changeAccessType('can')">
             <div class="leftBox">
               <div class="checkBox flex-center">
                 <i class="ri-check-line" v-if="accessType === 'can'" />
@@ -87,7 +87,7 @@
               </div>
             </div>
           </div>
-          <div class="item danger" @click="accessType = 'cant'">
+          <div class="item danger" @click="changeAccessType('cant')">
             <div class="leftBox">
               <div class="checkBox flex-center">
                 <i class="ri-check-line" v-if="accessType === 'cant'" />
@@ -175,7 +175,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import { watchEffect } from 'vue';
+import { watch } from 'vue';
 import { SelectListObjectProp, useAccessTarget } from './useAccessTarget';
 import SelectDialog from '@/components/SelectTarget/index.vue';
 import { ACCESS_TYPE } from '@/constants/accessTarget';
@@ -203,15 +203,22 @@ const {
   openDrawer,
   closeDrawer,
   openUserDialog,
-  openDeptDialog
+  openDeptDialog,
+  changeAccessType
 } = useAccessTarget(emits, props.type);
 
-watchEffect(() => {
-  if (props.defaultSelectListObject) {
-    defaultSelectSet(cloneDeep(props.defaultSelectListObject));
+watch(
+  () => props.defaultSelectListObject,
+  (nV) => {
+    if (nV) {
+      defaultSelectSet(cloneDeep(nV));
+    }
+  },
+  {
+    immediate: true,
+    deep: true
   }
-  accessType.value = props.type;
-});
+);
 
 export interface AccessTargetDrawerInstance {
   openDrawer: () => void;

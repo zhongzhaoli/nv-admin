@@ -65,7 +65,13 @@ import AccessTargetDrawer, {
   type AccessTargetDrawerInstance
 } from '@/components/AccessTargetDrawer/index.vue';
 import { SelectListObjectProp } from '@/components/AccessTargetDrawer/useAccessTarget';
+import * as API_NOTIFICATION from '@/api/notification';
+import { useTagsViewStore } from '@/store/modules/tagsView';
+import { useRoute } from 'vue-router';
+import { toLastView } from '@/utils/route';
 const { t } = useI18n();
+const tagsViewStore = useTagsViewStore();
+const route = useRoute();
 defineOptions({
   name: 'NotificationCreate'
 });
@@ -93,9 +99,27 @@ const openDrawer = () => {
 };
 
 // 发送
-const submit = () => {
+const submit = async () => {
   content.value = editRef.value.getHtml();
-  console.log(content.value);
+  const deptList = selectListObject.value?.departmentList || [];
+  const userList = selectListObject.value?.userList || [];
+  useMessageBox('确定发布此通知吗？', async () => {
+    try {
+      await API_NOTIFICATION.createNotification({
+        content: content.value,
+        title: title.value,
+        whoType: whoType.value,
+        deptList: deptList.map((item) => item.id),
+        userList: userList.map((item) => item.id)
+      });
+      ElMessage.success('发布成功');
+      tagsViewStore.delVisitedView(route);
+      tagsViewStore.delCachedView(route);
+      toLastView(tagsViewStore.visitedViews);
+    } catch (err) {
+      console.error(err);
+    }
+  });
 };
 
 // 选择对象回调

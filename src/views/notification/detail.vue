@@ -5,12 +5,17 @@
       <div class="header">
         <div class="title">{{ detail.title }}</div>
         <div class="tooltip">
-          <div class="author">作者：Custer</div>
-          <div class="time">发布时间：2021-08-01 12:00</div>
-          <div class="read">
+          <div class="author">作者：{{ detail.createUser.realName }}</div>
+          <div class="time">发布时间：{{ detail.createTime }}</div>
+          <div class="delete" v-if="detail.isAdmin">
+            <el-button type="danger" @click="deleteArticleFun" link
+              >删除</el-button
+            >
+          </div>
+          <!-- <div class="read">
             <i class="ri-eye-line" />
             <span>阅读量：100</span>
-          </div>
+          </div> -->
         </div>
       </div>
       <div class="body">
@@ -28,6 +33,8 @@ import { ElMessage } from 'element-plus';
 import * as API_NOTIFICATION from '@/api/notification';
 import 'prismjs/themes/prism.css';
 import '@/styles/editor.css';
+import { useMessageBox } from '@/hooks/useMessageBox';
+import { toLastView } from '@/utils/route';
 
 defineOptions({
   name: 'NotificationDetail'
@@ -54,6 +61,20 @@ const getListFun = async () => {
   } finally {
     loading.value = false;
   }
+};
+
+const deleteArticleFun = () => {
+  useMessageBox('确认删除此通知吗', async () => {
+    try {
+      await API_NOTIFICATION.delNotification(detail.value.id);
+      ElMessage.success('删除成功');
+      tagsViewStore.delVisitedView(route);
+      tagsViewStore.delCachedView(route);
+      toLastView(tagsViewStore.visitedViews);
+    } catch (err) {
+      console.error(err);
+    }
+  });
 };
 
 onMounted(() => {

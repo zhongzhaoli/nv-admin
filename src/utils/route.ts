@@ -1,5 +1,6 @@
 import { whiteListByPath } from '@/config/route';
 import router from '@/router';
+import { TagView } from '@/store/modules/tagsView';
 import { resolve } from 'path-browserify';
 import { RouteRecordRaw } from 'vue-router';
 
@@ -131,4 +132,13 @@ export const handleRoutes = (
     }
   });
   return res;
+};
+
+// 跳转到最后一个页面
+export const toLastView = (visitedViews: TagView[]) => {
+  // 没有页面了，跳转到首页
+  if (visitedViews.length === 0) return router.push('/');
+  const latestView = visitedViews.slice(-1)[0];
+  if (latestView && latestView.path)
+    return router.push({ path: latestView.path, query: latestView.query });
 };
