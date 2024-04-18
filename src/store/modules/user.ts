@@ -49,8 +49,9 @@ export const useUserStore = defineStore(
     };
     // 退出登录
     const logout = () => {
-      token.value = '';
-      userInfo.value = undefined;
+      // token.value = undefined;
+      // userInfo.value = undefined;
+      window.localStorage.clear();
     };
     // 获取用户信息
     const getUserInfo = async () => {

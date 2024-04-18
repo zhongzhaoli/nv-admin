@@ -10,7 +10,13 @@
             }}{{ $t(`msg.workbenches.hello.${greeting}.text2`)
             }}{{ $t(`msg.workbenches.hello.${greeting}.text3`) }}
           </div>
-          <div class="desc">今日晴，20℃ - 32℃！</div>
+          <div class="desc" v-if="weatherInfo">
+            今日{{ weatherInfo.weather }}，{{ weatherInfo.temperature }}℃，{{
+              weatherInfo.winddirection
+            }}风，风力{{ weatherInfo.windpower }}级 ，湿度{{
+              weatherInfo.humidity
+            }}%
+          </div>
         </div>
       </div>
       <div class="countBox">
@@ -58,6 +64,7 @@ import { useUserStore } from '@/store/modules/user';
 import { getCssVariableValue } from '@/utils/css';
 import { useMitt } from '@/hooks/useMitt';
 import { WORKBENCHES_MITT_KEY } from '@/constants/mittKey';
+import { getWeatherInfo, WeatherInfoProps } from '@/api/weather';
 const { addListener } = useMitt(WORKBENCHES_MITT_KEY);
 import { ref } from 'vue';
 const userStore = useUserStore();
@@ -85,6 +92,21 @@ interface Prop {
 addListener((prop: Prop) => {
   if (prop.key === 'todoList') todoListNum.value = prop.value;
 });
+
+const weatherLoading = ref(true);
+const weatherInfo = ref<WeatherInfoProps>();
+const getWeatherFun = async () => {
+  weatherLoading.value = true;
+  try {
+    const { data } = await getWeatherInfo();
+    weatherInfo.value = data;
+  } catch (err) {
+    console.log(err);
+  } finally {
+    weatherLoading.value = false;
+  }
+};
+getWeatherFun();
 
 defineOptions({
   name: 'Workbenches'

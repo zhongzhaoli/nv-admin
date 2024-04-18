@@ -111,6 +111,7 @@ const handleLeftClick = (obj: { item: HandleLeftProps }) => {
       hidden: false,
       keepAlive: false,
       affix: false,
+      breadcrumbHidden: false,
       sort: 1
     };
     openDialog('创建菜单');

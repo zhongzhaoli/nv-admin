@@ -96,7 +96,7 @@ watch(
   formValue,
   useDebounceFn(() => {
     emits('update:modelValue', filterNull(formValue));
-  }, 300),
+  }, 150),
   { deep: true }
 );
 

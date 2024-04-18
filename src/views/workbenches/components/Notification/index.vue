@@ -7,13 +7,16 @@
     </template>
     <template #default>
       <div class="cardBody">
-        <div class="listBox">
+        <div class="listBox" v-if="!loading && activities.length">
           <Item
             class="item"
             v-for="(item, index) in activities"
             :key="index"
             :notice="item"
           />
+        </div>
+        <div class="noDataBox" v-if="!loading && !activities.length">
+          暂无数据
         </div>
       </div>
     </template>
@@ -62,6 +65,12 @@ getListFun();
       padding-bottom: 16px;
       margin-bottom: 16px;
     }
+  }
+  & > .noDataBox {
+    height: 150px;
+    text-align: center;
+    color: #777;
+    line-height: 150px;
   }
 }
 </style>

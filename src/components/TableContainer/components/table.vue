@@ -3,6 +3,7 @@
     <el-table
       :data="data || []"
       :size="tableSize"
+      :default-expand-all="extraConfig && extraConfig.expand"
       :row-key="(extraConfig && extraConfig.rowKey) || ''"
       :tree-props="(extraConfig && extraConfig.treeProps) || DEFAULT_TREEPROPS"
       @selection-change="handleSelectionChange"

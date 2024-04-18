@@ -34,6 +34,7 @@ export interface TableExtraConfigProps {
 
 // Handle
 export interface HandleComponentProps {
+  show?: boolean;
   leftButtons?: HandleLeftProps[];
   columns?: TableColumnsProps[];
 }

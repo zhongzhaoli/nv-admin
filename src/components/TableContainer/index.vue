@@ -1,20 +1,23 @@
 <template>
   <div class="tableContainerComponent">
     <!-- Handle -->
-    <HandleComponent
-      :leftButtons="(handle && handle.leftButtons) || []"
-      :columns="newColumns"
-      @refresh="refresh"
-      @left-button-click="handleLeftButtonClick"
-      @columns-change="handleColumnsChange"
-    >
-      <template #left>
-        <slot name="handleLeft" />
-      </template>
-      <template #right>
-        <slot name="handleRight" />
-      </template>
-    </HandleComponent>
+    <template v-if="handle && handle.show !== false">
+      <HandleComponent
+        class="handleBox"
+        :leftButtons="(handle && handle.leftButtons) || []"
+        :columns="newColumns"
+        @refresh="refresh"
+        @left-button-click="handleLeftButtonClick"
+        @columns-change="handleColumnsChange"
+      >
+        <template #left>
+          <slot name="handleLeft" />
+        </template>
+        <template #right>
+          <slot name="handleRight" />
+        </template>
+      </HandleComponent>
+    </template>
     <!-- Table -->
     <TableComponent
       class="tableBox"
@@ -129,8 +132,8 @@ const handleSelectionChange = (selection: any[]) => {
 </script>
 <style lang="scss" scoped>
 .tableContainerComponent {
-  & > .tableBox {
-    margin-top: var(--normal-padding);
+  & > .handleBox {
+    margin-bottom: var(--normal-padding);
   }
   & > .pageBox {
     margin-top: var(--normal-padding);

@@ -1,14 +1,24 @@
 <template>
   <Card title="成交占比">
-    <div class="echart" ref="target" />
+    <div v-loading="loading" style="height: 400px" v-if="loading" />
+    <div v-else class="echart" ref="target" />
   </Card>
 </template>
 <script setup lang="ts">
 import Card from '@/components/Card/index.vue';
-import { ref, onMounted, Ref } from 'vue';
+import { ref, onMounted, Ref, watch, nextTick } from 'vue';
 import { EChartsOption } from 'echarts';
 import { useEcharts } from '@/hooks/useEcharts';
 const target = ref<HTMLElement | null>(null);
+
+interface ComponentProps {
+  loading: boolean;
+  data: {
+    list: { value: number; name: string }[];
+  };
+}
+
+const props = defineProps<ComponentProps>();
 
 const renderChart = () => {
   const { setOptions } = useEcharts(target as Ref<HTMLElement>);
@@ -40,23 +50,23 @@ const renderChart = () => {
         label: {
           show: true
         },
-        data: [
-          { value: 40, name: '服饰' },
-          { value: 38, name: '玩具' },
-          { value: 32, name: '虚拟' },
-          { value: 26, name: '3C' },
-          { value: 22, name: '文具' },
-          { value: 18, name: '机械' }
-        ]
+        data: props.data.list
       }
     ]
   };
   setOptions(options);
 };
 
-onMounted(() => {
-  renderChart();
-});
+watch(
+  () => props.loading,
+  (nV) => {
+    if (!nV) {
+      nextTick(() => {
+        renderChart();
+      });
+    }
+  }
+);
 </script>
 <style lang="scss" scoped>
 .echart {

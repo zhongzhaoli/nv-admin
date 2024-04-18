@@ -1,7 +1,7 @@
 <template>
   <el-dropdown trigger="hover" @command="handleCommand">
     <div class="navbarFunItem">
-      <el-avatar :size="26" :src="userStore.userInfo?.avatar" />
+      <el-avatar :size="26" v-if="userInfo" :src="userInfo.avatar" />
     </div>
     <template #dropdown>
       <el-dropdown-menu>
@@ -17,15 +17,14 @@
   <ChangePassword ref="changePasswrd" />
 </template>
 <script setup lang="ts">
-import { useRouter } from 'vue-router';
 import { useUserStore } from '@/store/modules/user';
 import ChangePassword, {
   type ChangePasswordInstance
 } from './components/changePassword.vue';
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 
 const userStore = useUserStore();
-const router = useRouter();
+const userInfo = computed(() => userStore.userInfo);
 
 const changePasswrd = ref<ChangePasswordInstance | null>(null);
 
@@ -37,7 +36,7 @@ const handleCommand = (command: string | number | object) => {
 
 const logout = () => {
   userStore.logout();
-  router.push('/login');
+  window.location.reload();
 };
 </script>
 <style lang="scss" scoped></style>

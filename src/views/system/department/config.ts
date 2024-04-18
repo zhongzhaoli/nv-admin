@@ -1,7 +1,4 @@
-import {
-  FilterColumnsProp,
-  FilterSelectOptionsProp
-} from '@/components/FilterContainer/types';
+import { FilterColumnsProp } from '@/components/FilterContainer/types';
 import {
   HandleLeftProps,
   TableColumnsProps,

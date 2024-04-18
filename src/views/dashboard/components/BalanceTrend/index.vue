@@ -1,15 +1,27 @@
 <template>
   <Card title="交易额趋势">
-    <div class="echart" ref="target" />
+    <div v-loading="loading" style="height: 320px" v-if="loading" />
+    <div class="echart" v-else ref="target" />
   </Card>
 </template>
 <script setup lang="ts">
 import Card from '@/components/Card/index.vue';
-import { ref, onMounted, Ref } from 'vue';
+import { ref, Ref, watch, nextTick } from 'vue';
 import { EChartsOption } from 'echarts';
 import * as echarts from 'echarts';
 import { useEcharts } from '@/hooks/useEcharts';
 const target = ref<HTMLElement | null>(null);
+
+interface ComponentProps {
+  loading: boolean;
+  data: {
+    ld: number[];
+    td: number[];
+  };
+}
+
+const props = defineProps<ComponentProps>();
+
 const renderChart = () => {
   const { setOptions } = useEcharts(target as Ref<HTMLElement>);
   const options: EChartsOption = {
@@ -63,7 +75,7 @@ const renderChart = () => {
       {
         name: '昨日交易额',
         smooth: true,
-        data: [0, 7320, 5000, 5201, 3000, 5492, 0],
+        data: props.data.ld,
         type: 'line',
         symbolSize: 6,
         lineStyle: {
@@ -83,7 +95,7 @@ const renderChart = () => {
       {
         name: '今日交易额',
         smooth: true,
-        data: [0, 3490, 1890, 4372, 6666, 6000, 0],
+        data: props.data.td,
         type: 'line',
         symbolSize: 6,
         areaStyle: {
@@ -104,9 +116,16 @@ const renderChart = () => {
   };
   setOptions(options);
 };
-onMounted(() => {
-  renderChart();
-});
+watch(
+  () => props.loading,
+  (nV) => {
+    if (!nV) {
+      nextTick(() => {
+        renderChart();
+      });
+    }
+  }
+);
 </script>
 <style lang="scss" scoped>
 .echart {

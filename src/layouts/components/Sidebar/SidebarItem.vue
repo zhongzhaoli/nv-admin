@@ -10,7 +10,7 @@
       <SidebarItem
         v-for="child in item.children"
         :item="child"
-        :isTop="false"
+        :isTop="true"
         :key="child.path"
       />
     </el-sub-menu>

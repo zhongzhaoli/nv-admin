@@ -1,14 +1,25 @@
 <template>
   <Card title="访问来源">
-    <div class="echart" ref="target" />
+    <div v-loading="loading" style="height: 400px" v-if="loading" />
+    <div v-else class="echart" ref="target" />
   </Card>
 </template>
 <script setup lang="ts">
 import Card from '@/components/Card/index.vue';
-import { ref, onMounted, Ref } from 'vue';
+import { ref, onMounted, Ref, nextTick, watch } from 'vue';
 import { EChartsOption } from 'echarts';
 import { useEcharts } from '@/hooks/useEcharts';
 const target = ref<HTMLElement | null>(null);
+
+interface ComponentProps {
+  loading: boolean;
+  data: {
+    list: { value: number; name: string }[];
+  };
+}
+
+const props = defineProps<ComponentProps>();
+
 const renderChart = () => {
   const { setOptions } = useEcharts(target as Ref<HTMLElement>);
   const options: EChartsOption = {
@@ -44,22 +55,23 @@ const renderChart = () => {
         labelLine: {
           show: true
         },
-        data: [
-          { value: 1048, name: 'H5' },
-          { value: 735, name: 'PC' },
-          { value: 580, name: '小程序' },
-          { value: 484, name: 'APP' },
-          { value: 300, name: '支付宝' }
-        ]
+        data: props.data.list
       }
     ]
   };
   setOptions(options);
 };
 
-onMounted(() => {
-  renderChart();
-});
+watch(
+  () => props.loading,
+  (nV) => {
+    if (!nV) {
+      nextTick(() => {
+        renderChart();
+      });
+    }
+  }
+);
 </script>
 <style lang="scss" scoped>
 .echart {
