@@ -5,13 +5,21 @@ import { LoginDto, login as loginApi } from '@/api/user/login';
 import { getUserInfo as getUserInfoApi } from '@/api/user/user';
 import { ResponseJson } from '@/config/request';
 
+interface UserDepartment {
+  name: string;
+  description: string;
+  avatar: string;
+}
+
 interface UserInfo {
   username: string;
   email: string;
   phone: string;
   realname: string;
-  department: string;
   avatar: string;
+  department: UserDepartment;
+  memberCount: number;
+  memberAvatarList: string[];
 }
 
 interface UserState {

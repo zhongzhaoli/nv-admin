@@ -2,11 +2,11 @@
   <div class="container">
     <div class="headerContentBox">
       <div class="userBox">
-        <el-avatar :size="60" :src="userStore.userInfo?.avatar || ''" />
+        <el-avatar :size="60" :src="userInfo!.avatar || ''" />
         <div class="greetBox">
           <div class="title">
             {{ $t(`msg.workbenches.hello.${greeting}.text1`) }}
-            {{ userStore.userInfo?.username || ''
+            {{ userInfo!.username || ''
             }}{{ $t(`msg.workbenches.hello.${greeting}.text2`)
             }}{{ $t(`msg.workbenches.hello.${greeting}.text3`) }}
           </div>
@@ -41,13 +41,14 @@
               <img src="@/assets/workbenches.jpg" />
             </div>
           </Card>
-          <Department class="mt-normal-padding" />
+          <Department v-if="userInfo!.department" class="mt-normal-padding" />
         </el-col>
       </el-row>
     </div>
   </div>
 </template>
 <script setup lang="ts">
+import { computed } from 'vue';
 import Card from '@/components/Card/index.vue';
 import ProjectCard from './components/ProjectCard/index.vue';
 import Notification from './components/Notification/index.vue';
@@ -60,6 +61,7 @@ import { WORKBENCHES_MITT_KEY } from '@/constants/mittKey';
 const { addListener } = useMitt(WORKBENCHES_MITT_KEY);
 import { ref } from 'vue';
 const userStore = useUserStore();
+const userInfo = computed(() => userStore.userInfo);
 
 let normalPadding: string | number = getCssVariableValue('--normal-padding');
 normalPadding = parseFloat(normalPadding.replace('px', ''));

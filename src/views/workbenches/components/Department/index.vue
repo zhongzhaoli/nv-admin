@@ -3,32 +3,29 @@
     <template #default>
       <div class="cardBody">
         <div class="posterBox">
-          <el-avatar
-            :size="80"
-            shape="square"
-            src="/src/assets/departmentAvatar.png"
-          />
+          <el-avatar :size="80" shape="square" :src="department.avatar" />
           <div class="textBox">
-            <div class="title">前端开发部</div>
-            <div class="desc">我们的团队OUR TEAM.</div>
+            <div class="title">{{ department.name }}</div>
+            <div class="desc">{{ department.description }}</div>
           </div>
         </div>
         <div class="usersBox">
           <div class="userList">
             <el-avatar
-              v-for="(item, index) in userList"
+              v-for="(item, index) in userInfo!.memberAvatarList"
               :key="index"
               :size="35"
               :style="{ '--i': index }"
-              :src="item.avatar"
+              :src="item"
             />
-            <div class="more" :style="{ '--i': userList.length }">
+            <div class="more" :style="{ '--i': userInfo!.memberCount }">
               <i class="ri-more-fill" />
             </div>
           </div>
           <div class="text">
             <el-button type="primary" link
-              >{{ $t('msg.workbenches.department.count1') }} 20
+              >{{ $t('msg.workbenches.department.count1') }}
+              {{ userInfo!.memberCount }}
               {{ $t('msg.workbenches.department.count2') }}</el-button
             >
           </div>
@@ -50,25 +47,12 @@
   </Card>
 </template>
 <script setup lang="ts">
+import { computed } from 'vue';
 import Card from '@/components/Card/index.vue';
-
-const userList: Array<{ avatar: string }> = [
-  {
-    avatar: 'https://resource.lstaer.com/1f967c66-5966-496d-beca-25b58622632a'
-  },
-  {
-    avatar: 'http://dummyimage.com/120x600'
-  },
-  {
-    avatar: 'http://dummyimage.com/120x600'
-  },
-  {
-    avatar: 'https://resource.lstaer.com/26541b3c-a630-4014-ae0d-67a59624e56d'
-  },
-  {
-    avatar: 'http://dummyimage.com/120x600'
-  }
-];
+import { useUserStore } from '@/store/modules/user';
+const userStore = useUserStore();
+const userInfo = computed(() => userStore.userInfo);
+const department = computed(() => userStore.userInfo!.department);
 </script>
 <style lang="scss" scoped>
 .cardBody {
