@@ -61,12 +61,11 @@ const router = useRouter();
 const loading = ref<boolean>(false);
 // 登录信息载核
 const loginPayload = reactive<LoginDto>({
-  username: 'custer1',
-  password: 'zzl86223288'
+  username: '',
+  password: ''
 });
 // 登录操作
 const loginHandle = async () => {
-  // TODO：做一些数据校验
   loading.value = true;
   try {
     await userStore.login(loginPayload);
