@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="isloading" v-if="loading" v-loading="loading" />
+    <div class="isloading" v-if="loading || !detail" v-loading="loading" />
     <div class="box" v-else>
       <div class="header">
         <div class="title">{{ detail.title }}</div>
@@ -58,6 +58,8 @@ const getListFun = async () => {
     }, 0);
   } catch (err) {
     console.log(err);
+    tagsViewStore.delVisitedView(route);
+    router.go(-1);
   } finally {
     loading.value = false;
   }
