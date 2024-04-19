@@ -6,10 +6,10 @@
     justify="center"
   >
     <transition name="layout-logo-fade">
-      <router-link to="/" v-if="collapse">
+      <router-link to="/workbenches" v-if="collapse">
         <img class="smallLogo" :src="smallLogo" />
       </router-link>
-      <router-link to="/" v-else>
+      <router-link to="/workbenches" v-else>
         <img class="logo" :src="logo" />
       </router-link>
     </transition>
