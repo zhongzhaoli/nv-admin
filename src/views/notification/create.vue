@@ -54,7 +54,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, unref } from 'vue';
 import Editor from '@/components/Editor/index.vue';
 import { DRAFT_LOCALSTORAGE_KEY } from '@/constants/notification';
 import { ElMessage } from 'element-plus';
@@ -103,6 +103,8 @@ const submit = async () => {
   content.value = editRef.value.getHtml();
   const deptList = selectListObject.value?.departmentList || [];
   const userList = selectListObject.value?.userList || [];
+  if (!unref(title).trim()) return ElMessage.error('请输入标题');
+  if (!unref(content).trim()) return ElMessage.error('请输入内容');
   useMessageBox('确定发布此通知吗？', async () => {
     try {
       await API_NOTIFICATION.createNotification({

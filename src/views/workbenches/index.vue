@@ -26,11 +26,11 @@
         </div>
         <div class="item">
           <div class="title">{{ $t('msg.workbenches.latestNotice') }}</div>
-          <div class="num">5</div>
+          <div class="num">{{ notificationNum }}</div>
         </div>
         <div class="item">
           <div class="title">{{ $t('msg.workbenches.project') }}</div>
-          <div class="num">7</div>
+          <div class="num">6</div>
         </div>
       </div>
     </div>
@@ -85,12 +85,14 @@ if (currentHour >= 6 && currentHour < 12) {
 }
 
 const todoListNum = ref<number>(0);
+const notificationNum = ref<number>(0);
 interface Prop {
   key: 'todoList' | 'project' | 'notification';
   value: number;
 }
 addListener((prop: Prop) => {
   if (prop.key === 'todoList') todoListNum.value = prop.value;
+  if (prop.key === 'notification') notificationNum.value = prop.value;
 });
 
 const weatherLoading = ref(true);

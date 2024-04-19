@@ -29,6 +29,9 @@ import { PAGE } from '@/constants/app';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import * as API_NOTIFICATION from '@/api/notification';
+import { WORKBENCHES_MITT_KEY } from '@/constants/mittKey';
+import { useMitt } from '@/hooks/useMitt';
+const wMitt = useMitt(WORKBENCHES_MITT_KEY);
 const router = useRouter();
 const toAll = () => {
   router.push('/notification/list');
@@ -40,7 +43,6 @@ const pageSize = ref<number>(8);
 // 获取通知列表
 const getListFun = async () => {
   loading.value = true;
-
   try {
     const { data } = await API_NOTIFICATION.getNotificationList({
       page: currentPage.value,
@@ -48,6 +50,10 @@ const getListFun = async () => {
     });
     currentPage.value = data.page;
     activities.value = data.list;
+    wMitt.send({
+      key: 'notification',
+      value: data.total
+    });
   } catch (err) {
     console.error(err);
   } finally {
