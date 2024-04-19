@@ -40,6 +40,26 @@
         </el-card>
       </el-col>
     </el-row>
+    <el-row :gutter="16" class="mt">
+      <el-col :span="12">
+        <el-card shadow="hover">
+          <h2>选择角色 - 单选</h2>
+          <el-button @click="openRoleO">开始选择</el-button>
+          <div style="margin-top: 10px; color: #999">
+            <span>结果：{{ JSON.stringify(selectRoleOList) }}</span>
+          </div>
+        </el-card>
+      </el-col>
+      <el-col :span="12">
+        <el-card shadow="hover">
+          <h2>选择角色 - 多选</h2>
+          <el-button @click="openRoleM">开始选择</el-button>
+          <div style="margin-top: 10px; color: #999">
+            <span>结果：{{ JSON.stringify(selectRoleMList) }}</span>
+          </div>
+        </el-card>
+      </el-col>
+    </el-row>
 
     <SelectDialog
       ref="selectUserRef"
@@ -69,12 +89,26 @@
       :api="API_DEPARTMENT.getDeptList"
       @submit="(v) => submitFun(v, 'selectDeptMRef')"
     />
+    <SelectDialog
+      ref="selectRoleRef"
+      name-key="name"
+      :api="API_ROLE.getRoleList"
+      :multiple="false"
+      @submit="(v) => submitFun(v, 'selectRoleRef')"
+    />
+    <SelectDialog
+      ref="selectRoleMRef"
+      name-key="name"
+      :api="API_ROLE.getRoleList"
+      @submit="(v) => submitFun(v, 'selectRoleMRef')"
+    />
   </div>
 </template>
 <script setup lang="ts">
 import SelectDialog from '@/components/SelectTarget/index.vue';
 import * as API_USERS from '@/api/users';
 import * as API_DEPARTMENT from '@/api/department';
+import * as API_ROLE from '@/api/role';
 import { ref } from 'vue';
 import { getCssVariableValue } from '@/utils/css';
 
@@ -82,6 +116,8 @@ const selectUserRef = ref();
 const selectUserMRef = ref();
 const selectDeptRef = ref();
 const selectDeptMRef = ref();
+const selectRoleRef = ref();
+const selectRoleMRef = ref();
 
 let normalPadding: string | number = getCssVariableValue('--normal-padding');
 normalPadding = parseFloat(normalPadding.replace('px', ''));
@@ -90,6 +126,8 @@ const selectUserOList = ref<{} | any[]>([]);
 const selectUserMList = ref<{} | any[]>([]);
 const selectDeptOList = ref<{} | any[]>([]);
 const selectDeptMList = ref<{} | any[]>([]);
+const selectRoleOList = ref<{} | any[]>([]);
+const selectRoleMList = ref<{} | any[]>([]);
 
 const openUserO = () => {
   selectUserRef.value.openDialog();
@@ -103,6 +141,13 @@ const openDeptO = () => {
 };
 const openDeptM = () => {
   selectDeptMRef.value.openDialog();
+};
+
+const openRoleO = () => {
+  selectRoleRef.value.openDialog();
+};
+const openRoleM = () => {
+  selectRoleMRef.value.openDialog();
 };
 
 const submitFun = (v: any, type: string) => {
@@ -158,6 +203,34 @@ const submitFun = (v: any, type: string) => {
       }) as any[];
     } else {
       selectDeptMList.value = {
+        name: v.name
+      };
+    }
+  }
+  if (type === 'selectRoleRef') {
+    selectRoleRef.value.closeDialog();
+    if (Array.isArray(v)) {
+      selectRoleOList.value = v.map((item: any) => {
+        return {
+          name: item.name
+        };
+      }) as any[];
+    } else {
+      selectRoleOList.value = {
+        name: v.name
+      };
+    }
+  }
+  if (type === 'selectRoleMRef') {
+    selectRoleMRef.value.closeDialog();
+    if (Array.isArray(v)) {
+      selectRoleMList.value = v.map((item: any) => {
+        return {
+          name: item.name
+        };
+      }) as any[];
+    } else {
+      selectRoleMList.value = {
         name: v.name
       };
     }

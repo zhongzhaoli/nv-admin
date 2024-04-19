@@ -69,6 +69,7 @@ export const tableColumns: TableColumnsProps[] = [
 
 export const tableExtraConfig: TableExtraConfigProps = {
   rowKey: 'path',
+  expand: true,
   treeProps: { children: 'children', hasChildren: 'hasChildren' }
 };
 

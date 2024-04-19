@@ -158,7 +158,7 @@
         <SelectDialog
           ref="selectUserRef"
           name-key="username"
-          :api="API_USERS.getUsersList"
+          :api="API_USERS.getUsersListExcludeMine"
           :default-select-list="selectListObject[accessType].userList"
           @submit="(v) => submitFun(v, 'User')"
         />

@@ -20,6 +20,8 @@
         >
           <el-input
             :placeholder="$t('msg.navbar.userDropdown.oldPasswordPlaceholder')"
+            type="password"
+            show-password
             v-model="passwordValue.oldPassword"
           />
         </el-form-item>
@@ -29,6 +31,8 @@
         >
           <el-input
             :placeholder="$t('msg.navbar.userDropdown.newPasswordPlaceholder')"
+            type="password"
+            show-password
             v-model="passwordValue.newPassword"
           />
         </el-form-item>
@@ -40,6 +44,8 @@
             :placeholder="
               $t('msg.navbar.userDropdown.confirmPasswordPlaceholder')
             "
+            type="password"
+            show-password
             v-model="passwordValue.confirmPassword"
           />
         </el-form-item>

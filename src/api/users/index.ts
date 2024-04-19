@@ -28,6 +28,16 @@ export function getUsersList(
   });
 }
 
+export function getUsersListExcludeMine(
+  params: UsersListParams
+): Promise<ResponsePageJson> {
+  return request({
+    url: '/system/users/excludeMine',
+    method: 'get',
+    params
+  });
+}
+
 export function createUsers(data: UsersDto): Promise<ResponseJson> {
   return request({
     url: '/system/users',

@@ -1,12 +1,15 @@
 import { type UserConfigExport, type ConfigEnv, loadEnv } from 'vite';
 import { resolve } from 'path';
 import vue from '@vitejs/plugin-vue';
-import { viteMockServe } from 'vite-plugin-mock';
+// import { viteMockServe } from 'vite-plugin-mock';
 
 export default (configEnv: ConfigEnv): UserConfigExport => {
   const viteEnv = loadEnv(configEnv.mode, process.cwd());
   const { VITE_PUBLIC_PATH } = viteEnv;
   return {
+    define: {
+      __VUE_PROD_HYDRATION_MISMATCH_DETAILS__: true
+    },
     base: VITE_PUBLIC_PATH,
     resolve: {
       alias: {

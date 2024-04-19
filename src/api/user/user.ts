@@ -14,7 +14,7 @@ export interface PasswordDto {
 }
 export function changePassword(data: PasswordDto) {
   return request({
-    url: '/changePassword',
+    url: '/user/changePassword',
     method: 'post',
     data
   });
