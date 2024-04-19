@@ -69,6 +69,8 @@ import * as API_NOTIFICATION from '@/api/notification';
 import { useTagsViewStore } from '@/store/modules/tagsView';
 import { useRoute } from 'vue-router';
 import { toLastView } from '@/utils/route';
+import { WORKBENCHES_MITT_KEY } from '@/constants/mittKey';
+import { useMitt } from '@/hooks/useMitt';
 const { t } = useI18n();
 const tagsViewStore = useTagsViewStore();
 const route = useRoute();
@@ -82,6 +84,7 @@ const content = ref<string>('');
 const whoType = ref<ACCESS_TYPE>('all');
 const selectListObject = ref<SelectListObjectProp | null>(null);
 const accessTargetDrawer = ref<AccessTargetDrawerInstance | null>(null);
+const wMitt = useMitt(WORKBENCHES_MITT_KEY);
 
 // 保存草稿
 const saveDraft = () => {
@@ -120,6 +123,9 @@ const submit = async () => {
       tagsViewStore.delVisitedView(route);
       tagsViewStore.delCachedView(route);
       toLastView(tagsViewStore.visitedViews);
+      wMitt.send({
+        key: 'refreshNotification'
+      });
     } catch (err) {
       console.error(err);
     }

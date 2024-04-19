@@ -13,7 +13,7 @@ import { useRouter } from 'vue-router';
 const router = useRouter();
 
 const toHome = () => {
-  router.push('/');
+  router.push('/workbenches');
 };
 </script>
 <style lang="scss" scoped>

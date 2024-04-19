@@ -32,6 +32,7 @@ import * as API_NOTIFICATION from '@/api/notification';
 import { WORKBENCHES_MITT_KEY } from '@/constants/mittKey';
 import { useMitt } from '@/hooks/useMitt';
 const wMitt = useMitt(WORKBENCHES_MITT_KEY);
+const { addListener } = useMitt(WORKBENCHES_MITT_KEY);
 const router = useRouter();
 const toAll = () => {
   router.push('/notification/list');
@@ -40,6 +41,12 @@ const activities = ref<Notice[]>([]);
 const loading = ref<boolean>(true);
 const currentPage = ref<number>(PAGE);
 const pageSize = ref<number>(8);
+interface Prop {
+  key: 'refreshNotification';
+}
+addListener((prop: Prop) => {
+  if (prop.key === 'refreshNotification') getListFun();
+});
 // 获取通知列表
 const getListFun = async () => {
   loading.value = true;
