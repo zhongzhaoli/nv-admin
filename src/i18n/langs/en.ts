@@ -8,6 +8,7 @@ export default {
     },
     errorPage: {
       404: 'Sorry, the page you visited does not exist.',
+      401: 'Sorry, you do not have permission.',
       goHome: 'Back Home'
     },
     navbar: {

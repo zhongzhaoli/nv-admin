@@ -8,6 +8,7 @@ export default {
     },
     errorPage: {
       404: '抱歉，您访问的页面不存在。',
+      401: '抱歉，您无权访问。',
       goHome: '返回首页'
     },
     navbar: {
