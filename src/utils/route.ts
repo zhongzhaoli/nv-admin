@@ -3,6 +3,7 @@ import router from '@/router';
 import { TagView } from '@/store/modules/tagsView';
 import { resolve } from 'path-browserify';
 import { RouteRecordRaw } from 'vue-router';
+import Layout from '@/layouts/index.vue';
 
 // 判断路由是否在面登录白名单内
 export const isLoginWhiteList = (path: string): boolean => {
@@ -20,7 +21,7 @@ export const addRoutes = (routes: RouteRecordRaw[]) => {
 export const routesComponentInstance = (routes: any): RouteRecordRaw[] => {
   routes.forEach((route: any) => {
     if (route.component === 'Layout') {
-      route.component = () => import('@/layouts/index.vue');
+      route.component = Layout;
     } else {
       const dynamicViewsModules = import.meta.glob('../views/**/*.{vue,tsx}');
       route.component = dynamicImport(dynamicViewsModules, route.component);
