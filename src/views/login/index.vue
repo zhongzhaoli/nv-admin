@@ -24,7 +24,7 @@
                 :placeholder="$t('msg.login.passwordPlaceholder')"
               />
               <div class="checkBox">
-                <el-checkbox>
+                <el-checkbox v-model="remember">
                   <span class="remember">{{ $t('msg.login.rememberMe') }}</span>
                 </el-checkbox>
               </div>
@@ -50,7 +50,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import { reactive, ref } from 'vue';
+import { onMounted, reactive, ref, unref } from 'vue';
 import { useUserStore } from '@/store/modules/user';
 import { LoginDto } from '@/api/login';
 import { ElMessage } from 'element-plus';
@@ -64,17 +64,32 @@ const loginPayload = reactive<LoginDto>({
   username: '',
   password: ''
 });
+// 记住我
+const remember = ref(false);
 // 登录操作
 const loginHandle = async () => {
   loading.value = true;
   try {
     await userStore.login(loginPayload);
     ElMessage.success('登录成功');
+    if (unref(remember)) {
+      localStorage.setItem('accountRemember', JSON.stringify(loginPayload));
+    } else {
+      localStorage.removeItem('accountRemember');
+    }
     router.push('/');
   } finally {
     loading.value = false;
   }
 };
+
+onMounted(() => {
+  const accountRemember = localStorage.getItem('accountRemember');
+  if (accountRemember) {
+    loginPayload.username = JSON.parse(accountRemember).username;
+    loginPayload.password = JSON.parse(accountRemember).password;
+  }
+});
 </script>
 <style lang="scss" scoped>
 .container {

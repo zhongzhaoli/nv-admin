@@ -113,6 +113,8 @@ const submit = async () => {
         userList: userList.map((item) => item.id)
       });
       ElMessage.success('发布成功');
+      // 清除草稿
+      localStorage.removeItem(DRAFT_LOCALSTORAGE_KEY);
       tagsViewStore.delVisitedView(route);
       tagsViewStore.delCachedView(route);
       toLastView(tagsViewStore.visitedViews);

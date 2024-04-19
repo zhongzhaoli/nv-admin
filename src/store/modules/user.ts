@@ -4,6 +4,7 @@ import { defineStore } from 'pinia';
 import { LoginDto, login as loginApi } from '@/api/user/login';
 import { getUserInfo as getUserInfoApi } from '@/api/user/user';
 import { ResponseJson } from '@/config/request';
+import { TOKEN_KEY } from '@/constants/storage';
 
 interface UserDepartment {
   name: string;
@@ -49,9 +50,12 @@ export const useUserStore = defineStore(
     };
     // 退出登录
     const logout = () => {
-      // token.value = undefined;
-      // userInfo.value = undefined;
-      window.localStorage.clear();
+      const userStore = localStorage.getItem('USER_STORE') as any;
+      if (userStore) {
+        delete userStore.token;
+        token.value = undefined;
+        localStorage.setItem('USER_STORE', userStore);
+      }
     };
     // 获取用户信息
     const getUserInfo = async () => {
@@ -62,6 +66,6 @@ export const useUserStore = defineStore(
     return { token, userInfo, setUserInfo, logout, login, getUserInfo };
   },
   {
-    persist: piniaPersistConfig<UserStateKey>('USER_STORE', ['token'])
+    persist: piniaPersistConfig<UserStateKey>('USER_STORE', [TOKEN_KEY])
   }
 );

@@ -3,3 +3,6 @@ export enum StorageEnum {
   LOCAL,
   SESSION
 }
+
+/** Token Key */
+export const TOKEN_KEY = 'token';
