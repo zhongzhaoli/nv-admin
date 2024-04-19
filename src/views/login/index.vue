@@ -21,6 +21,7 @@
               <el-input
                 type="password"
                 v-model="loginPayload.password"
+                show-password
                 :placeholder="$t('msg.login.passwordPlaceholder')"
               />
               <div class="checkBox">
