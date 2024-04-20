@@ -8,3 +8,9 @@ export const STORAGE_ACTION: Storage =
   STORAGE_TYPE === StorageEnum.LOCAL
     ? window.localStorage
     : window.sessionStorage;
+
+/** 持久化KEY */
+export enum STORAGE_KEY {
+  'user' = 'USER_STORE',
+  'app' = 'APP_STORE'
+}

@@ -8,6 +8,7 @@ import {
 } from '@/constants/app';
 import { piniaPersistConfig } from '@/utils/persist';
 import { ref } from 'vue';
+import { STORAGE_KEY } from '@/config/storage';
 
 interface AppState {
   sidebarOpened: boolean;
@@ -48,7 +49,7 @@ export const useAppStore = defineStore(
     };
   },
   {
-    persist: piniaPersistConfig<AppStateKey>('APP_STORE', [
+    persist: piniaPersistConfig<AppStateKey>(STORAGE_KEY.app, [
       'sidebarOpened',
       'tableSize',
       'language'
